@@ -39,7 +39,7 @@
                             <div class="row mb-3">
                                 <div class="col-12">
                                     <a href="{{ route('back.pages.maps.index') }}" class="btn btn-secondary">Geri</a>
-                                    <a href="{{ route('back.pages.maps.edit', $map->id) }}" class="btn btn-primary">Redaktə Et</a>
+                                    <a href="{{ route('back.pages.maps.edit', $map->id) }}" class="btn btn-primary" style="background-color: #5bf91b; border-color: green;">Redaktə Et</a>
                                     <form action="{{ route('back.pages.maps.destroy', $map->id) }}" method="POST" class="d-inline" id="delete-form-{{ $map->id }}">
                                         @csrf
                                         @method('DELETE')
