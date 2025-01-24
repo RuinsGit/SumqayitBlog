@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\SeoController;
 use App\Http\Controllers\Api\SocialMediaApiController;
 use App\Http\Controllers\Api\SocialshareApiController;
 use App\Http\Controllers\Api\SocialfooterApiController;
-
+use App\Http\Controllers\Api\HomecartApiController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -66,4 +66,13 @@ Route::prefix('social-footer')->group(function () {
     Route::post('/', [SocialfooterApiController::class, 'store']);
     Route::put('/{id}', [SocialfooterApiController::class, 'update']);
     Route::delete('/{id}', [SocialfooterApiController::class, 'destroy']);
+});
+
+// Homecart Routes
+Route::prefix('homecart')->group(function () {
+    Route::get('/', [HomecartApiController::class, 'index']);
+    Route::get('/{id}', [HomecartApiController::class, 'show']);
+    Route::post('/', [HomecartApiController::class, 'store']);
+    Route::put('/{id}', [HomecartApiController::class, 'update']);
+    Route::delete('/{id}', [HomecartApiController::class, 'destroy']);
 });

@@ -85,9 +85,57 @@
                         </a>
                     </li>  
 
+                    
+
                         
    
                     </ul>
+                </li>
+
+
+
+
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-home-3-line"></i>
+                        <span>Ana Səhifə</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                       
+                    <li>
+                        <a href="{{ route('back.pages.homecart.index') }}">
+                            <i class="ri-home-line"></i>
+                            <span>Homecart</span>
+                        </a>
+                    </li>  
+   
+                    </ul>
+                </li>
+
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-information-line"></i>
+                        <span>Haqqımızda</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                       
+                    <li>
+                        <a href="{{ route('back.pages.homecart.index') }}">
+                            <i class="ri-home-line"></i>
+                            <span>Haqqımızda</span>
+                        </a>
+                    </li>  
+   
+                    </ul>
+                </li>
+
+
+
+
+
+                
             </ul>
         </div>
         <!-- Sidebar -->
