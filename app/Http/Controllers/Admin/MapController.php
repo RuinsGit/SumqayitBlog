@@ -10,24 +10,23 @@ class MapController extends Controller
 {
     public function index()
     {
-        $map = Map::first(); // Sadece bir tane veri al
+        $map = Map::first(); 
         return view('back.pages.maps.index', compact('map'));
     }
 
     public function create()
     {
-        // Eğer zaten bir kayıt varsa, create sayfasına yönlendirin
+       
         if (Map::count() >= 1) {
-            return redirect()->route('back.pages.maps.index')->with('error', 'Zaten bir harita kaydı mevcut.');
+            return redirect()->route('back.pages.maps.index')->with('error', 'Xəritə əlavə edilə bilməz.');
         }
         return view('back.pages.maps.create');
     }
 
     public function store(Request $request)
     {
-        // Sadece bir kayıt oluşturulmasına izin ver
         if (Map::count() >= 1) {
-            return redirect()->route('back.pages.maps.index')->with('error', 'Zaten bir harita kaydı mevcut.');
+            return redirect()->route('back.pages.maps.index')->with('error', 'Xəritə əlavə edilə bilməz.');
         }
 
         $request->validate([
@@ -38,7 +37,7 @@ class MapController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('back.pages.maps.index')->with('success', 'Harita başarıyla eklendi.');
+        return redirect()->route('back.pages.maps.index')->with('success', 'Xəritə uğurla əlavə edildi.');
     }
 
     public function edit($id)
@@ -59,7 +58,7 @@ class MapController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('back.pages.maps.index')->with('success', 'Harita başarıyla güncellendi.');
+        return redirect()->route('back.pages.maps.index')->with('success', 'Xəritə uğurla yeniləndi.');
     }
 
     public function destroy($id)
@@ -67,7 +66,7 @@ class MapController extends Controller
         $map = Map::findOrFail($id);
         $map->delete();
 
-        return redirect()->route('back.pages.maps.index')->with('success', 'Harita başarıyla silindi.');
+        return redirect()->route('back.pages.maps.index')->with('success', 'Xəritə uğurla silindi.');
     }
 
     public function show($id)
