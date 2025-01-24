@@ -3,6 +3,12 @@
 @section('title', 'Logolar')
 
 @section('content')
+    <style>
+        .swal2-popup {
+            border-radius: 50px; /* Modern görünüm için köşe yuvarlama */
+        }
+    </style>
+
     @if(session('success'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {

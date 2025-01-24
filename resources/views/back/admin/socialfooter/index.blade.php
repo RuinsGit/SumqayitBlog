@@ -2,6 +2,42 @@
 @section('title', 'Sosial Media')
 
 @section('content')
+    <style>
+        .swal2-popup {
+            border-radius: 50px; /* Modern görünüm için köşe yuvarlama */
+        }
+    </style>
+
+    @if(session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "{{ session('success') }}",
+                    showConfirmButton: true,
+                    confirmButtonText: 'Tamam',
+                    timer: 1500
+                });
+            });
+        </script>
+    @endif
+
+    @if(session('error'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "{{ session('error') }}",
+                    showConfirmButton: true,
+                    confirmButtonText: 'Tamam',
+                    timer: 1500
+                });
+            });
+        </script>
+    @endif
+
     <div class="page-content">
         <div class="container-fluid">
             <div class="row">
@@ -22,70 +58,58 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            @if(session('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
-
-                            <table class="table table-bordered dt-responsive nowrap">
-                                <thead>
-                                    <tr>
-                                        <th>Sıra</th>
-                                        <th>Şəkil</th>
-                                        <th>Link</th>
-                                        <th>Status</th>
-                                        <th>Əməliyyatlar</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="sortable" data-url="{{ route('back.pages.socialfooter.order') }}">
-                                    @foreach($socialfooters as $socialfooter)
-                                        <tr id="order-{{ $socialfooter->id }}">
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>
-                                                <img src="{{ asset($socialfooter->image) }}" alt="" style="height: 50px; width: 50px; object-fit: cover; ">
-                                            </td>
-                                            <td>{{ $socialfooter->link }}</td>
-                                            <td>
-                                                <form action="{{ route('back.pages.socialfooter.toggle-status', $socialfooter->id) }}" method="POST" class="d-inline-block">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-sm btn-{{ $socialfooter->status ? 'success' : 'danger' }}">
-                                                        {{ $socialfooter->status ? 'Aktiv' : 'Deaktiv' }}
-                                                    </button>
-                                                </form>
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('back.pages.socialfooter.edit', $socialfooter->id) }}" 
-                                                   class="btn btn-primary btn-sm">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <form action="{{ route('back.pages.socialfooter.destroy', $socialfooter->id) }}" 
-                                                      method="POST" 
-                                                      class="d-inline-block">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" 
-                                                            class="btn btn-danger btn-sm" 
-                                                            onclick="return confirm('Silmək istədiyinizə əminsiniz?')">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
+                            <div class="table-responsive">
+                                <table class="table table-bordered dt-responsive nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>Sıra</th>
+                                            <th>Şəkil</th>
+                                            <th>Link</th>
+                                            <th>Status</th>
+                                            <th>Əməliyyatlar</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody class="sortable" data-url="{{ route('back.pages.socialfooter.order') }}">
+                                        @foreach($socialfooters as $socialfooter)
+                                            <tr id="order-{{ $socialfooter->id }}">
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>
+                                                    <img src="{{ asset($socialfooter->image) }}" alt="" style="height: 50px; width: 50px; object-fit: cover; ">
+                                                </td>
+                                                <td>{{ $socialfooter->link }}</td>
+                                                <td>
+                                                    <form action="{{ route('back.pages.socialfooter.toggle-status', $socialfooter->id) }}" method="POST" class="d-inline-block">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-sm btn-{{ $socialfooter->status ? 'success' : 'danger' }}">
+                                                            {{ $socialfooter->status ? 'Aktiv' : 'Deaktiv' }}
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('back.pages.socialfooter.edit', $socialfooter->id) }}" 
+                                                       class="btn btn-primary btn-sm">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <form id="delete-form-{{ $socialfooter->id }}" action="{{ route('back.pages.socialfooter.destroy', $socialfooter->id) }}" method="POST" class="d-inline-block">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteData({{ $socialfooter->id }})">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-@endsection
 
-@section('script')
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(function() {
             $('.sortable').sortable({
@@ -98,6 +122,29 @@
             });
         });
 
+        function deleteData(id) {
+            Swal.fire({
+                title: 'Silmək istədiyinizdən əminsiniz?',
+                text: "Bu əməliyyat geri alına bilməz!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Bəli, sil!',
+                cancelButtonText: 'Xeyr'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            })
+        }
+    </script>
+@endsection
+
+@section('script')
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
         function toggleStatus(socialfooterId) {
             Swal.fire({
                 title: 'Statusu dəyişmək istədiyinizdən əminsiniz?',

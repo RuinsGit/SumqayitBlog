@@ -75,12 +75,12 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="status" name="status" value="1" {{ old('status', $socialshare->status) ? 'checked' : '' }}>
                                 <label class="custom-control-label" for="status">Status</label>
                             </div>
-                        </div>
+                        </div> -->
 
                         <button type="submit" class="btn btn-primary">Yadda saxla</button>
                         <a href="{{ route('back.pages.socialshare.index') }}" class="btn btn-secondary">Ləğv et</a>

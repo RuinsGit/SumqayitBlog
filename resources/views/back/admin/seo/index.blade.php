@@ -2,6 +2,42 @@
 @section('title', 'SEO Siyahısı')
 
 @section('content')
+    <style>
+        .swal2-popup {
+            border-radius: 50px; /* Modern görünüm için köşe yuvarlama */
+        }
+    </style>
+
+    @if(session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "{{ session('success') }}",
+                    showConfirmButton: true,
+                    confirmButtonText: 'Tamam',
+                    timer: 1500
+                });
+            });
+        </script>
+    @endif
+
+    @if(session('error'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "{{ session('error') }}",
+                    showConfirmButton: true,
+                    confirmButtonText: 'Tamam',
+                    timer: 1500
+                });
+            });
+        </script>
+    @endif
+
     <div class="page-content">
         <div class="container-fluid">
             <div class="row">
@@ -48,6 +84,13 @@
                                                 <a href="{{ route('back.pages.seo.edit', $seo->id) }}" class="btn btn-info btn-sm">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteData({{ $seo->id }})">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                                <form id="delete-form-{{ $seo->id }}" action="{{ route('back.pages.seo.destroy', $seo->id) }}" method="POST" class="d-none">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -60,83 +103,22 @@
         </div>
     </div>
 
-    <form id="delete-form" method="POST" class="d-none">
-        @csrf
-        @method('DELETE')
-    </form>
-
-    <form id="status-form" method="POST" class="d-none">
-        @csrf
-    </form>
-@endsection
-
-@section('script')
     <script>
-        $(document).ready(function() {
-            // Status değiştirme işlemi
-            $('.status-form').on('submit', function(e) {
-                e.preventDefault();
-                var form = $(this);
-                var url = form.attr('action');
-                
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: form.serialize(),
-                    success: function(response) {
-                        if (response.success) {
-                            var button = form.find('button');
-                            var newStatus = !button.hasClass('btn-outline-success');
-                            
-                            button.removeClass('btn-outline-success btn-outline-danger')
-                                .addClass(newStatus ? 'btn-outline-success' : 'btn-outline-danger')
-                                .text(newStatus ? 'Aktiv' : 'Deaktiv');
-                            
-                            // Toast bildirimi
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 3000,
-                                background: '#fff',
-                                color: '#000'
-                            });
-
-                            Toast.fire({
-                                icon: 'success',
-                                title: response.message
-                            });
-                        } else {
-                            alert('Bir hata oluştu. Lütfen tekrar deneyin.');
-                        }
-                    },
-                    error: function() {
-                        alert('Bir hata oluştu. Lütfen tekrar deneyin.');
-                    }
-                });
-            });
-
-            // Silme işlemi için
-            window.deleteData = function(url) {
-                Swal.fire({
-                    title: "Əminsiniz?",
-                    text: "Silinən məlumat geri qaytarılmır!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Bəli, sil!",
-                    cancelButtonText: "Xeyr",
-                    background: '#fff',
-                    color: '#000'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const form = document.getElementById('delete-form');
-                        form.setAttribute('action', url);
-                        form.submit();
-                    }
-                });
-            }
-        });
+        function deleteData(id) {
+            Swal.fire({
+                title: 'Silmək istədiyinizdən əminsiniz?',
+                text: "Bu əməliyyat geri alına bilməz!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Bəli, sil!',
+                cancelButtonText: 'Xeyr'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            })
+        }
     </script>
 @endsection 
