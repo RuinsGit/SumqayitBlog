@@ -107,7 +107,7 @@ class AboutController extends Controller
             if ($about->image && File::exists(public_path($about->image))) {
                 File::delete(public_path($about->image));
             }
-            
+
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('uploads/about'), $imageName);
@@ -138,7 +138,7 @@ class AboutController extends Controller
 
         $about->save();
 
-        return redirect()->route('back.pages.about.index')->with('success', 'About başarıyla güncellendi.');
+        return redirect()->route('back.pages.about.index')->with('success', 'About ugurla deyisdirildi.');
     }
 
     public function destroy($id)
@@ -155,7 +155,7 @@ class AboutController extends Controller
 
         $about->delete();
 
-        return redirect()->route('back.pages.about.index')->with('success', 'About başarıyla silindi.');
+        return redirect()->route('back.pages.about.index')->with('success', 'About ugurla silindi.');
     }
 
     public function toggleStatus($id)
