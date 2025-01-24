@@ -22,7 +22,7 @@
                 <li class="menu-title">Menu</li>
 
                 <li>
-                    <a href="№" class="waves-effect">
+                    <a href="{{ route('admin.dashboard') }}" class="waves-effect">
                         <i class="ri-dashboard-line"></i>
                         <span>Ana Səhifə</span>
                     </a>
@@ -122,8 +122,8 @@
                     <ul class="sub-menu" aria-expanded="false">
                        
                     <li>
-                        <a href="{{ route('back.pages.homecart.index') }}">
-                            <i class="ri-home-line"></i>
+                        <a href="{{ route('back.pages.about.index') }}">
+                            <i class="ri-information-line"></i>
                             <span>Haqqımızda</span>
                         </a>
                     </li>  

@@ -7,6 +7,12 @@
         .swal2-popup {
             border-radius: 50px; /* Modern görünüm için köşe yuvarlama */
         }
+        .btn-disabled {
+            background-color: #d3d3d3; /* Gri arka plan rengi */
+            border-color: #a9a9a9; /* Gri kenar rengi */
+            color: #ffffff; /* Beyaz yazı rengi */
+            cursor: not-allowed; /* İzin verilmedi imleci */
+        }
     </style>
 
     @if(session('success'))
@@ -46,7 +52,9 @@
                     <div class="page-title-box d-flex align-items-center justify-content-between">
                         <h4 class="mb-0">Worklife Siyahısı</h4>
                         <div class="page-title-right">
-                            <a href="{{ route('back.pages.worklife.create') }}" class="btn btn-primary" >
+                            <a href="{{ route('back.pages.worklife.create') }}" class="btn btn-primary 
+                               @if($worklife->count() >= 1) btn-disabled @endif" 
+                               @if($worklife->count() >= 1) disabled @endif>
                                 <i class="fas fa-plus me-2"></i> Yeni Əlavə Et
                             </a>
                         </div>
@@ -81,7 +89,7 @@
                                                     <form action="{{ route('back.pages.worklife.destroy', $worklife->id) }}" method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="button" class="btn btn-danger" onclick="deleteData({{ $worklife->id }})">Sil</button>
+                                                        <!-- <button type="button" class="btn btn-danger" onclick="deleteData({{ $worklife->id }})">Sil</button> -->
                                                     </form>
                                                 </td>
                                             </tr>

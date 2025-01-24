@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\SocialshareController;
 use App\Http\Controllers\Admin\SocialfooterController;
 use App\Http\Controllers\Admin\HomecartController;
 use App\Http\Controllers\Admin\WorklifeController;
+use App\Http\Controllers\Admin\AboutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -123,6 +124,8 @@ Route::prefix('admin')->group(function () {
             Route::get('worklife/{id}/edit', [WorklifeController::class, 'edit'])->name('worklife.edit');
             Route::put('worklife/{id}', [WorklifeController::class, 'update'])->name('worklife.update');
             Route::delete('worklife/{id}', [WorklifeController::class, 'destroy'])->name('worklife.destroy');
+
+            Route::resource('about', AboutController::class);
 
         });
 

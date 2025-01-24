@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\SocialMediaApiController;
 use App\Http\Controllers\Api\SocialshareApiController;
 use App\Http\Controllers\Api\SocialfooterApiController;
 use App\Http\Controllers\Api\HomecartApiController;
+use App\Http\Controllers\Api\WorklifeController;
+use App\Http\Controllers\Api\AboutController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -76,3 +78,16 @@ Route::prefix('homecart')->group(function () {
     Route::put('/{id}', [HomecartApiController::class, 'update']);
     Route::delete('/{id}', [HomecartApiController::class, 'destroy']);
 });
+
+// Worklife Routes
+Route::prefix('worklife')->group(function () {
+    Route::get('/', [WorklifeController::class, 'index'])->name('api.worklife.index');
+    Route::get('{id}', [WorklifeController::class, 'show'])->name('api.worklife.show');
+    Route::post('/', [WorklifeController::class, 'store'])->name('api.worklife.store');
+    Route::put('{id}', [WorklifeController::class, 'update'])->name('api.worklife.update');
+    Route::delete('{id}', [WorklifeController::class, 'destroy'])->name('api.worklife.destroy');
+});
+
+// About Routes
+Route::get('/about', [AboutController::class, 'index']);
+Route::get('/about/{id}', [AboutController::class, 'show']);
