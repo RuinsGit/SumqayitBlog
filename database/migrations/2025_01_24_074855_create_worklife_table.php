@@ -15,7 +15,9 @@ class CreateWorklifeTable extends Migration
     {
         Schema::create('worklife', function (Blueprint $table) {
             $table->id();
-            $table->text('description'); // Sadece description alanı
+            $table->text('description_az'); 
+            $table->text('description_en'); 
+            $table->text('description_ru'); 
             $table->timestamps();
         });
     }

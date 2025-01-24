@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SocialMediaController;
 use App\Http\Controllers\Admin\SocialshareController;
 use App\Http\Controllers\Admin\SocialfooterController;
 use App\Http\Controllers\Admin\HomecartController;
+use App\Http\Controllers\Admin\WorklifeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -114,11 +115,14 @@ Route::prefix('admin')->group(function () {
               // Homecart
             Route::resource('homecart', HomecartController::class);
 
-
-
-
-
-
+            // Worklife
+            Route::resource('worklife', WorklifeController::class);
+            Route::get('worklife', [WorklifeController::class, 'index'])->name('worklife.index');
+            Route::get('worklife/create', [WorklifeController::class, 'create'])->name('worklife.create');
+            Route::post('worklife', [WorklifeController::class, 'store'])->name('worklife.store');
+            Route::get('worklife/{id}/edit', [WorklifeController::class, 'edit'])->name('worklife.edit');
+            Route::put('worklife/{id}', [WorklifeController::class, 'update'])->name('worklife.update');
+            Route::delete('worklife/{id}', [WorklifeController::class, 'destroy'])->name('worklife.destroy');
 
         });
 

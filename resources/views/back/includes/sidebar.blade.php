@@ -127,6 +127,13 @@
                             <span>Haqqımızda</span>
                         </a>
                     </li>  
+
+                    <li>
+                        <a href="{{ route('back.pages.worklife.index') }}">
+                            <i class="ri-briefcase-line"></i>
+                            <span>İş Hayatı</span>
+                        </a>
+                    </li>  
    
                     </ul>
                 </li>
