@@ -30,13 +30,13 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="mdi mdi-application-cog"></i>
+                        <i class="ri-settings-3-line"></i>
                         <span>Tənzimləmələr</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                     <li>
                             <a href="{{ route('back.pages.translation-manage.index') }}">
-                                <i class="mdi mdi-translate"></i>
+                                <i class="ri-translate"></i>
                                 <span>Tərcümələr</span>
                             </a>
                         </li>
@@ -48,7 +48,7 @@
                         </li>
                         <li>
                             <a href="{{ route('back.pages.logos.index') }}">
-                                <i class="mdi mdi-image"></i>
+                                <i class="ri-file-line"></i>
                                 <span>Logo</span>
                             </a>
                         </li>
@@ -56,6 +56,38 @@
 
                     </ul>
                 </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-share-line"></i>
+                        <span>Sosial Media</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                       
+                    <li>
+                            <a href="{{ route('back.pages.social.index') }}">
+                                <i class="ri-messenger-line"></i>
+                                <span>Sosial Media</span>
+                            </a>
+                        </li>   
+
+                        <li>
+                        <a href="{{ route('back.pages.socialshare.index') }}">
+                            <i class="ri-share-line"></i>
+                            <span>Sosial Share</span>
+                        </a>
+                    </li>  
+
+                    <li>
+                        <a href="{{ route('back.pages.socialfooter.index') }}">
+                            <i class="ri-mail-open-line"></i>
+                            <span>Sosial Footer</span>
+                        </a>
+                    </li>  
+
+                        
+   
+                    </ul>
             </ul>
         </div>
         <!-- Sidebar -->
