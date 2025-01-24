@@ -131,7 +131,7 @@
                                                             {{ $logo->status ?? 1 == 1 ? 'Aktif' : 'Deaktif' }}
                                                         </td>
                                                         <td>
-                                                            <a href="{{ route('back.pages.logos.edit', $logo->id) }}" class="btn btn-primary btn-sm">
+                                                            <a href="{{ route('back.pages.logos.edit', $logo->id) }}" class="btn btn-primary btn-sm" style="background-color: #5bf91b; border-color: green">
                                                                 <i class="fas fa-edit"></i>
                                                             </a>
                                                             <form id="delete-form-{{ $logo->id }}" action="{{ route('back.pages.logos.destroy', $logo->id) }}" method="POST" class="d-none">
@@ -187,7 +187,7 @@
                                                             {{ $logo->status ?? 1 == 1 ? 'Aktif' : 'Deaktif' }}
                                                         </td>
                                                         <td>
-                                                            <a href="{{ route('back.pages.logos.edit', $logo->id) }}" class="btn btn-primary btn-sm">
+                                                            <a href="{{ route('back.pages.logos.edit', $logo->id) }}" class="btn btn-primary btn-sm" style="background-color: #5bf91b; border-color: green">
                                                                 <i class="fas fa-edit"></i>
                                                             </a>
                                                             <form id="delete-form-{{ $logo->id }}" action="{{ route('back.pages.logos.destroy', $logo->id) }}" method="POST" class="d-none">
@@ -243,7 +243,7 @@
                                                             {{ $logo->status ?? 1 == 1 ? 'Aktif' : 'Deaktif' }}
                                                         </td>
                                                         <td>
-                                                            <a href="{{ route('back.pages.logos.edit', $logo->id) }}" class="btn btn-primary btn-sm">
+                                                            <a href="{{ route('back.pages.logos.edit', $logo->id) }}" class="btn btn-primary btn-sm" style="background-color: #5bf91b; border-color: green">
                                                                 <i class="fas fa-edit"></i>
                                                             </a>
                                                             <form id="delete-form-{{ $logo->id }}" action="{{ route('back.pages.logos.destroy', $logo->id) }}" method="POST" class="d-none">

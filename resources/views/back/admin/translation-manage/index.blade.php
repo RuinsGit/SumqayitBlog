@@ -77,16 +77,16 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <a href="{{ route('back.pages.translation-manage.edit', $translation->id) }}" class="btn btn-primary btn-sm waves-effect waves-light">
+                                                <a href="{{ route('back.pages.translation-manage.edit', $translation->id) }}" class="btn btn-primary btn-sm waves-effect waves-light" style="background-color: #5bf91b; border-color: green">
                                                     <i class="ri-pencil-line"></i>
                                                 </a>
                                                 <form id="delete-form-{{ $translation->id }}" action="{{ route('back.pages.translation-manage.destroy', $translation->id) }}" method="POST" class="d-none">
                                                     @csrf
                                                     @method('DELETE')
                                                 </form>
-                                                <button type="button" class="btn btn-danger btn-sm waves-effect waves-light" onclick="deleteData({{ $translation->id }})">
+                                                <!-- <button type="button" class="btn btn-danger btn-sm waves-effect waves-light" onclick="deleteData({{ $translation->id }})">
                                                     <i class="ri-delete-bin-line"></i>
-                                                </button>
+                                                </button> -->
                                             </td>
                                         </tr>
                                         @endforeach

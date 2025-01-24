@@ -86,7 +86,7 @@
                                                     </form>
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('back.pages.social.edit', $social->id) }}" class="btn btn-primary btn-sm">
+                                                    <a href="{{ route('back.pages.social.edit', $social->id) }}" class="btn btn-primary btn-sm" style="background-color: #5bf91b; border-color: green">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                     <form id="delete-form-{{ $social->id }}" action="{{ route('back.pages.social.destroy', $social->id) }}" method="POST" class="d-inline-block">

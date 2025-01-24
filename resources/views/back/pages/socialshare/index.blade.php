@@ -93,13 +93,13 @@
                                                     </form>
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('back.pages.socialshare.edit', $socialshare->id) }}" class="btn btn-primary btn-sm">
+                                                    <a href="{{ route('back.pages.socialshare.edit', $socialshare->id) }}" class="btn btn-primary btn-sm" style="background-color: #5bf91b; border-color: green">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                     <form id="delete-form-{{ $socialshare->id }}" action="{{ route('back.pages.socialshare.destroy', $socialshare->id) }}" method="POST" class="d-inline-block">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteData({{ $socialshare->id }})">
+                                                        <button type="button" class="btn btn-danger btn-sm" st onclick="deleteData({{ $socialshare->id }})">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                     </form>

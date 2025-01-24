@@ -81,12 +81,12 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <a href="{{ route('back.pages.seo.edit', $seo->id) }}" class="btn btn-info btn-sm">
+                                                <a href="{{ route('back.pages.seo.edit', $seo->id) }}" class="btn btn-info btn-sm" style="background-color: #5bf91b; ">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteData({{ $seo->id }})">
+                                                <!-- <button type="button" class="btn btn-danger btn-sm" onclick="deleteData({{ $seo->id }})">
                                                     <i class="fas fa-trash"></i>
-                                                </button>
+                                                </button> -->
                                                 <form id="delete-form-{{ $seo->id }}" action="{{ route('back.pages.seo.destroy', $seo->id) }}" method="POST" class="d-none">
                                                     @csrf
                                                     @method('DELETE')
