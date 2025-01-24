@@ -46,6 +46,12 @@
                                 <span>SEO</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('back.pages.logos.index') }}">
+                                <i class="mdi mdi-image"></i>
+                                <span>Logo</span>
+                            </a>
+                        </li>
 
 
                     </ul>
