@@ -6,6 +6,9 @@ use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\TranslationManageController;
 use App\Http\Controllers\Admin\SeoController;
 use App\Http\Controllers\Admin\LogoController;
+use App\Http\Controllers\Admin\SocialMediaController;
+use App\Http\Controllers\Admin\SocialshareController;
+use App\Http\Controllers\Admin\SocialfooterController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -93,6 +96,8 @@ Route::prefix('admin')->group(function () {
             Route::get('socialshare/{id}/edit', [SocialshareController::class, 'edit'])->name('socialshare.edit');
             Route::put('socialshare/{id}', [SocialshareController::class, 'update'])->name('socialshare.update');
             Route::delete('socialshare/{id}', [SocialshareController::class, 'destroy'])->name('socialshare.destroy');
+            Route::post('socialshare/order', [SocialshareController::class, 'order'])->name('socialshare.order');
+            Route::post('socialshare/{id}/toggle-status', [SocialshareController::class, 'toggleStatus'])->name('socialshare.toggleStatus');
 
               // Social Footer routes
               Route::get('socialfooter', [SocialfooterController::class, 'index'])->name('socialfooter.index');

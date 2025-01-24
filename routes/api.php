@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\LogoApiController;
 use App\Http\Controllers\Api\TranslationManageController;
 use App\Http\Controllers\Api\SeoController;
+use App\Http\Controllers\Api\SocialMediaApiController;
+use App\Http\Controllers\Api\SocialshareApiController;
+use App\Http\Controllers\Api\SocialfooterApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,4 +38,32 @@ Route::prefix('seo')->group(function () {
     Route::post('/', [SeoController::class, 'store']);
     Route::put('/{id}', [SeoController::class, 'update']);
     Route::delete('/{id}', [SeoController::class, 'destroy']);
+});
+
+// Social Media Routes
+Route::prefix('social-media')->group(function () {
+    Route::get('/', [SocialMediaApiController::class, 'index']);
+    Route::get('/{id}', [SocialMediaApiController::class, 'show']);
+    Route::post('/', [SocialMediaApiController::class, 'store']);
+    Route::put('/{id}', [SocialMediaApiController::class, 'update']);
+    Route::delete('/{id}', [SocialMediaApiController::class, 'destroy']);
+    Route::post('/{id}/toggle-status', [SocialMediaApiController::class, 'toggleStatus']);
+});
+
+// Socialshare Routes
+Route::prefix('socialshares')->group(function () {
+    Route::get('/', [SocialshareApiController::class, 'index']);
+    Route::get('/{id}', [SocialshareApiController::class, 'show']);
+    Route::post('/', [SocialshareApiController::class, 'store']);
+    Route::put('/{id}', [SocialshareApiController::class, 'update']);
+    Route::delete('/{id}', [SocialshareApiController::class, 'destroy']);
+});
+
+// Social Footer Routes
+Route::prefix('social-footer')->group(function () {
+    Route::get('/', [SocialfooterApiController::class, 'index']);
+    Route::get('/{id}', [SocialfooterApiController::class, 'show']);
+    Route::post('/', [SocialfooterApiController::class, 'store']);
+    Route::put('/{id}', [SocialfooterApiController::class, 'update']);
+    Route::delete('/{id}', [SocialfooterApiController::class, 'destroy']);
 });

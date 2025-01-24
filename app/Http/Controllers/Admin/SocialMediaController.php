@@ -44,7 +44,7 @@ class SocialMediaController extends Controller
 
         $social->link = $request->link;
         $social->order = SocialMedia::max('order') + 1;
-        $social->status = $request->has('status') ? 1 : 0;
+        $social->status = 1;
         $social->save();
 
         return redirect()->route('back.pages.social.index')->with('success', 'Sosial media uğurla əlavə edildi');
@@ -81,7 +81,7 @@ class SocialMediaController extends Controller
         }
 
         $social->link = $request->link;
-        $social->status = $request->has('status') ? 1 : 0;
+        $social->status = 1;
         $social->save();
 
         return redirect()->route('back.pages.social.index')->with('success', 'Sosial media uğurla yeniləndi');

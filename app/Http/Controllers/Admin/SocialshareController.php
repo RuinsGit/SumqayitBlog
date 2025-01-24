@@ -52,10 +52,13 @@ class SocialshareController extends Controller
             $data['order'] = Socialshare::max('order') + 1;
         }
 
+        // Varsayılan status değeri 1 olarak ayarlandı
+        $data['status'] = 1;
+
         Socialshare::create($data);
 
         return redirect()->route('back.pages.socialshare.index')
-            ->with('success', 'Sosial media uğurla əlavə edildi.');
+            ->with('success', 'Sosial paylaşım uğurla əlavə edildi.');
     }
 
     public function edit($id)
@@ -91,10 +94,13 @@ class SocialshareController extends Controller
             $data['image'] = 'uploads/' . $fileName;
         }
 
+        // Varsayılan status değeri 1 olarak ayarlandı
+        $data['status'] = 1;
+
         $socialshare->update($data);
 
         return redirect()->route('back.pages.socialshare.index')
-            ->with('success', 'Sosial media uğurla yeniləndi.');
+            ->with('success', 'Sosial paylaşım uğurla yeniləndi.');
     }
 
     public function destroy($id)
@@ -113,5 +119,14 @@ class SocialshareController extends Controller
 
         return redirect()->route('back.pages.socialshare.index')
             ->with('success', 'Sosial media uğurla silindi.');
+    }
+
+    public function toggleStatus($id)
+    {
+        $socialshare = Socialshare::findOrFail($id);
+        $socialshare->status = !$socialshare->status;
+        $socialshare->save();
+
+        return redirect()->back()->with('success', 'Status uğurla dəyişdirildi');
     }
 } 

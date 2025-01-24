@@ -48,7 +48,7 @@ class SocialfooterController extends Controller
 
         $socialfooter->link = $request->link;
         $socialfooter->order = Socialfooter::max('order') + 1;
-        $socialfooter->status = $request->has('status') ? 1 : 0;
+        $socialfooter->status = 1;
         $socialfooter->save();
 
         return redirect()->route('back.pages.socialfooter.index')->with('success', 'Sosial media uğurla əlavə edildi');
@@ -85,7 +85,7 @@ class SocialfooterController extends Controller
         }
 
         $socialfooter->link = $request->link;
-        $socialfooter->status = $request->has('status') ? 1 : 0;
+        $socialfooter->status = 1;
         $socialfooter->save();
 
         return redirect()->route('back.pages.socialfooter.index')->with('success', 'Sosial media uğurla yeniləndi');

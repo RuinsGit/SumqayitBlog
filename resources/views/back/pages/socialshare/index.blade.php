@@ -1,90 +1,102 @@
 @extends('back.layouts.master')
 
-@section('title', 'Sosial Media')
+@section('title', 'Sosial Paylaşım')
 
 @section('content')
-<div class="content-wrapper">
-    <div class="content-header">
+    <div class="page-content">
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Sosial Media</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Panel</a></li>
-                        <li class="breadcrumb-item active">Sosial Media</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-flex align-items-center justify-content-between">
+                        <h4 class="mb-0">Sosial Paylaşım</h4>
 
-    <div class="content">
-        <div class="container-fluid">
-            <div class="card">
-                <div class="card-header">
-                    <a href="{{ route('back.pages.socialshare.create') }}" class="btn btn-primary">Yeni Sosial Media</a>
+                        <div class="page-title-right">
+                            <a href="{{ route('back.pages.socialshare.create') }}" class="btn btn-primary">
+                                <i class="fas fa-plus me-2"></i> Yeni əlavə et
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th style="width: 50px">ID</th>
-                                <th>Ad</th>
-                                <th>İkon</th>
-                                <th>Link</th>
-                                <th>Sıra</th>
-                                <th>Status</th>
-                                <th style="width: 200px">Əməliyyatlar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($socialshares as $socialshare)
-                            <tr>
-                                <td>{{ $socialshare->id }}</td>
-                                <td>{{ $socialshare->name }}</td>
-                                <td>
-                                    @if($socialshare->image)
-                                        <img src="{{ asset($socialshare->image) }}" alt="{{ $socialshare->name }}" style="max-height: 30px;">
-                                    @else
-                                        <span class="text-muted">Şəkil yoxdur</span>
-                                    @endif
-                                </td>
-                                <td>{{ $socialshare->link }}</td>
-                                <td>{{ $socialshare->order }}</td>
-                                <td>
-                                    @if($socialshare->status)
-                                        <span class="badge badge-success">Aktiv</span>
-                                    @else
-                                        <span class="badge badge-danger">Deaktiv</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <a href="{{ route('back.pages.socialshare.edit', $socialshare->id) }}" class="btn btn-sm btn-warning">Düzəliş et</a>
-                                    <button type="button" class="btn btn-sm btn-danger" onclick="deleteSocialshare({{ $socialshare->id }})">Sil</button>
-                                    <form id="delete-form-{{ $socialshare->id }}" action="{{ route('back.pages.socialshare.destroy', $socialshare->id) }}" method="POST" style="display: none;">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            @if(session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+
+                            <table class="table table-bordered dt-responsive nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>Sıra</th>
+                                        <th>Ad</th>
+                                        <th>İkon</th>
+                                        <th>Link</th>
+                                        <th>Status</th>
+                                        <th>Əməliyyatlar</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="sortable" data-url="{{ route('back.pages.socialshare.order') }}">
+                                    @foreach($socialshares as $socialshare)
+                                        <tr id="order-{{ $socialshare->id }}">
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $socialshare->name }}</td>
+                                            <td>
+                                                @if($socialshare->image)
+                                                    <img src="{{ asset($socialshare->image) }}" alt="" style="height: 50px; width: 50px; object-fit: cover;">
+                                                @else
+                                                    <span class="text-muted">Şəkil yoxdur</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ $socialshare->link }}</td>
+                                            <td>
+                                                <form action="{{ route('back.pages.socialshare.toggleStatus', $socialshare->id) }}" method="POST" class="d-inline-block">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn-{{ $socialshare->status ? 'success' : 'danger' }}">
+                                                        {{ $socialshare->status ? 'Aktiv' : 'Deaktiv' }}
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('back.pages.socialshare.edit', $socialshare->id) }}" class="btn btn-primary btn-sm">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <form action="{{ route('back.pages.socialshare.destroy', $socialshare->id) }}" method="POST" class="d-inline-block">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Silmək istədiyinizə əminsiniz?')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
 
-@push('js')
-<script>
-    function deleteSocialshare(id) {
-        if (confirm('Silmək istədiyinizə əminsiniz?')) {
-            document.getElementById('delete-form-' + id).submit();
-        }
-    }
-</script>
-@endpush 
+@section('script')
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            $('.sortable').sortable({
+                handle: 'tr',
+                update: function() {
+                    let siralama = $('.sortable').sortable('serialize');
+                    let url = $('.sortable').data('url');
+                    $.post(url, {order: siralama}, function(response) {});
+                }
+            });
+        });
+    </script>
+@endsection 
