@@ -34,9 +34,14 @@
                         <span>Tənzimləmələr</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="#">Tərcümələr</a></li>
-                        <li><a href="#">Ümumi tənzimləmələr</a></li>
-                        <li><a href="#">Haqqımızda</a></li>
+                    <li>
+                            <a href="{{ route('back.pages.translation-manage.index') }}">
+                                <i class="mdi mdi-translate"></i>
+                                <span>Tərcümələr</span>
+                            </a>
+                        </li>
+
+                        
                     </ul>
                 </li>
             </ul>

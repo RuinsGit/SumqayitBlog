@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\PageController;
-
+use App\Http\Controllers\Admin\TranslationManageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +42,23 @@ Route::prefix('admin')->group(function () {
 
         Route::prefix('pages')->name('back.pages.')->group(function () {
             Route::get('index', [PageController::class, 'index'])->name('index');
+
+            Route::resource('translation-manage', TranslationManageController::class);
+            Route::get('translation-manage', [TranslationManageController::class, 'index'])->name('translation-manage.index');
+            Route::get('translation-manage/create', [TranslationManageController::class, 'create'])->name('translation-manage.create');
+            Route::post('translation-manage', [TranslationManageController::class, 'store'])->name('translation-manage.store');
+            Route::get('translation-manage/{translation}/edit', [TranslationManageController::class, 'edit'])->name('translation-manage.edit');
+            Route::put('translation-manage/{translation}', [TranslationManageController::class, 'update'])->name('translation-manage.update');
+            Route::delete('translation-manage/{translation}', [TranslationManageController::class, 'destroy'])->name('translation-manage.destroy');
+
+
+
+
+
+
+
         });
+
+        
     });
 });
