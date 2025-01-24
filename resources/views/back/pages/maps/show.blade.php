@@ -31,7 +31,7 @@
                             <h5>Yenilənmə Tarixi:</h5>
                             <p>{{ $map->updated_at->format('d-m-Y') }}</p>
 
-                            <h5>Harita:</h5>
+                            <h5>Xəritə:</h5>
                             <div class="embed-responsive embed-responsive-16by9 mb-3">
                                 {!! $map->description !!}
                             </div>
