@@ -40,8 +40,14 @@
                                 <span>Tərcümələr</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('back.pages.seo.index') }}">
+                                <i class="ri-earth-line"></i>
+                                <span>SEO</span>
+                            </a>
+                        </li>
 
-                        
+
                     </ul>
                 </li>
             </ul>
