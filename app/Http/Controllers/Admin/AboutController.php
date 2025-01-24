@@ -27,7 +27,7 @@ class AboutController extends Controller
         $aboutCount = About::count();
 
         if ($aboutCount >= 1) {
-            return redirect()->route('back.pages.about.index')->with('error', 'Zaten bir about sayfası mevcut. Yeni bir about ekleyemezsiniz.');
+            return redirect()->route('back.pages.about.index')->with('error', 'Hal-hazirda bir about.');
         }
 
         $request->validate([
