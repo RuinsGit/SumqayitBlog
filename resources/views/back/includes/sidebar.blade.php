@@ -138,6 +138,13 @@
                     </ul>
                 </li>
 
+                <li>
+                        <a href="{{ route('back.pages.maps.index') }}">
+                            <i class="ri-map-line"></i>
+                            <span>Xəritələr</span>
+                        </a>
+                    </li>  
+
 
 
 

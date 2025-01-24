@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\SocialfooterController;
 use App\Http\Controllers\Admin\HomecartController;
 use App\Http\Controllers\Admin\WorklifeController;
 use App\Http\Controllers\Admin\AboutController;
+use App\Http\Controllers\Admin\MapController;
 
 /*
 |--------------------------------------------------------------------------
@@ -126,6 +127,17 @@ Route::prefix('admin')->group(function () {
             Route::delete('worklife/{id}', [WorklifeController::class, 'destroy'])->name('worklife.destroy');
 
             Route::resource('about', AboutController::class);
+
+            // Maps
+            
+            Route::get('maps', [MapController::class, 'index'])->name('maps.index');
+            Route::get('maps/create', [MapController::class, 'create'])->name('maps.create');
+            Route::post('maps', [MapController::class, 'store'])->name('maps.store');
+            Route::get('maps/{id}/edit', [MapController::class, 'edit'])->name('maps.edit');
+            Route::put('maps/{id}', [MapController::class, 'update'])->name('maps.update');
+            Route::delete('maps/{id}', [MapController::class, 'destroy'])->name('maps.destroy');
+            Route::get('maps/{id}', [MapController::class, 'show'])->name('maps.show');
+
 
         });
 
