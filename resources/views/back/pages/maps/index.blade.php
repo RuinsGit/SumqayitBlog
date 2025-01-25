@@ -78,7 +78,7 @@
                                         @if($map)
                                             <tr>
                                                 <td>1</td>
-                                                <td>{{ $map->description }}</td>
+                                                <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $map->description }}</td>
                                                 <td>{{ $map->created_at->format('d-m-Y') }}</td>
                                                 <td>{{ $map->updated_at->format('d-m-Y') }}</td>
                                             </tr>

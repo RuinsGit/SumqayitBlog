@@ -24,10 +24,10 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h5>Xəritə Linki:</h5>
-                            <p>{{ $map->description }}</p>
+                            <!-- <h5>Xəritə Linki:</h5> -->
+                            <!-- <p>{{ $map->description }}</p> -->
                             <h5>Yaradılma Tarixi:</h5>
-                            <p>{{ $map->created_at->format('d-m-Y') }}</p>
+                            <p>{{ $map->created_at->format ('d-m-Y') }}</p>
                             <h5>Yenilənmə Tarixi:</h5>
                             <p>{{ $map->updated_at->format('d-m-Y') }}</p>
 
