@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Homecart extends Model
+
+
+class HomeCart extends Model
 {
     protected $table = 'home_cart';
     protected $fillable = [
@@ -34,4 +36,5 @@ class Homecart extends Model
     {
         return $this->{'image_alt_' . app()->getLocale()};
     }
+    
 }

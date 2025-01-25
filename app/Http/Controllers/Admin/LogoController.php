@@ -176,7 +176,7 @@ class LogoController extends Controller
 
         $logo->delete();
 
-        return redirect()->route('back.pages.logos.index')->with('success', 'Logo başarıyla silindi.');
+        return redirect()->route('back.pages.logos.index')->with('success', 'Logo Uğurla Silindi.');
     }
 
     public function toggleStatus($id)
@@ -189,6 +189,6 @@ class LogoController extends Controller
         }
         $logo->save();
 
-        return redirect()->route('back.pages.logos.index')->with('success', 'Status uğurla dəyişdirildi');
+        return redirect()->route('back.pages.logos.index')->with('success', 'Status Uğurla Dəyişdirildi.');
     }
 }

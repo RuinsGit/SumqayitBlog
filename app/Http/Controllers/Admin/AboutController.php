@@ -138,7 +138,7 @@ class AboutController extends Controller
 
         $about->save();
 
-        return redirect()->route('back.pages.about.index')->with('success', 'About ugurla deyisdirildi.');
+        return redirect()->route('back.pages.about.index')->with('success', 'About Uğurla Redaktə edildi.');
     }
 
     public function destroy($id)
@@ -155,7 +155,7 @@ class AboutController extends Controller
 
         $about->delete();
 
-        return redirect()->route('back.pages.about.index')->with('success', 'About ugurla silindi.');
+        return redirect()->route('back.pages.about.index')->with('success', 'About Uğurla Silindi.');
     }
 
     public function toggleStatus($id)
@@ -168,6 +168,6 @@ class AboutController extends Controller
         }
         $about->save();
 
-        return redirect()->route('back.pages.about.index')->with('success', 'Status başarıyla değiştirildi');
+        return redirect()->route('back.pages.about.index')->with('success', 'Status Uğurla Dəyişdirildi.');
     }
 } 

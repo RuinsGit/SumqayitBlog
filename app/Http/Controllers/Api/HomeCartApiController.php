@@ -3,23 +3,23 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\HomecartResource;
-use App\Models\Homecart;
+use App\Http\Resources\HomeCartResource;
+use App\Models\HomeCart;
 use Illuminate\Http\Request;
 
-class HomecartApiController extends Controller
+class HomeCartApiController extends Controller
 {
     public function index()
     {
-        $homecart = Homecart::all();
-        return HomecartResource::collection($homecart);
+        $homecart = HomeCart::all();
+        return HomeCartResource::collection($homecart);
     }
 
     public function show($id)
     {
         try {
-            $homecart = Homecart::findOrFail($id);
-            return new HomecartResource($homecart);
+            $homecart = HomeCart::findOrFail($id);
+            return new HomeCartResource($homecart);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Homecart not found'], 404);
         }

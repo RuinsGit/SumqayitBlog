@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Homecart;
+use App\Models\HomeCart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 
-class HomecartController extends Controller
+class HomeCartController extends Controller
 {
     public function index()
     {
-        $homecart = Homecart::all();
-        $homecartExists = Homecart::count() >= 1;
+        $homecart = HomeCart::all();
+        $homecartExists = HomeCart::count() >= 1;
         return view('back.admin.homecart.index', compact('homecart', 'homecartExists'));
     }
 
@@ -25,7 +25,7 @@ class HomecartController extends Controller
     public function store(Request $request)
     {
         // Check if a StoreHero already exists
-        if (Homecart::count() >= 1) {
+        if (HomeCart::count() >= 1) {
             return redirect()->route('back.pages.homecart.index')
                 ->with('error', 'Hal hazırda homecart mövcuddur!');
         }
@@ -64,7 +64,7 @@ class HomecartController extends Controller
 
                 $imagePath = 'uploads/homecart/' . $webpFileName;
                 
-                Homecart::create([
+                HomeCart::create([
                     'image' => $imagePath,
                     'image_alt_az' => $request->image_alt_az,
                     'image_alt_en' => $request->image_alt_en,
@@ -83,12 +83,12 @@ class HomecartController extends Controller
             ->with('success', 'Homecart uğurla əlavə edildi.');
     }
 
-    public function edit(Homecart $homecart)
+    public function edit(HomeCart $homecart)
     {
         return view('back.admin.homecart.edit', compact('homecart'));
     }
 
-    public function update(Request $request, Homecart $homecart)
+    public function update(Request $request, HomeCart $homecart)
     {
         $request->validate([
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',

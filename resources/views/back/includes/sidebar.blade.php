@@ -143,9 +143,45 @@
                             <i class="ri-map-line"></i>
                             <span>Xəritələr</span>
                         </a>
-                    </li>  
+                    </li> 
 
+                    <li>
+                        <a href="{{ route('back.pages.contact_marketing.index') }}">
+                            <i class="ri-mail-open-line"></i>
+                            <span>Marketing Mesajları</span>
+                        </a>
+                    </li> 
 
+                    <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-image-line"></i>
+                        <span>Galeriya</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                       
+                  
+
+                       
+
+                    <li>
+                            <a href="{{ route('back.pages.galleries.index') }}">
+                                <i class="ri-image-line"></i>
+                                <span>Şəkillər</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('back.pages.gallery-videos.index') }}">
+                                <i class="ri-video-line"></i>
+                                <span>Videolar</span>
+                            </a>
+                        </li>
+                        
+                        
+
+                         
+                       
+                    </ul>
 
 
 

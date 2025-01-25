@@ -13,6 +13,9 @@ use App\Http\Controllers\Admin\HomecartController;
 use App\Http\Controllers\Admin\WorklifeController;
 use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\MapController;
+use App\Http\Controllers\Admin\ContactMarketingController;
+use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\GalleryVideoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -138,9 +141,32 @@ Route::prefix('admin')->group(function () {
             Route::delete('maps/{id}', [MapController::class, 'destroy'])->name('maps.destroy');
             Route::get('maps/{id}', [MapController::class, 'show'])->name('maps.show');
 
+            Route::resource('contact_marketing', ContactMarketingController::class);
+            Route::get('contact_marketing/{id}', [ContactMarketingController::class, 'show'])->name('contact_marketing.show');
+            Route::delete('contact_marketing/{id}', [ContactMarketingController::class, 'destroy'])->name('contact_marketing.destroy');
+
+
+            // Gallery routes
+            Route::get('galleries', [GalleryController::class, 'index'])->name('galleries.index');
+            Route::get('galleries/create', [GalleryController::class, 'create'])->name('galleries.create');
+            Route::post('galleries', [GalleryController::class, 'store'])->name('galleries.store');
+            Route::get('galleries/{gallery}/edit', [GalleryController::class, 'edit'])->name('galleries.edit');
+            Route::put('galleries/{gallery}', [GalleryController::class, 'update'])->name('galleries.update');
+            Route::delete('galleries/{gallery}', [GalleryController::class, 'destroy'])->name('galleries.destroy');
+
+            // Gallery Video routes
+            Route::get('gallery-videos', [GalleryVideoController::class, 'index'])->name('gallery-videos.index');
+            Route::get('gallery-videos/create', [GalleryVideoController::class, 'create'])->name('gallery-videos.create');
+            Route::post('gallery-videos', [GalleryVideoController::class, 'store'])->name('gallery-videos.store');
+            Route::get('gallery-videos/{galleryVideo}/edit', [GalleryVideoController::class, 'edit'])->name('gallery-videos.edit');
+            Route::put('gallery-videos/{galleryVideo}', [GalleryVideoController::class, 'update'])->name('gallery-videos.update');
+            Route::delete('gallery-videos/{galleryVideo}', [GalleryVideoController::class, 'destroy'])->name('gallery-videos.destroy');
+
 
         });
 
         
     });
 });
+
+

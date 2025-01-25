@@ -8,9 +8,13 @@ use App\Http\Controllers\Api\SeoController;
 use App\Http\Controllers\Api\SocialMediaApiController;
 use App\Http\Controllers\Api\SocialshareApiController;
 use App\Http\Controllers\Api\SocialfooterApiController;
-use App\Http\Controllers\Api\HomecartApiController;
+use App\Http\Controllers\Api\HomeCartApiController;
 use App\Http\Controllers\Api\WorklifeController;
 use App\Http\Controllers\Api\AboutController;
+use App\Http\Controllers\Api\ContactMarketingApiController;
+use App\Http\Controllers\Api\MapApiController;
+use App\Http\Controllers\Api\GalleryVideoController;
+use App\Http\Controllers\Api\GalleryController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -91,3 +95,34 @@ Route::prefix('worklife')->group(function () {
 // About Routes
 Route::get('/about', [AboutController::class, 'index']);
 Route::get('/about/{id}', [AboutController::class, 'show']);
+
+// Contact Marketing Routes
+Route::get('contact_marketing', [ContactMarketingApiController::class, 'index']);
+Route::post('contact_marketing', [ContactMarketingApiController::class, 'store']);
+Route::get('contact_marketing/{id}', [ContactMarketingApiController::class, 'show']);
+Route::delete('contact_marketing/{id}', [ContactMarketingApiController::class, 'destroy']);
+
+// Map Routes
+Route::get('maps', [MapApiController::class, 'index']);
+Route::get('maps/{id}', [MapApiController::class, 'show']);
+
+
+
+
+// Gallery Video Routes
+Route::prefix('gallery-videos')->group(function () {
+    Route::get('/', [GalleryVideoController::class, 'index']);
+    Route::get('/latest/{limit?}', [GalleryVideoController::class, 'getLatest']);
+    Route::get('/paginated/{perPage?}', [GalleryVideoController::class, 'getPaginated']);
+    Route::get('/slug/{lang}/{slug}', [GalleryVideoController::class, 'getBySlug']);
+    Route::get('/{id}', [GalleryVideoController::class, 'show']);
+});
+
+// Gallery Image Routes
+Route::prefix('gallery-images')->group(function () {
+    Route::get('/', [GalleryController::class, 'index']);
+    Route::get('/latest/{limit?}', [GalleryController::class, 'getLatest']);
+    Route::get('/paginated/{perPage?}', [GalleryController::class, 'getPaginated']);
+    Route::get('/slug/{lang}/{slug}', [GalleryController::class, 'getBySlug']);
+    Route::get('/{id}', [GalleryController::class, 'show']);
+});

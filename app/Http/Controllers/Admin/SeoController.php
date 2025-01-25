@@ -39,7 +39,7 @@ class SeoController extends Controller
         ]);
 
         Seo::create($request->all());
-        return redirect()->route('back.pages.seo.index')->with('success', 'SEO məlumatları uğurla əlavə edildi');
+        return redirect()->route('back.pages.seo.index')->with('success', 'SEO Məlumatları Uğurla Əlavə Edildi.');
     }
 
     public function edit(Seo $seo)
@@ -61,12 +61,12 @@ class SeoController extends Controller
         ]);
 
         $seo->update($request->all());
-        return redirect()->route('back.pages.seo.index')->with('success', 'SEO məlumatları uğurla yeniləndi');
+        return redirect()->route('back.pages.seo.index')->with('success', 'SEO Məlumatları Uğurla Yeniləndi.');
     }
 
     public function destroy(Seo $seo)
     {
         $seo->delete();
-        return redirect()->route('back.pages.seo.index')->with('success', 'SEO məlumatları uğurla silindi');
+        return redirect()->route('back.pages.seo.index')->with('success', 'SEO Məlumatları Uğurla Silindi.');
     }
 }
