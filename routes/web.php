@@ -98,14 +98,17 @@ Route::prefix('admin')->group(function () {
              Route::post('social/toggle-status/{id}', [SocialMediaController::class, 'toggleStatus'])->name('social.toggle-status');
 
               // Social Share routes
-            Route::get('socialshare', [SocialshareController::class, 'index'])->name('socialshare.index');
-            Route::get('socialshare/create', [SocialshareController::class, 'create'])->name('socialshare.create');
-            Route::post('socialshare', [SocialshareController::class, 'store'])->name('socialshare.store');
-            Route::get('socialshare/{id}/edit', [SocialshareController::class, 'edit'])->name('socialshare.edit');
-            Route::put('socialshare/{id}', [SocialshareController::class, 'update'])->name('socialshare.update');
-            Route::delete('socialshare/{id}', [SocialshareController::class, 'destroy'])->name('socialshare.destroy');
-            Route::post('socialshare/order', [SocialshareController::class, 'order'])->name('socialshare.order');
-            Route::post('socialshare/{id}/toggle-status', [SocialshareController::class, 'toggleStatus'])->name('socialshare.toggleStatus');
+            Route::prefix('socialshare')->group(function () {
+                Route::get('/', [SocialshareController::class, 'index'])->name('socialshare.index');
+                Route::get('/create', [SocialshareController::class, 'create'])->name('socialshare.create');
+                Route::post('/', [SocialshareController::class, 'store'])->name('socialshare.store');
+                Route::get('/{id}/edit', [SocialshareController::class, 'edit'])->name('socialshare.edit');
+                Route::put('/{id}', [SocialshareController::class, 'update'])->name('socialshare.update');
+                Route::delete('/{id}', [SocialshareController::class, 'destroy'])->name('socialshare.destroy');
+                Route::post('/order', [SocialshareController::class, 'order'])->name('socialshare.order');
+                Route::post('/{id}/toggle-status', [SocialshareController::class, 'toggleStatus'])->name('socialshare.toggleStatus');
+                Route::post('/updatesitelink', [SocialshareController::class, 'updateSitelink'])->name('socialshare.updatesitelink');
+            });
 
               // Social Footer routes
               Route::get('socialfooter', [SocialfooterController::class, 'index'])->name('socialfooter.index');

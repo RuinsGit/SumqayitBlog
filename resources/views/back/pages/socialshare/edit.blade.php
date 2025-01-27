@@ -65,15 +65,15 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="sitelink">Site Linki</label>
-                            <input type="text" name="sitelink" id="sitelink" class="form-control @error('sitelink') is-invalid @enderror" value="{{ old('sitelink', $socialshare->sitelink) }}">
+                            <input type="text" name="sitelink" id="sitelink" class="form-control @error('sitelink') is-invalid @enderror" value="{{ old('sitelink', $socialshare->sitelink) }}" placeholder="https://example.com">
                             @error('sitelink')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
-                        </div>
+                        </div> -->
 
                         <div class="form-group" style="display: flex; align-items: center; justify-content: flex-start; margin: 24px 0; gap: 28px;">
                             <label for="background_color" style="margin: 0; color: #303030; font-weight: 500; font-size: 16px;">Arxa plan Rengi</label>
@@ -102,8 +102,34 @@
                             </div>
                         </div> -->
 
-                        <button type="submit" class="btn btn-primary">Yadda saxla</button>
-                        <a href="{{ route('back.pages.socialshare.index') }}" class="btn btn-secondary">Ləğv et</a>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 24px;">Yadda saxla</button>
+                        <a href="{{ route('back.pages.socialshare.index') }}" style="margin-top: 24px;" class="btn btn-secondary">Ləğv et</a>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Site Link güncelleme formu -->
+            <div class="card mt-4" style="margin-top: 24px;">
+                <div class="card-header">
+                    <h4>Sayt Linkini Dəyişdir</h4>
+                    
+                </div>
+                <div class="card-body" style="margin-bottom: 50px;">
+                    <form action="{{ route('back.pages.socialshare.updatesitelink') }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <label for="global_sitelink">Site Linki</label>
+                            <input type="text" name="sitelink" id="global_sitelink" 
+                                class="form-control @error('sitelink') is-invalid @enderror" 
+                                value="{{ old('sitelink', $sitelink) }}" 
+                                placeholder="https://example.com">
+                            @error('sitelink')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 24px; background-color: orange; color: white;">Apply</button>
                     </form>
                 </div>
             </div>

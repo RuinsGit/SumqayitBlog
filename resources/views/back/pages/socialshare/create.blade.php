@@ -59,7 +59,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="sitelink">Site Linki</label>
                             <input type="text" name="sitelink" id="sitelink" class="form-control @error('sitelink') is-invalid @enderror" value="{{ old('sitelink') }}" placeholder="https://example.com">
                             @error('sitelink')
@@ -67,7 +67,7 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
-                        </div>
+                        </div> -->
 
                         <div class="form-group" style="display: flex; align-items: center; justify-content: flex-start; margin: 24px 0; gap: 28px;">
                             <label for="background_color" style="margin: 0; color: #303030; font-weight: 500; font-size: 16px;">Arxa plan Rengi</label>
@@ -96,9 +96,11 @@
                             </div>
                         </div> -->
 
-                        <button type="submit" class="btn btn-primary">Yadda saxla</button>
-                        <a href="{{ route('back.pages.socialshare.index') }}" class="btn btn-secondary">Ləğv et</a>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 24px;">Yadda saxla</button>
+                        <a href="{{ route('back.pages.socialshare.index') }}" class="btn btn-secondary" style="margin-top: 24px;">Ləğv et</a>
                     </form>
+
+                    
                 </div>
             </div>
         </div>

@@ -30,7 +30,9 @@ class SocialshareController extends Controller
 
     public function create()
     {
-        return view('back.pages.socialshare.create');
+        // İlk sitelink değerini al
+        $sitelink = Socialshare::first()?->sitelink;
+        return view('back.pages.socialshare.create', compact('sitelink'));
     }
 
     public function store(Request $request)
@@ -68,7 +70,9 @@ class SocialshareController extends Controller
     public function edit($id)
     {
         $socialshare = Socialshare::findOrFail($id);
-        return view('back.pages.socialshare.edit', compact('socialshare'));
+        // İlk sitelink değerini al
+        $sitelink = Socialshare::first()?->sitelink;
+        return view('back.pages.socialshare.edit', compact('socialshare', 'sitelink'));
     }
 
     public function update(Request $request, $id)
@@ -134,5 +138,21 @@ class SocialshareController extends Controller
         $socialshare->save();
 
         return redirect()->back()->with('success', 'Status uğurla dəyişdirildi');
+    }
+
+    public function updateSitelink(Request $request)
+    {
+        $request->validate([
+            'sitelink' => 'required|string|max:255'
+        ], [
+            'sitelink.required' => 'Site linki mütləq daxil edilməlidir',
+            'sitelink.string' => 'Site linki düzgün formatda olmalıdır',
+            'sitelink.max' => 'Site linki maksimum 255 simvol olmalıdır'
+        ]);
+
+       
+        Socialshare::query()->update(['sitelink' => $request->sitelink]);
+
+        return redirect()->back()->with('success', 'Site linki uğurla yeniləndi.');
     }
 } 
