@@ -1,6 +1,6 @@
 @extends('back.layouts.master')
 
-@section('title', 'Video Redaktə Et')
+@section('title', 'Video Qalereya Redaktə')
 
 @section('content')
     <div class="page-content">
@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Video Redaktə Et</h4>
+                        <h4 class="mb-sm-0">Video Qalereya Redaktə</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Ana səhifə</a></li>
@@ -32,7 +32,7 @@
                                 <div class="row mb-4">
                                     <div class="col-md-4">
                                         <div class="mb-3">
-                                            <label class="form-label">Əsas Video</label>
+                                            <label class="form-label">Video</label>
                                             <input type="file" name="main_video" class="form-control @error('main_video') is-invalid @enderror" accept="video/mp4,video/quicktime">
                                             @error('main_video')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -47,88 +47,16 @@
                                             @endif
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Əsas Video Thumbnail (WebP formatına çevriləcək)</label>
+                                            <label class="form-label">Video Thumbnail</label>
                                             <input type="file" name="main_video_thumbnail" class="form-control @error('main_video_thumbnail') is-invalid @enderror" accept="image/*">
                                             @error('main_video_thumbnail')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                             @if($galleryVideo->main_video_thumbnail)
                                             <div class="mt-2">
-                                                <img src="{{ asset($galleryVideo->main_video_thumbnail) }}" alt="Main Video Thumbnail" class="img-thumbnail" style="max-width: 200px;">
+                                                <img src="{{ asset($galleryVideo->main_video_thumbnail) }}" alt="Video Thumbnail" style="max-width: 200px;">
                                             </div>
                                             @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label class="form-label">Alt Video</label>
-                                            <input type="file" name="bottom_video" class="form-control @error('bottom_video') is-invalid @enderror" accept="video/mp4,video/quicktime">
-                                            @error('bottom_video')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                            @if($galleryVideo->bottom_video)
-                                            <div class="mt-2">
-                                                <video width="200" controls>
-                                                    <source src="{{ asset($galleryVideo->bottom_video) }}" type="video/mp4">
-                                                    Your browser does not support the video tag.
-                                                </video>
-                                            </div>
-                                            @endif
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Alt Video Thumbnail (WebP formatına çevriləcək)</label>
-                                            <input type="file" name="bottom_video_thumbnail" class="form-control @error('bottom_video_thumbnail') is-invalid @enderror" accept="image/*">
-                                            @error('bottom_video_thumbnail')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                            @if($galleryVideo->bottom_video_thumbnail)
-                                            <div class="mt-2">
-                                                <img src="{{ asset($galleryVideo->bottom_video_thumbnail) }}" alt="Bottom Video Thumbnail" class="img-thumbnail" style="max-width: 200px;">
-                                            </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label class="form-label">Əlavə Videolar</label>
-                                            
-                                            <div id="additional-videos-container" style="margin-top: 50px;" >
-                                                @if($galleryVideo->multiple_videos)
-                                                    @foreach(is_string($galleryVideo->multiple_videos) ? json_decode($galleryVideo->multiple_videos, true) : $galleryVideo->multiple_videos as $index => $video)
-                                                    <div class="mb-2 position-relative">
-                                                        <div class="mb-2">
-                                                            <video width="200" controls>
-                                                                <source src="{{ asset($video['video']) }}" type="video/mp4">
-                                                                Your browser does not support the video tag.
-                                                            </video>
-                                                        </div>
-                                                        <div class="mb-2">
-                                                            <img src="{{ asset($video['thumbnail']) }}" alt="Video Thumbnail" class="img-thumbnail" style="max-width: 200px;">
-                                                        </div>
-                                                        <div class="row mt-2">
-                                                            <div class="col-md-4">
-                                                                <input type="text" name="existing_videos_alt_az[]" class="form-control" value="{{ $video['alt_az'] }}" placeholder="ALT mətni">
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <input type="text" name="existing_videos_alt_en[]" class="form-control" value="{{ $video['alt_en'] }}" placeholder="ALT text">
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <input type="text" name="existing_videos_alt_ru[]" class="form-control" value="{{ $video['alt_ru'] }}" placeholder="ALT текст">
-                                                            </div>
-                                                        </div>
-                                                        <input type="hidden" name="existing_videos[]" value="{{ $video['video'] }}">
-                                                        <input type="hidden" name="existing_videos_thumbnail[]" value="{{ $video['thumbnail'] }}">
-                                                        <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0" onclick="this.closest('.mb-2').remove();">
-                                                            <i class="ri-delete-bin-line"></i>
-                                                        </button>
-                                                    </div>
-                                                    
-                                                    @endforeach
-                                                    <button type="button" class="btn btn-soft-primary btn-sm mb-2" onclick="addVideoInput()" style="background-color: #5bf91b; border-color: green; color: white; margin-top: 30px; ">
-                                                <i class="ri-add-line"></i> Yeni Video Əlavə Et
-                                            </button>
-                                                @endif
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -167,27 +95,6 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Slug</label>
-                                            <input type="text" name="slug_az" id="slug_az" class="form-control @error('slug_az') is-invalid @enderror" value="{{ old('slug_az', $galleryVideo->slug_az) }}">
-                                            @error('slug_az')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Əsas Video ALT</label>
-                                            <input type="text" name="main_video_alt_az" class="form-control @error('main_video_alt_az') is-invalid @enderror" value="{{ old('main_video_alt_az', $galleryVideo->main_video_alt_az) }}" required>
-                                            @error('main_video_alt_az')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Alt Video ALT</label>
-                                            <input type="text" name="bottom_video_alt_az" class="form-control @error('bottom_video_alt_az') is-invalid @enderror" value="{{ old('bottom_video_alt_az', $galleryVideo->bottom_video_alt_az) }}" required>
-                                            @error('bottom_video_alt_az')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3">
                                             <label class="form-label">Meta Başlıq</label>
                                             <input type="text" name="meta_title_az" class="form-control" value="{{ old('meta_title_az', $galleryVideo->meta_title_az) }}">
                                         </div>
@@ -203,27 +110,6 @@
                                             <label class="form-label">Title</label>
                                             <input type="text" name="title_en" id="title_en" class="form-control @error('title_en') is-invalid @enderror" value="{{ old('title_en', $galleryVideo->title_en) }}" required>
                                             @error('title_en')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Slug</label>
-                                            <input type="text" name="slug_en" id="slug_en" class="form-control @error('slug_en') is-invalid @enderror" value="{{ old('slug_en', $galleryVideo->slug_en) }}">
-                                            @error('slug_en')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Main Video ALT</label>
-                                            <input type="text" name="main_video_alt_en" class="form-control @error('main_video_alt_en') is-invalid @enderror" value="{{ old('main_video_alt_en', $galleryVideo->main_video_alt_en) }}" required>
-                                            @error('main_video_alt_en')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Bottom Video ALT</label>
-                                            <input type="text" name="bottom_video_alt_en" class="form-control @error('bottom_video_alt_en') is-invalid @enderror" value="{{ old('bottom_video_alt_en', $galleryVideo->bottom_video_alt_en) }}" required>
-                                            @error('bottom_video_alt_en')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
@@ -247,27 +133,6 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Slug</label>
-                                            <input type="text" name="slug_ru" id="slug_ru" class="form-control @error('slug_ru') is-invalid @enderror" value="{{ old('slug_ru', $galleryVideo->slug_ru) }}">
-                                            @error('slug_ru')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">ALT главного видео</label>
-                                            <input type="text" name="main_video_alt_ru" class="form-control @error('main_video_alt_ru') is-invalid @enderror" value="{{ old('main_video_alt_ru', $galleryVideo->main_video_alt_ru) }}" required>
-                                            @error('main_video_alt_ru')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">ALT нижнего видео</label>
-                                            <input type="text" name="bottom_video_alt_ru" class="form-control @error('bottom_video_alt_ru') is-invalid @enderror" value="{{ old('bottom_video_alt_ru', $galleryVideo->bottom_video_alt_ru) }}" required>
-                                            @error('bottom_video_alt_ru')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3">
                                             <label class="form-label">Мета-заголовок</label>
                                             <input type="text" name="meta_title_ru" class="form-control" value="{{ old('meta_title_ru', $galleryVideo->meta_title_ru) }}">
                                         </div>
@@ -280,7 +145,7 @@
 
                                 <div class="row mt-3">
                                     <div class="col-12">
-                                        <button type="submit" class="btn btn-primary" style="background-color: #5bf91b; border-color: green;">Yadda saxla</button>
+                                        <button type="submit" class="btn btn-primary">Yadda saxla</button>
                                         <a href="{{ route('back.pages.gallery-videos.index') }}" class="btn btn-secondary">Ləğv et</a>
                                     </div>
                                 </div>
@@ -311,30 +176,6 @@
             thumbnailInput.className = 'form-control mb-2';
             thumbnailInput.accept = 'image/*';
             
-            const altContainer = document.createElement('div');
-            altContainer.className = 'row mt-2';
-            
-            // Alt inputs for each language
-            const languages = [
-                { code: 'az', placeholder: 'ALT mətni' },
-                { code: 'en', placeholder: 'ALT text' },
-                { code: 'ru', placeholder: 'ALT текст' }
-            ];
-            
-            languages.forEach(lang => {
-                const col = document.createElement('div');
-                col.className = 'col-md-4';
-                
-                const altInput = document.createElement('input');
-                altInput.type = 'text';
-                altInput.name = `videos_alt_${lang.code}[]`;
-                altInput.className = 'form-control';
-                altInput.placeholder = lang.placeholder;
-                
-                col.appendChild(altInput);
-                altContainer.appendChild(col);
-            });
-            
             const removeButton = document.createElement('button');
             removeButton.type = 'button';
             removeButton.className = 'btn btn-danger btn-sm position-absolute top-0 end-0';
@@ -343,7 +184,6 @@
             
             wrapper.appendChild(videoInput);
             wrapper.appendChild(thumbnailInput);
-            wrapper.appendChild(altContainer);
             wrapper.appendChild(removeButton);
             container.appendChild(wrapper);
         }

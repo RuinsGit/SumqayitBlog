@@ -35,15 +35,15 @@
                             <div class="d-flex align-items-center">
                                 <h5 class="card-title mb-0 flex-grow-1">Qalereya Siyahısı</h5>
                                 <div class="flex-shrink-0">
-                                    @if($galleries->count() >= 1)
-                                        <button class="btn btn-primary" disabled>
+                                    
+                                        <!-- <button class="btn btn-primary" disabled>
                                             <i class="ri-add-line align-bottom me-1"></i> Yeni Qalereya
-                                        </button>
-                                    @else
+                                        </button> -->
+                                  
                                         <a href="{{ route('back.pages.galleries.create') }}" class="btn btn-primary">
                                             <i class="ri-add-line align-bottom me-1"></i> Yeni Qalereya
                                         </a>
-                                    @endif
+                                
                                 </div>
                             </div>
                         </div>
@@ -87,8 +87,6 @@
                                             <th scope="col" class="text-center" style="width: 50px;">#</th>
                                             <th scope="col" class="text-center" style="width: 150px;">Əsas Şəkil</th>
                                             <th scope="col">Başlıq</th>
-                                            <th scope="col" class="text-center" style="width: 150px;">Alt Şəkil</th>
-                                            <th scope="col" class="text-center" style="width: 150px;">Əlavə Şəkillər</th>
                                             <th scope="col" class="text-center" style="width: 120px;">Əməliyyatlar</th>
                                         </tr>
                                     </thead>
@@ -105,29 +103,6 @@
                                                 <td>
                                                     <h5 class="mb-1">{{ $gallery->title_az }}</h5>
                                                     <p class="text-muted mb-0">{{ Str::limit($gallery->description_az, 100) }}</p>
-                                                </td>
-                                                <td class="text-center">
-                                                    <img src="{{ asset('storage/' . $gallery->bottom_image) }}" 
-                                                         alt="{{ $gallery->bottom_image_alt_az }}"
-                                                         class="img-thumbnail"
-                                                         style="max-height: 80px;">
-                                                </td>
-                                                <td class="text-center">
-                                                    @if($gallery->multiple_images)
-                                                        <div class="avatar-group">
-                                                            @foreach(array_slice($gallery->multiple_images, 0, 3) as $image)
-                                                                <img src="{{ asset('storage/' . $image['image']) }}" 
-                                                                     alt="{{ $image['alt_az'] }}"
-                                                                     class="img-thumbnail"
-                                                                     style="max-height: 50px; margin-right: 5px;">
-                                                            @endforeach
-                                                            @if(count($gallery->multiple_images) > 3)
-                                                                <span class="badge bg-light text-dark">+{{ count($gallery->multiple_images) - 3 }}</span>
-                                                            @endif
-                                                        </div>
-                                                    @else
-                                                        <span class="badge bg-light text-dark">Şəkil yoxdur</span>
-                                                    @endif
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="d-flex justify-content-center gap-2">
@@ -150,7 +125,7 @@
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="6" class="text-center">Heç bir məlumat tapılmadı</td>
+                                                <td colspan="4" class="text-center">Heç bir məlumat tapılmadı</td>
                                             </tr>
                                         @endforelse
                                     </tbody>

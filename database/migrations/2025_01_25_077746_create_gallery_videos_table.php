@@ -18,23 +18,12 @@ return new class extends Migration
             $table->string('title_en');
             $table->string('title_ru');
             
-            $table->string('slug_az')->unique();
-            $table->string('slug_en')->unique();
-            $table->string('slug_ru')->unique();
+            $table->string('slug_az');
+            $table->string('slug_en');
+            $table->string('slug_ru');
             
-            $table->string('main_video');
-            $table->string('main_video_thumbnail');
-            $table->string('main_video_alt_az');
-            $table->string('main_video_alt_en');
-            $table->string('main_video_alt_ru');
-            
-            $table->string('bottom_video');
-            $table->string('bottom_video_thumbnail');
-            $table->string('bottom_video_alt_az');
-            $table->string('bottom_video_alt_en');
-            $table->string('bottom_video_alt_ru');
-            
-            $table->json('multiple_videos')->nullable();
+            $table->string('main_video')->nullable();
+            $table->string('main_video_thumbnail')->nullable();
             
             $table->string('meta_title_az')->nullable();
             $table->string('meta_title_en')->nullable();
@@ -54,4 +43,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('gallery_videos');
     }
-};
+}; 

@@ -106,15 +106,11 @@ Route::delete('contact_marketing/{id}', [ContactMarketingApiController::class, '
 Route::get('maps', [MapApiController::class, 'index']);
 Route::get('maps/{id}', [MapApiController::class, 'show']);
 
-
-
-
 // Gallery Video Routes
 Route::prefix('gallery-videos')->group(function () {
     Route::get('/', [GalleryVideoController::class, 'index']);
     Route::get('/latest/{limit?}', [GalleryVideoController::class, 'getLatest']);
-    Route::get('/paginated/{perPage?}', [GalleryVideoController::class, 'getPaginated']);
-    Route::get('/slug/{lang}/{slug}', [GalleryVideoController::class, 'getBySlug']);
+    Route::get('/paginated', [GalleryVideoController::class, 'getPaginated']);
     Route::get('/{id}', [GalleryVideoController::class, 'show']);
 });
 

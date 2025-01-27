@@ -53,86 +53,6 @@
                                             @endif
                                         </div>
                                     </div>
-
-                                    <!-- Bottom Image -->
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label class="form-label">Alt Şəkil</label>
-                                            <input type="file" name="bottom_image" class="form-control @error('bottom_image') is-invalid @enderror">
-                                            @error('bottom_image')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                            @if($gallery->bottom_image)
-                                                <div class="mt-2 position-relative">
-                                                    <img src="{{ asset('storage/' . $gallery->bottom_image) }}" 
-                                                         alt="{{ $gallery->bottom_image_alt_az }}"
-                                                         class="img-thumbnail"
-                                                         style="max-height: 150px;">
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <!-- Additional Images -->
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label class="form-label">Əlavə Şəkillər</label>
-                                            <input type="file" name="bottom_images[]" class="form-control mb-2" multiple>
-                                            @if($gallery->multiple_images)
-                                                <div class="mt-2">
-                                                    <div class="row g-2">
-                                                        @foreach($gallery->multiple_images as $key => $image)
-                                                            <div class="col-12 position-relative mb-3">
-                                                                <div class="d-flex align-items-center">
-                                                                    <img src="{{ asset('storage/' . $image['image']) }}" 
-                                                                         alt="{{ $image['alt_az'] }}"
-                                                                         class="img-thumbnail me-2"
-                                                                         style="height: 80px;">
-                                                                    <div class="flex-grow-1">
-                                                                        <div class="row g-1">
-                                                                            <div class="col-md-4">
-                                                                                <input type="text" 
-                                                                                       name="existing_images_alt_az[]" 
-                                                                                       class="form-control form-control-sm" 
-                                                                                       value="{{ $image['alt_az'] }}" 
-                                                                                       placeholder="AZ ALT">
-                                                                            </div>
-                                                                            <div class="col-md-4">
-                                                                                <input type="text" 
-                                                                                       name="existing_images_alt_en[]" 
-                                                                                       class="form-control form-control-sm" 
-                                                                                       value="{{ $image['alt_en'] }}" 
-                                                                                       placeholder="EN ALT">
-                                                                            </div>
-                                                                            <div class="col-md-4">
-                                                                                <input type="text" 
-                                                                                       name="existing_images_alt_ru[]" 
-                                                                                       class="form-control form-control-sm" 
-                                                                                       value="{{ $image['alt_ru'] }}" 
-                                                                                       placeholder="RU ALT">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <input type="hidden" name="existing_images[]" value="{{ $image['image'] }}">
-                                                                    <button type="button" 
-                                                                            class="btn btn-danger btn-sm ms-2"
-                                                                            onclick="removeImage(this)">
-                                                                        <i class="ri-delete-bin-line"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            @endif
-                                            <button type="button" class="btn btn-soft-primary btn-sm mt-2" onclick="addImageInput()" style="background-color: #5bf91b; border-color: green; color: white;">
-                                                <i class="ri-add-line"></i> Yeni Şəkil Əlavə Et
-                                            </button>
-                                            <div id="additional-images-container" style="margin-top: 30px;">
-                                                <!-- New image inputs will be added here -->
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -175,13 +95,6 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Slug</label>
-                                            <input type="text" name="slug_az" id="slug_az" class="form-control @error('slug_az') is-invalid @enderror" value="{{ old('slug_az', $gallery->slug_az) }}">
-                                            @error('slug_az')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3">
                                             <label class="form-label">Mətn</label>
                                             <textarea name="description_az" class="form-control @error('description_az') is-invalid @enderror" rows="4" required>{{ old('description_az', $gallery->description_az) }}</textarea>
                                             @error('description_az')
@@ -192,13 +105,6 @@
                                             <label class="form-label">Əsas Şəkil ALT</label>
                                             <input type="text" name="main_image_alt_az" class="form-control @error('main_image_alt_az') is-invalid @enderror" value="{{ old('main_image_alt_az', $gallery->main_image_alt_az) }}" required>
                                             @error('main_image_alt_az')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Alt Şəkil ALT</label>
-                                            <input type="text" name="bottom_image_alt_az" class="form-control @error('bottom_image_alt_az') is-invalid @enderror" value="{{ old('bottom_image_alt_az', $gallery->bottom_image_alt_az) }}" required>
-                                            @error('bottom_image_alt_az')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
@@ -222,13 +128,6 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Slug</label>
-                                            <input type="text" name="slug_en" id="slug_en" class="form-control @error('slug_en') is-invalid @enderror" value="{{ old('slug_en', $gallery->slug_en) }}">
-                                            @error('slug_en')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3">
                                             <label class="form-label">Description</label>
                                             <textarea name="description_en" class="form-control @error('description_en') is-invalid @enderror" rows="4" required>{{ old('description_en', $gallery->description_en) }}</textarea>
                                             @error('description_en')
@@ -239,13 +138,6 @@
                                             <label class="form-label">Main Image ALT</label>
                                             <input type="text" name="main_image_alt_en" class="form-control @error('main_image_alt_en') is-invalid @enderror" value="{{ old('main_image_alt_en', $gallery->main_image_alt_en) }}" required>
                                             @error('main_image_alt_en')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Bottom Image ALT</label>
-                                            <input type="text" name="bottom_image_alt_en" class="form-control @error('bottom_image_alt_en') is-invalid @enderror" value="{{ old('bottom_image_alt_en', $gallery->bottom_image_alt_en) }}" required>
-                                            @error('bottom_image_alt_en')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
@@ -269,13 +161,6 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Slug</label>
-                                            <input type="text" name="slug_ru" id="slug_ru" class="form-control @error('slug_ru') is-invalid @enderror" value="{{ old('slug_ru', $gallery->slug_ru) }}">
-                                            @error('slug_ru')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3">
                                             <label class="form-label">Описание</label>
                                             <textarea name="description_ru" class="form-control @error('description_ru') is-invalid @enderror" rows="4" required>{{ old('description_ru', $gallery->description_ru) }}</textarea>
                                             @error('description_ru')
@@ -286,13 +171,6 @@
                                             <label class="form-label">ALT главного изображения</label>
                                             <input type="text" name="main_image_alt_ru" class="form-control @error('main_image_alt_ru') is-invalid @enderror" value="{{ old('main_image_alt_ru', $gallery->main_image_alt_ru) }}" required>
                                             @error('main_image_alt_ru')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">ALT нижнего изображения</label>
-                                            <input type="text" name="bottom_image_alt_ru" class="form-control @error('bottom_image_alt_ru') is-invalid @enderror" value="{{ old('bottom_image_alt_ru', $gallery->bottom_image_alt_ru) }}" required>
-                                            @error('bottom_image_alt_ru')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>

@@ -27,9 +27,7 @@ class GalleryController extends Controller
     {
         try {
             // Veritabanında en az bir kayıt var mı kontrolü
-            if (Gallery::count() >= 1) {
-                return back()->with('error', 'Zatən bir qalereya mövcuddur. Yeni qalereya əlavə edilə bilməz.');
-            }
+            
 
             $validated = $request->validate([
                 'title_az' => 'required|string|max:255',
@@ -42,14 +40,6 @@ class GalleryController extends Controller
                 'main_image_alt_az' => 'required|string|max:255',
                 'main_image_alt_en' => 'required|string|max:255',
                 'main_image_alt_ru' => 'required|string|max:255',
-                'bottom_image' => 'required|image|mimes:jpeg,png,jpg,gif',
-                'bottom_image_alt_az' => 'required|string|max:255',
-                'bottom_image_alt_en' => 'required|string|max:255',
-                'bottom_image_alt_ru' => 'required|string|max:255',
-                'bottom_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-                'bottom_images_alt_az.*' => 'nullable|string|max:255',
-                'bottom_images_alt_en.*' => 'nullable|string|max:255',
-                'bottom_images_alt_ru.*' => 'nullable|string|max:255',
                 'meta_title_az' => 'nullable|string|max:255',
                 'meta_title_en' => 'nullable|string|max:255',
                 'meta_title_ru' => 'nullable|string|max:255',
@@ -79,56 +69,6 @@ class GalleryController extends Controller
                 }
             }
 
-            // Alt görsel yükleme
-            if ($request->hasFile('bottom_image')) {
-                $file = $request->file('bottom_image');
-                $destinationPath = public_path('storage/gallery/bottom');
-                $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $webpFileName = time() . '_' . $originalFileName . '.webp';
-
-                if (!file_exists($destinationPath)) {
-                    mkdir($destinationPath, 0777, true);
-                }
-
-                $imageResource = imagecreatefromstring(file_get_contents($file));
-                $webpPath = $destinationPath . '/' . $webpFileName;
-
-                if ($imageResource) {
-                    imagewebp($imageResource, $webpPath, 80);
-                    imagedestroy($imageResource);
-                    $bottomImagePath = 'gallery/bottom/' . $webpFileName;
-                }
-            }
-            
-            // Çoklu görseller için dizi oluştur
-            $multipleImages = [];
-            if ($request->hasFile('bottom_images')) {
-                foreach ($request->file('bottom_images') as $key => $file) {
-                    $destinationPath = public_path('storage/gallery/multiple');
-                    $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                    $webpFileName = time() . '_' . $key . '_' . $originalFileName . '.webp';
-
-                    if (!file_exists($destinationPath)) {
-                        mkdir($destinationPath, 0777, true);
-                    }
-
-                    $imageResource = imagecreatefromstring(file_get_contents($file));
-                    $webpPath = $destinationPath . '/' . $webpFileName;
-
-                    if ($imageResource) {
-                        imagewebp($imageResource, $webpPath, 80);
-                        imagedestroy($imageResource);
-                        
-                        $multipleImages[] = [
-                            'image' => 'gallery/multiple/' . $webpFileName,
-                            'alt_az' => $request->bottom_images_alt_az[$key] ?? '',
-                            'alt_en' => $request->bottom_images_alt_en[$key] ?? '',
-                            'alt_ru' => $request->bottom_images_alt_ru[$key] ?? ''
-                        ];
-                    }
-                }
-            }
-
             // Galeri oluştur
             Gallery::create([
                 'title_az' => $request->title_az,
@@ -141,11 +81,6 @@ class GalleryController extends Controller
                 'main_image_alt_az' => $request->main_image_alt_az,
                 'main_image_alt_en' => $request->main_image_alt_en,
                 'main_image_alt_ru' => $request->main_image_alt_ru,
-                'bottom_image' => $bottomImagePath,
-                'bottom_image_alt_az' => $request->bottom_image_alt_az,
-                'bottom_image_alt_en' => $request->bottom_image_alt_en,
-                'bottom_image_alt_ru' => $request->bottom_image_alt_ru,
-                'multiple_images' => $multipleImages,
                 'meta_title_az' => $request->meta_title_az,
                 'meta_title_en' => $request->meta_title_en,
                 'meta_title_ru' => $request->meta_title_ru,
@@ -184,14 +119,9 @@ class GalleryController extends Controller
                 'main_image_alt_az' => 'required',
                 'main_image_alt_en' => 'required',
                 'main_image_alt_ru' => 'required',
-                'bottom_image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-                'bottom_image_alt_az' => 'required',
-                'bottom_image_alt_en' => 'required',
-                'bottom_image_alt_ru' => 'required',
-                'bottom_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             ]);
 
-            $data = $request->except(['main_image', 'bottom_image', 'bottom_images', 'existing_images', 'existing_images_alt_az', 'existing_images_alt_en', 'existing_images_alt_ru']);
+            $data = $request->except(['main_image']);
 
             if ($request->hasFile('main_image')) {
                 if ($gallery->main_image) {
@@ -217,93 +147,6 @@ class GalleryController extends Controller
                 }
             }
 
-           
-            if ($request->hasFile('bottom_image')) {
-                
-                if ($gallery->bottom_image) {
-                    Storage::disk('public')->delete($gallery->bottom_image);
-                }
-
-                $file = $request->file('bottom_image');
-                $destinationPath = public_path('storage/gallery/bottom');
-                $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $webpFileName = time() . '_' . $originalFileName . '.webp';
-
-                if (!file_exists($destinationPath)) {
-                    mkdir($destinationPath, 0777, true);
-                }
-
-                $imageResource = imagecreatefromstring(file_get_contents($file));
-                $webpPath = $destinationPath . '/' . $webpFileName;
-
-                if ($imageResource) {
-                    imagewebp($imageResource, $webpPath, 80);
-                    imagedestroy($imageResource);
-                    $data['bottom_image'] = 'gallery/bottom/' . $webpFileName;
-                }
-            }
-
-            
-            $multipleImages = [];
-            
-            
-            if ($request->has('existing_images')) {
-                $existingImages = $request->existing_images;
-                $existingImagesAltAz = $request->existing_images_alt_az;
-                $existingImagesAltEn = $request->existing_images_alt_en;
-                $existingImagesAltRu = $request->existing_images_alt_ru;
-
-                foreach ($existingImages as $key => $image) {
-                    $multipleImages[] = [
-                        'image' => $image,
-                        'alt_az' => $existingImagesAltAz[$key] ?? '',
-                        'alt_en' => $existingImagesAltEn[$key] ?? '',
-                        'alt_ru' => $existingImagesAltRu[$key] ?? ''
-                    ];
-                }
-            }
-
-            
-            if ($gallery->multiple_images) {
-                $oldImages = collect($gallery->multiple_images)->pluck('image')->toArray();
-                $keepImages = $request->has('existing_images') ? $request->existing_images : [];
-                
-                
-                $deletedImages = array_diff($oldImages, $keepImages);
-                foreach ($deletedImages as $deletedImage) {
-                    Storage::disk('public')->delete($deletedImage);
-                }
-            }
-
-          
-            if ($request->hasFile('new_images')) {
-                foreach ($request->file('new_images') as $key => $file) {
-                    $destinationPath = public_path('storage/gallery/multiple');
-                    $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                    $webpFileName = time() . '_' . $key . '_' . $originalFileName . '.webp';
-
-                    if (!file_exists($destinationPath)) {
-                        mkdir($destinationPath, 0777, true);
-                    }
-
-                    $imageResource = imagecreatefromstring(file_get_contents($file));
-                    $webpPath = $destinationPath . '/' . $webpFileName;
-
-                    if ($imageResource) {
-                        imagewebp($imageResource, $webpPath, 80);
-                        imagedestroy($imageResource);
-                        
-                        $multipleImages[] = [
-                            'image' => 'gallery/multiple/' . $webpFileName,
-                            'alt_az' => $request->input('new_images_alt_az.' . $key, ''),
-                            'alt_en' => $request->input('new_images_alt_en.' . $key, ''),
-                            'alt_ru' => $request->input('new_images_alt_ru.' . $key, '')
-                        ];
-                    }
-                }
-            }
-
-            $data['multiple_images'] = $multipleImages;
             $gallery->update($data);
 
             return redirect()
@@ -323,14 +166,6 @@ class GalleryController extends Controller
             
             if ($gallery->main_image) {
                 Storage::disk('public')->delete($gallery->main_image);
-            }
-            if ($gallery->bottom_image) {
-                Storage::disk('public')->delete($gallery->bottom_image);
-            }
-            if (!empty($gallery->multiple_images)) {
-                foreach ($gallery->multiple_images as $image) {
-                    Storage::disk('public')->delete($image['image']);
-                }
             }
 
             $gallery->delete();

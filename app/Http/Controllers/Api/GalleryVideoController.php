@@ -6,15 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\GalleryVideoResource;
 use App\Models\GalleryVideo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class GalleryVideoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         try {
             $galleryVideos = GalleryVideo::latest()->get();
             return response()->json([
                 'success' => true,
+                'message' => 'Qalereya videoları uğurla gətirildi',
                 'data' => GalleryVideoResource::collection($galleryVideos)
             ]);
         } catch (\Exception $e) {
@@ -31,6 +33,7 @@ class GalleryVideoController extends Controller
             $galleryVideo = GalleryVideo::findOrFail($id);
             return response()->json([
                 'success' => true,
+                'message' => 'Qalereya videosu uğurla gətirildi',
                 'data' => new GalleryVideoResource($galleryVideo)
             ]);
         } catch (\Exception $e) {
@@ -65,6 +68,7 @@ class GalleryVideoController extends Controller
                 ->get();
             return response()->json([
                 'success' => true,
+                'message' => 'Son əlavə edilən videolar uğurla gətirildi',
                 'data' => GalleryVideoResource::collection($galleryVideos)
             ]);
         } catch (\Exception $e) {
@@ -75,14 +79,25 @@ class GalleryVideoController extends Controller
         }
     }
 
-    public function getPaginated($perPage = 10)
+    public function getPaginated(Request $request)
     {
         try {
+            $perPage = $request->per_page ?? 10;
             $galleryVideos = GalleryVideo::latest()
                 ->paginate($perPage);
+            
             return response()->json([
                 'success' => true,
-                'data' => GalleryVideoResource::collection($galleryVideos)
+                'message' => 'Qalereya videoları uğurla gətirildi',
+                'data' => GalleryVideoResource::collection($galleryVideos),
+                'pagination' => [
+                    'total' => $galleryVideos->total(),
+                    'per_page' => $galleryVideos->perPage(),
+                    'current_page' => $galleryVideos->currentPage(),
+                    'last_page' => $galleryVideos->lastPage(),
+                    'from' => $galleryVideos->firstItem(),
+                    'to' => $galleryVideos->lastItem()
+                ]
             ]);
         } catch (\Exception $e) {
             return response()->json([
