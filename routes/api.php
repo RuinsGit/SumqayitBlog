@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\ContactMarketingApiController;
 use App\Http\Controllers\Api\MapApiController;
 use App\Http\Controllers\Api\GalleryVideoController;
 use App\Http\Controllers\Api\GalleryController;
+use App\Http\Controllers\Api\ArticleController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -122,3 +123,6 @@ Route::prefix('gallery-images')->group(function () {
     Route::get('/slug/{lang}/{slug}', [GalleryController::class, 'getBySlug']);
     Route::get('/{id}', [GalleryController::class, 'show']);
 });
+
+// Article Routes
+Route::apiResource('articles', ArticleController::class);

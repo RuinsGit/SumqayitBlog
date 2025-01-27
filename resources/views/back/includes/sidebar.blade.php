@@ -183,6 +183,13 @@
                        
                     </ul>
 
+                    <li>
+                        <a href="{{ route('back.pages.articles.index') }}">
+                            <i class="ri-article-line"></i>
+                            <span>Məqalələr</span>
+                        </a>
+                    </li>
+
 
 
                 

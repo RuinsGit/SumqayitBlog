@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\MapController;
 use App\Http\Controllers\Admin\ContactMarketingController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\GalleryVideoController;
+use App\Http\Controllers\Admin\ArticleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -165,7 +166,13 @@ Route::prefix('admin')->group(function () {
             Route::put('gallery-videos/{galleryVideo}', [GalleryVideoController::class, 'update'])->name('gallery-videos.update');
             Route::delete('gallery-videos/{galleryVideo}', [GalleryVideoController::class, 'destroy'])->name('gallery-videos.destroy');
 
-
+            Route::resource('articles', ArticleController::class);
+            Route::get('articles', [ArticleController::class, 'index'])->name('articles.index');
+            Route::get('articles/create', [ArticleController::class, 'create'])->name('articles.create');
+            Route::post('articles', [ArticleController::class, 'store'])->name('articles.store');
+            Route::get('articles/{article}/edit', [ArticleController::class, 'edit'])->name('articles.edit');
+            Route::put('articles/{article}', [ArticleController::class, 'update'])->name('articles.update');
+            Route::delete('articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
         });
 
         
