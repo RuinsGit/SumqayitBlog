@@ -66,6 +66,26 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="sitelink">Site Linki</label>
+                            <input type="text" name="sitelink" id="sitelink" class="form-control @error('sitelink') is-invalid @enderror" value="{{ old('sitelink', $socialshare->sitelink) }}">
+                            @error('sitelink')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group" style="display: flex; align-items: center; justify-content: flex-start; margin: 24px 0; gap: 28px;">
+                            <label for="background_color" style="margin: 0; color: #303030; font-weight: 500; font-size: 16px;">Arxa plan Rengi</label>
+                            <input type="color" name="background_color" id="background_color" class="color-picker @error('background_color') is-invalid @enderror" style="margin: 0; width: 46px; height: 46px; border-radius: 50%; outline: none; border: none; padding: 0;" value="{{ old('background_color', $socialshare->background_color) }}">
+                            @error('background_color')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
                             <label for="order">Sıra</label>
                             <input type="number" name="order" id="order" class="form-control @error('order') is-invalid @enderror" value="{{ old('order', $socialshare->order) }}" min="0">
                             @error('order')

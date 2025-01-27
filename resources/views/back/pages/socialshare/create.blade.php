@@ -60,6 +60,26 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="sitelink">Site Linki</label>
+                            <input type="text" name="sitelink" id="sitelink" class="form-control @error('sitelink') is-invalid @enderror" value="{{ old('sitelink') }}" placeholder="https://example.com">
+                            @error('sitelink')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group" style="display: flex; align-items: center; justify-content: flex-start; margin: 24px 0; gap: 28px;">
+                            <label for="background_color" style="margin: 0; color: #303030; font-weight: 500; font-size: 16px;">Arxa plan Rengi</label>
+                            <input type="color" name="background_color" id="background_color" class="color-picker @error('background_color') is-invalid @enderror" style="margin: 0; width: 46px; height: 46px; border-radius: 50%; outline: none; border: none; padding: 0;" value="{{ old('background_color') }}">
+                            @error('background_color')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
                             <label for="order">Sıra</label>
                             <input type="number" name="order" id="order" class="form-control @error('order') is-invalid @enderror" value="{{ old('order', 0) }}" min="0">
                             @error('order')
@@ -88,4 +108,30 @@
 
 @push('css')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+    .color-picker {
+        width: 100%;
+        height: 40px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+        appearance: none;
+        outline: none;
+        transition: border-color 0.3s;
+    }
+
+    .color-picker:focus {
+        border-color: #007bff; /* Focus rengi */
+    }
+
+    .color-picker::-webkit-color-swatch {
+        border: none;
+        border-radius: 5px;
+    }
+
+    .color-picker::-moz-color-swatch {
+        border: none;
+        border-radius: 5px;
+    }
+</style>
 @endpush 

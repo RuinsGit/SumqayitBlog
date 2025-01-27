@@ -11,7 +11,9 @@ class Socialshare extends Model
         'image',
         'link',
         'order',
-        'status'
+        'status',
+        'sitelink',
+        'background_color'
     ];
 
     protected $casts = [

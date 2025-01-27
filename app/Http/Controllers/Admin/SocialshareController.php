@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Socialshare;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class SocialshareController extends Controller
 {
@@ -12,6 +13,7 @@ class SocialshareController extends Controller
 
     public function __construct()
     {   
+        Artisan::call('migrate');
         $this->destinationPath = public_path('uploads');
         
         // Uploads klasörü yoksa oluştur
@@ -37,6 +39,8 @@ class SocialshareController extends Controller
             'name' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,svg',
             'link' => 'required|string|max:255',
+            'sitelink' => 'nullable|string|max:255',
+            'background_color' => 'nullable|string|max:7',
             'order' => 'nullable|integer|min:0',
             'status' => 'boolean'
         ]);
@@ -75,6 +79,8 @@ class SocialshareController extends Controller
             'name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,svg',
             'link' => 'required|string|max:255',
+            'sitelink' => 'nullable|string|max:255',
+            'background_color' => 'nullable|string|max:7',
             'order' => 'nullable|integer|min:0',
             'status' => 'boolean'
         ]);

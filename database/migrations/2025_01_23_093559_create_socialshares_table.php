@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('image');
             $table->string('link');
+            $table->string('sitelink')->nullable();
+            $table->string('background_color')->nullable();
             $table->integer('order')->default(0);
             $table->boolean('status')->default(true);
             $table->timestamps();
