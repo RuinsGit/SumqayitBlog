@@ -29,12 +29,16 @@ class SocialfooterController extends Controller
     {
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
-            'link' => 'required|url'
+            'link' => 'required|url',
+            'title' => 'required|string|max:255'
         ], [
             'image.required' => 'Şəkil mütləq yüklənməlidir',
             'image.image' => 'Fayl şəkil formatında olmalıdır',
             'link.required' => 'Link mütləq daxil edilməlidir',
-            'link.url' => 'Düzgün link daxil edin'
+            'link.url' => 'Düzgün link daxil edin',
+            'title.required' => 'Başlıq mütləq daxil edilməlidir',
+            'title.string' => 'Başlıq düzgün formatda olmalıdır',
+            'title.max' => 'Başlıq maksimum 255 simvol olmalıdır'
         ]);
 
         $socialfooter = new Socialfooter();
@@ -47,6 +51,7 @@ class SocialfooterController extends Controller
         }
 
         $socialfooter->link = $request->link;
+        $socialfooter->title = $request->title;
         $socialfooter->order = Socialfooter::max('order') + 1;
         $socialfooter->status = 1;
         $socialfooter->save();
@@ -64,11 +69,15 @@ class SocialfooterController extends Controller
     {
         $request->validate([
             'image' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
-            'link' => 'required|url'
+            'link' => 'required|url',
+            'title' => 'required|string|max:255'
         ], [
             'image.image' => 'Fayl şəkil formatında olmalıdır',
             'link.required' => 'Link mütləq daxil edilməlidir',
-            'link.url' => 'Düzgün link daxil edin'
+            'link.url' => 'Düzgün link daxil edin',
+            'title.required' => 'Başlıq mütləq daxil edilməlidir',
+            'title.string' => 'Başlıq düzgün formatda olmalıdır',
+            'title.max' => 'Başlıq maksimum 255 simvol olmalıdır'
         ]);
 
         $socialfooter = Socialfooter::findOrFail($id);
@@ -85,6 +94,7 @@ class SocialfooterController extends Controller
         }
 
         $socialfooter->link = $request->link;
+        $socialfooter->title = $request->title;
         $socialfooter->status = 1;
         $socialfooter->save();
 

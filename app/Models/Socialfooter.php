@@ -12,6 +12,7 @@ class Socialfooter extends Model
         'image',
         'link',
         'order',
-        'status'
+        'status',
+        'title'
     ];
 }

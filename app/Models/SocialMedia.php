@@ -12,6 +12,11 @@ class SocialMedia extends Model
         'image',
         'link',
         'order',
-        'status'
+        'status',
+        'title'
+    ];
+
+    protected $casts = [
+        'status' => 'boolean'
     ];
 }

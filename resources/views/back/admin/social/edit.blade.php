@@ -43,6 +43,16 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="title">Başlıq</label>
+                                    <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title', $social->title) }}" required>
+                                    @error('title')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
                                 <div class="row mb-3">
                                     <!-- <div class="col-md-6">
                                         <div class="form-check form-switch">

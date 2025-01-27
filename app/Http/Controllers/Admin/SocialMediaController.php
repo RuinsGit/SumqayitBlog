@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\SocialMedia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Artisan;
 
 class SocialMediaController extends Controller
 {
     public function index()
     {
-        
+        Artisan::call('migrate');
         $socials = SocialMedia::orderBy('order')->get();
         return view('back.admin.social.index', compact('socials'));
     }
@@ -25,12 +26,16 @@ class SocialMediaController extends Controller
     {
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
-            'link' => 'required|url'
+            'link' => 'required|url',
+            'title' => 'required|string|max:255'
         ], [
             'image.required' => 'Şəkil mütləq yüklənməlidir',
             'image.image' => 'Fayl şəkil formatında olmalıdır',
             'link.required' => 'Link mütləq daxil edilməlidir',
-            'link.url' => 'Düzgün link daxil edin'
+            'link.url' => 'Düzgün link daxil edin',
+            'title.required' => 'Başlıq mütləq daxil edilməlidir',
+            'title.string' => 'Başlıq düzgün formatda olmalıdır',
+            'title.max' => 'Başlıq maksimum 255 simvol olmalıdır'
         ]);
 
         $social = new SocialMedia();
@@ -43,6 +48,7 @@ class SocialMediaController extends Controller
         }
 
         $social->link = $request->link;
+        $social->title = $request->title;
         $social->order = SocialMedia::max('order') + 1;
         $social->status = 1;
         $social->save();
@@ -60,11 +66,15 @@ class SocialMediaController extends Controller
     {
         $request->validate([
             'image' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
-            'link' => 'required|url'
+            'link' => 'required|url',
+            'title' => 'required|string|max:255'
         ], [
             'image.image' => 'Fayl şəkil formatında olmalıdır',
             'link.required' => 'Link mütləq daxil edilməlidir',
-            'link.url' => 'Düzgün link daxil edin'
+            'link.url' => 'Düzgün link daxil edin',
+            'title.required' => 'Başlıq mütləq daxil edilməlidir',
+            'title.string' => 'Başlıq düzgün formatda olmalıdır',
+            'title.max' => 'Başlıq maksimum 255 simvol olmalıdır'
         ]);
 
         $social = SocialMedia::findOrFail($id);
@@ -81,6 +91,7 @@ class SocialMediaController extends Controller
         }
 
         $social->link = $request->link;
+        $social->title = $request->title;
         $social->status = 1;
         $social->save();
 
