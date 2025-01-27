@@ -86,7 +86,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('back.pages.gallery-videos.edit', $video->id) }}" class="btn btn-primary btn-sm">
+                                                <a href="{{ route('back.pages.gallery-videos.edit', $video->id) }}" class="btn btn-primary btn-sm" style="background-color: #5bf91b; border-color: green;">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                                 <form action="{{ route('back.pages.gallery-videos.destroy', $video->id) }}" method="POST" class="d-inline-block">
