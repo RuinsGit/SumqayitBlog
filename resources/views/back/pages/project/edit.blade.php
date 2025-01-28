@@ -34,7 +34,6 @@
                                 @csrf
                                 @method('PUT')
 
-                                <!-- Şəkil Yükləmə Bölməsi -->
                                 <div class="row mb-4">
                                     <div class="col-md-4">
                                         <div class="mb-3">
@@ -52,7 +51,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Nav tabs -->
                                 <ul class="nav nav-tabs nav-justified" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" data-bs-toggle="tab" href="#az" role="tab">
@@ -74,9 +72,7 @@
                                     </li>
                                 </ul>
 
-                                <!-- Tab panes -->
                                 <div class="tab-content p-3">
-                                    <!-- Azərbaycan dili -->
                                     <div class="tab-pane active" id="az" role="tabpanel">
                                         <div class="mb-3">
                                             <label class="form-label">Başlıq</label>
@@ -264,7 +260,6 @@
                 ]
             });
 
-            // Sweet Alert for form submission
             $('form').on('submit', function(e) {
                 e.preventDefault();
                 let form = this;
@@ -286,7 +281,6 @@
             });
         });
 
-        // Slug generation for each language
         document.addEventListener('DOMContentLoaded', function() {
             const slugify = (text) => {
                 let trMap = {
@@ -303,13 +297,12 @@
                 }
                 return text
                     .toLowerCase()
-                    .replace(/[^-a-zA-Z0-9\s]+/ig, '') // Remove non-alphanumeric chars
-                    .replace(/\s/gi, "-") // Convert spaces to dashes
-                    .replace(/-+/g, "-") // Remove consecutive dashes
+                    .replace(/[^-a-zA-Z0-9\s]+/ig, '') 
+                    .replace(/\s/gi, "-") 
+                    .replace(/-+/g, "-") 
                     .trim();
             };
 
-            // For each language
             ['az', 'en', 'ru'].forEach(lang => {
                 const titleInput = document.getElementById(`title_${lang}`);
                 const slugInput = document.getElementById(`slug_${lang}`);
@@ -319,8 +312,7 @@
                         slugInput.value = slugify(this.value);
                     }
                 });
-
-                // Allow manual slug editing
+                
                 slugInput.addEventListener('keyup', function() {
                     this.value = slugify(this.value);
                 });

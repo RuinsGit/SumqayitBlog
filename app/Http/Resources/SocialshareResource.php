@@ -19,7 +19,6 @@ class SocialshareResource extends JsonResource
             'image' => asset($this->image), 
             'link' => $this->link,
             'background_color' => $this->background_color,
-            // 'order' => $this->order,
             'status' => $this->status,
         ];
     }

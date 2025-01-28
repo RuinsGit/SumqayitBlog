@@ -14,7 +14,6 @@ class SocialMediaResource extends JsonResource
             'image' => asset($this->image),
             'link' => $this->link,
             'title' => $this->title,
-            // 'order' => $this->order,
             'status' => $this->status,
         ];
     }

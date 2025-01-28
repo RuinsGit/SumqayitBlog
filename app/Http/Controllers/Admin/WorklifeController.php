@@ -16,7 +16,6 @@ class WorklifeController extends Controller
 
     public function create()
     {
-        // Veritabanında zaten bir kayıt olup olmadığını kontrol et
         if (Worklife::count() >= 1) {
             return redirect()->route('back.pages.worklife.index')->with('error', 'Məlumatlar mövcuddur! Mövcud məlumatı Redaktə edin.');
         }
@@ -26,7 +25,6 @@ class WorklifeController extends Controller
 
     public function store(Request $request)
     {
-        // Veritabanında zaten bir kayıt olup olmadığını kontrol et
         if (Worklife::count() >= 1) {
             return redirect()->route('back.pages.worklife.index')->with('error', 'Məlumatlar mövcuddur! Mövcud məlumatı Redaktə edin.');
         }

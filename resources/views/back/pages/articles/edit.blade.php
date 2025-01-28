@@ -263,8 +263,7 @@
                     ['view', ['fullscreen', 'codeview', 'help']]
                 ]
             });
-
-            // Sweet Alert for form submission
+            
             $('form').on('submit', function(e) {
                 e.preventDefault();
                 let form = this;
@@ -286,7 +285,6 @@
             });
         });
 
-        // Slug generation for each language
         document.addEventListener('DOMContentLoaded', function() {
             const slugify = (text) => {
                 let trMap = {
@@ -303,13 +301,12 @@
                 }
                 return text
                     .toLowerCase()
-                    .replace(/[^-a-zA-Z0-9\s]+/ig, '') // Remove non-alphanumeric chars
-                    .replace(/\s/gi, "-") // Convert spaces to dashes
-                    .replace(/-+/g, "-") // Remove consecutive dashes
+                    .replace(/[^-a-zA-Z0-9\s]+/ig, '') 
+                    .replace(/\s/gi, "-") 
+                    .replace(/-+/g, "-") 
                     .trim();
             };
 
-            // For each language
             ['az', 'en', 'ru'].forEach(lang => {
                 const titleInput = document.getElementById(`title_${lang}`);
                 const slugInput = document.getElementById(`slug_${lang}`);
@@ -320,7 +317,6 @@
                     }
                 });
 
-                // Allow manual slug editing
                 slugInput.addEventListener('keyup', function() {
                     this.value = slugify(this.value);
                 });

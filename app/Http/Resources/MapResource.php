@@ -12,8 +12,6 @@ class MapResource extends JsonResource
         return [
             'id' => 1,
             'description' => $this->description,
-            // 'created_at' => $this->created_at->format('d-m-Y H:i'),
-            // 'updated_at' => $this->updated_at->format('d-m-Y H:i'),
         ];
     }
 } 

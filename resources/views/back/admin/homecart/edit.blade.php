@@ -255,8 +255,7 @@
     background-color: #fff;
     border-radius: 0 0 8px 8px;
 }
-
-/* Responsive adjustments */
+    
 @media (max-width: 768px) {
     .image-preview {
         width: 200px;

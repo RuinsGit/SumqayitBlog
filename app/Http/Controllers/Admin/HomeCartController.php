@@ -24,7 +24,6 @@ class HomeCartController extends Controller
 
     public function store(Request $request)
     {
-        // Check if a StoreHero already exists
         if (HomeCart::count() >= 1) {
             return redirect()->route('back.pages.homecart.index')
                 ->with('error', 'Hal hazırda homecart mövcuddur!');
@@ -47,7 +46,6 @@ class HomeCartController extends Controller
             $file = $request->file('image');
             $destinationPath = public_path('uploads/homecart');
             
-            // Create directory if it doesn't exist
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0755, true);
             }
@@ -106,7 +104,6 @@ class HomeCartController extends Controller
         $data = $request->except('image');
 
         if ($request->hasFile('image')) {
-            // Delete old image
             if ($homecart->image) {
                 $oldImagePath = public_path($homecart->image);
                 if (file_exists($oldImagePath)) {
@@ -114,11 +111,9 @@ class HomeCartController extends Controller
                 }
             }
 
-            // Upload and convert new image
             $file = $request->file('image');
             $destinationPath = public_path('uploads/homecart');
             
-            // Create directory if it doesn't exist
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0755, true);
             }

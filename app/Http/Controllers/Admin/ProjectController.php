@@ -51,7 +51,7 @@ class ProjectController extends Controller
                 'slug_ru' => 'nullable|string|max:255',
             ]);
 
-            // Ana görsel yükleme
+            
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
                 $destinationPath = public_path('storage/projects');

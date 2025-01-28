@@ -26,7 +26,6 @@ class GalleryController extends Controller
     public function store(Request $request)
     {
         try {
-            // Veritabanında en az bir kayıt var mı kontrolü
             
 
             $validated = $request->validate([
@@ -48,7 +47,6 @@ class GalleryController extends Controller
                 'meta_description_ru' => 'nullable|string',
             ]);
 
-            // Ana görsel yükleme
             if ($request->hasFile('main_image')) {
                 $file = $request->file('main_image');
                 $destinationPath = public_path('storage/gallery/main');
@@ -69,7 +67,6 @@ class GalleryController extends Controller
                 }
             }
 
-            // Galeri oluştur
             Gallery::create([
                 'title_az' => $request->title_az,
                 'title_en' => $request->title_en,

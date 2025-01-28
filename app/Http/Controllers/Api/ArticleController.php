@@ -14,7 +14,6 @@ class ArticleController extends Controller
     {
         $articles = Article::all();
         
-        // Her bir makalenin view_count değerini artır
         foreach ($articles as $article) {
             $article->increment('view_count');
         }
@@ -38,10 +37,8 @@ class ArticleController extends Controller
             ], 404);
         }
 
-        // View count artırma
         $article->increment('view_count');
 
-        // Kontrol için log ekleyin
         \Log::info('View count for article ID ' . $id . ' increased to ' . $article->view_count);
 
         return response()->json([
@@ -79,7 +76,6 @@ class ArticleController extends Controller
                 'slug_ru' => 'nullable|string|max:255',
             ]);
 
-            // Ana görsel yükleme
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
                 $destinationPath = public_path('storage/articles');

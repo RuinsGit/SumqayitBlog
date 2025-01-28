@@ -15,7 +15,6 @@ class SocialshareApiController extends Controller
     {
         $this->destinationPath = public_path('uploads');
         
-        // Uploads klasörü yoksa oluştur
         if (!file_exists($this->destinationPath)) {
             mkdir($this->destinationPath, 0775, true);
         }
@@ -75,7 +74,6 @@ class SocialshareApiController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            // Eski resmi sil
             if ($socialshare->image) {
                 $oldImagePath = public_path($socialshare->image);
                 if (file_exists($oldImagePath)) {
@@ -98,7 +96,6 @@ class SocialshareApiController extends Controller
     {
         $socialshare = Socialshare::findOrFail($id);
         
-        // Resmi sil
         if ($socialshare->image) {
             $imagePath = public_path($socialshare->image);
             if (file_exists($imagePath)) {

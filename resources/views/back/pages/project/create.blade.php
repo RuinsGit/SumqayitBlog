@@ -227,12 +227,10 @@
             ]
         });
 
-        // Slug oluşturma fonksiyonu
         function createSlug(str) {
             str = str || '';
             str = str.toString();
             
-            // Türkçe ve Azerice karakterleri değiştir
             const charMap = {
                 'ə': 'e', 'Ə': 'e',
                 'ı': 'i', 'I': 'i', 'İ': 'i',
@@ -275,36 +273,31 @@
                 'ю': 'yu', 'Ю': 'yu',
                 'я': 'ya', 'Я': 'ya'
             };
-
-            // Karakterleri değiştir
+            
             for (let key in charMap) {
                 str = str.replace(new RegExp(key, 'g'), charMap[key]);
             }
 
             return str
-                .toLowerCase() // küçük harfe çevir
-                .trim() // başındaki ve sonundaki boşlukları temizle
-                .replace(/[^a-z0-9\s-]/g, '') // alfanumerik ve boşluk dışındaki karakterleri temizle
-                .replace(/\s+/g, '-') // boşlukları tire ile değiştir
-                .replace(/-+/g, '-') // ardışık tireleri tek tireye çevir
-                .replace(/^-+/, '') // baştaki tireyi kaldır
-                .replace(/-+$/, ''); // sondaki tireyi kaldır
+                .toLowerCase() 
+                .trim() 
+                .replace(/[^a-z0-9\s-]/g, '') 
+                .replace(/\s+/g, '-') 
+                .replace(/-+/g, '-') 
+                .replace(/^-+/, '') 
+                .replace(/-+$/, ''); 
         }
 
-        // Her dil için başlık-slug eşleşmesi
         ['az', 'en', 'ru'].forEach(function(lang) {
-            // Input elemanını seç
             let titleInput = $('input[name="title_' + lang + '"]');
             let slugInput = $('input[name="slug_' + lang + '"]');
 
-            // Başlık değiştiğinde
             titleInput.on('input', function() {
                 let title = $(this).val();
                 let slug = createSlug(title);
                 slugInput.val(slug);
             });
 
-            // Sayfa yüklendiğinde mevcut başlıktan slug oluştur
             let initialTitle = titleInput.val();
             if (initialTitle) {
                 slugInput.val(createSlug(initialTitle));

@@ -25,6 +25,4 @@ class HomeCartApiController extends Controller
         }
     }
 
-    // Diğer yöntemleri (create, store, edit, update, destroy) API yapısına uygun hale getirin
-    // ... mevcut kodu API yapısına uygun hale getirin ...
 } 

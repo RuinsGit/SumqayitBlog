@@ -15,7 +15,6 @@ class TranslationManageResource extends JsonResource
             'value' => $this->value,
             'value' => $this->value,
            
-            // 'status' => $this->status,
         ];
     }
 } 

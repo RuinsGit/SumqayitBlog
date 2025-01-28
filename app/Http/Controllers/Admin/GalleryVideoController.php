@@ -26,7 +26,6 @@ class GalleryVideoController extends Controller
     public function store(Request $request)
     {
         try {
-            // Veritabanında en az bir kayıt var mı kontrolü
             if (GalleryVideo::count() >= 1) {
                 return back()->with('error', 'Zatən bir video qalereyası mövcuddur. Yeni video əlavə edilə bilməz.');
             }
@@ -45,7 +44,6 @@ class GalleryVideoController extends Controller
                 'meta_description_ru' => 'nullable|string',
             ]);
 
-            // Ana video yükleme
             $mainVideoPath = null;
             if ($request->hasFile('main_video')) {
                 $mainVideo = $request->file('main_video');
@@ -54,7 +52,6 @@ class GalleryVideoController extends Controller
                 $mainVideoPath = 'uploads/gallery-videos/main/' . $mainVideoName;
             }
 
-            // Ana video thumbnail yükleme ve WebP dönüşümü
             $mainThumbnailPath = null;
             if ($request->hasFile('main_video_thumbnail')) {
                 $mainThumbnail = $request->file('main_video_thumbnail');
@@ -74,12 +71,10 @@ class GalleryVideoController extends Controller
                 }
             }
 
-            // Slugları oluştur
             $slugAz = str()->slug($request->title_az);
             $slugEn = str()->slug($request->title_en);
             $slugRu = str()->slug($request->title_ru);
 
-            // Gallery Video oluştur
             GalleryVideo::create([
                 'title_az' => $request->title_az,
                 'title_en' => $request->title_en,
@@ -124,9 +119,9 @@ class GalleryVideoController extends Controller
                 'main_video_thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif'
             ]);
 
-            // Ana video güncelleme
+             
             if ($request->hasFile('main_video')) {
-                // Eski videoyu sil
+                
                 if ($galleryVideo->main_video && file_exists(public_path($galleryVideo->main_video))) {
                     unlink(public_path($galleryVideo->main_video));
                 }
@@ -137,9 +132,9 @@ class GalleryVideoController extends Controller
                 $galleryVideo->main_video = 'uploads/gallery-videos/main/' . $mainVideoName;
             }
 
-            // Ana video thumbnail güncelleme
+            
             if ($request->hasFile('main_video_thumbnail')) {
-                // Eski thumbnail'ı sil
+                
                 if ($galleryVideo->main_video_thumbnail && file_exists(public_path($galleryVideo->main_video_thumbnail))) {
                     unlink(public_path($galleryVideo->main_video_thumbnail));
                 }
@@ -161,7 +156,7 @@ class GalleryVideoController extends Controller
                 }
             }
 
-            // Temel alanları güncelle
+            
             $galleryVideo->title_az = $request->title_az;
             $galleryVideo->title_en = $request->title_en;
             $galleryVideo->title_ru = $request->title_ru;
@@ -169,7 +164,6 @@ class GalleryVideoController extends Controller
             $galleryVideo->slug_en = str()->slug($request->title_en);
             $galleryVideo->slug_ru = str()->slug($request->title_ru);
 
-            // Meta alanlarını güncelle
             if ($request->filled('meta_title_az')) $galleryVideo->meta_title_az = $request->meta_title_az;
             if ($request->filled('meta_title_en')) $galleryVideo->meta_title_en = $request->meta_title_en;
             if ($request->filled('meta_title_ru')) $galleryVideo->meta_title_ru = $request->meta_title_ru;
@@ -177,7 +171,7 @@ class GalleryVideoController extends Controller
             if ($request->filled('meta_description_en')) $galleryVideo->meta_description_en = $request->meta_description_en;
             if ($request->filled('meta_description_ru')) $galleryVideo->meta_description_ru = $request->meta_description_ru;
 
-            // Değişiklikleri kaydet
+            
             if (!$galleryVideo->save()) {
                 throw new \Exception('Güncelleme işlemi başarısız oldu.');
             }
@@ -200,7 +194,6 @@ class GalleryVideoController extends Controller
     public function destroy(GalleryVideo $galleryVideo)
     {
         try {
-            // Video ve thumbnail dosyalarını sil
             if ($galleryVideo->main_video && file_exists(public_path($galleryVideo->main_video))) {
                 unlink(public_path($galleryVideo->main_video));
             }
