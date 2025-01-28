@@ -98,7 +98,7 @@
                                                     <img src="{{ asset('storage/' . $gallery->main_image) }}" 
                                                          alt="{{ $gallery->main_image_alt_az }}"
                                                          class="img-thumbnail"
-                                                         style="max-height: 80px;">
+                                                         style="width: 150px; height: 80px; object-fit: cover; border-radius: 4px;">
                                                 </td>
                                                 <td>
                                                     <h5 class="mb-1">{{ $gallery->title_az }}</h5>

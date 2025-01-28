@@ -23,7 +23,7 @@ class DigitalResource extends JsonResource
             ],
             'meta_title' => $this->meta_title,
             'meta_description' => $this->meta_description,
-            'view_count' => $this->view_count,
+            
             'created_at' => $this->created_at->format('d.m.Y'),
             
         ];

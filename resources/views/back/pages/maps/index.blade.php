@@ -42,7 +42,7 @@
                 <div class="col-xl-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="col-12 d-flex justify-content-end mb-4">
+                            <div class="col-12 d-flex justify-content-end mb-4"  style="background-color: #f2f2f2;">
                                 @if($map)
                                     <a href="{{ route('back.pages.maps.edit', $map->id) }}" class="btn btn-primary" style="background-color: #5bf91b; border-color: green;">
                                         <i class="fas fa-edit"></i> Redaktə Et

@@ -70,7 +70,7 @@
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td>{{ $project->title_az }}</td>
                                             <td class="text-center">
-                                                <img src="{{ asset('storage/' . $project->image) }}" class="img-thumbnail" style="max-height: 80px;">
+                                                <img src="{{ asset('storage/' . $project->image) }}" class="img-thumbnail" style="width: 150px; height: 80px; object-fit: cover; border-radius: 4px; ">
                                             </td>
                                             <td class="text-center">
                                             <a href="{{ route('back.pages.projects.edit', $project->id) }}" class="btn btn-primary btn-sm" style="background-color: #5bf91b; border-color: green">
