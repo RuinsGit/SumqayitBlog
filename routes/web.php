@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\ContactMarketingController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\GalleryVideoController;
 use App\Http\Controllers\Admin\ArticleController;
+use App\Http\Controllers\Admin\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -173,6 +174,14 @@ Route::prefix('admin')->group(function () {
             Route::get('articles/{article}/edit', [ArticleController::class, 'edit'])->name('articles.edit');
             Route::put('articles/{article}', [ArticleController::class, 'update'])->name('articles.update');
             Route::delete('articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
+
+            Route::resource('projects', ProjectController::class);
+            Route::get('projects', [ProjectController::class, 'index'])->name('projects.index');
+            Route::get('projects/create', [ProjectController::class, 'create'])->name('projects.create');
+            Route::post('projects', [ProjectController::class, 'store'])->name('projects.store');
+            Route::get('projects/{project}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
+            Route::put('projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
+            Route::delete('projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
         });
 
         

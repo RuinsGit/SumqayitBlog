@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\MapApiController;
 use App\Http\Controllers\Api\GalleryVideoController;
 use App\Http\Controllers\Api\GalleryController;
 use App\Http\Controllers\Api\ArticleController;
+use App\Http\Controllers\Api\ProjectController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -126,3 +127,6 @@ Route::prefix('gallery-images')->group(function () {
 
 // Article Routes
 Route::apiResource('articles', ArticleController::class);
+
+// Project Routes
+Route::apiResource('projects', ProjectController::class);

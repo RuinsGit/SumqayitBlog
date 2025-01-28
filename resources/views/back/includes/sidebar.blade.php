@@ -190,6 +190,13 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href="{{ route('back.pages.projects.index') }}">
+                            <i class="ri-building-line"></i>
+                            <span>Layihələr</span>
+                        </a>
+                    </li>
+
 
 
                 
