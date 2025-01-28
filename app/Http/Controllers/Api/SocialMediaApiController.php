@@ -12,7 +12,7 @@ class SocialMediaApiController extends Controller
 {
     public function index()
     {
-        $socials = SocialMedia::orderBy('order')->get();
+        $socials = SocialMedia::orderBy('order')->where('status', 1)->get();
         return SocialMediaResource::collection($socials);
     }
 

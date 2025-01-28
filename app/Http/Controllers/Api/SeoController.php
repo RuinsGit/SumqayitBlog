@@ -11,14 +11,14 @@ class SeoController extends Controller
 {
     public function index()
     {
-        $seos = Seo::where('status', true)->get();
+        $seos = Seo::where('status', 1)->get();
         return SeoResource::collection($seos);
     }
 
     public function show($key)
     {
         $seo = Seo::where('key', $key)
-                  ->where('status', true)
+                  ->where('status', 1)
                   ->first();
 
         if (!$seo) {

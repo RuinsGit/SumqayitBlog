@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\GalleryController;
 use App\Http\Controllers\Api\ArticleController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\DigitalController;
+use App\Http\Controllers\Api\SocialMoreApiController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -134,3 +135,13 @@ Route::apiResource('projects', ProjectController::class);
 
 // Digital Routes
 Route::apiResource('digitals', DigitalController::class);
+
+// Social More Routes
+Route::prefix('social-more')->group(function () {
+    Route::get('/', [SocialMoreApiController::class, 'index']);
+    Route::get('/{id}', [SocialMoreApiController::class, 'show']);
+    Route::post('/', [SocialMoreApiController::class, 'store']);
+    Route::put('/{id}', [SocialMoreApiController::class, 'update']);
+    Route::delete('/{id}', [SocialMoreApiController::class, 'destroy']);
+    Route::post('/{id}/toggle-status', [SocialMoreApiController::class, 'toggleStatus']);
+});

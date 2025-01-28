@@ -85,6 +85,13 @@
                         </a>
                     </li>  
 
+                    <li>
+                        <a href="{{ route('back.pages.socialmore.index') }}">
+                            <i class="ri-share-line"></i>
+                            <span>Sosial Projects</span>
+                        </a>
+                    </li>  
+
                     
 
                         
@@ -204,6 +211,7 @@
                         </a>
                     </li>
 
+                   
 
                 
             </ul>

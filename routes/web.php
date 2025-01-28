@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\GalleryVideoController;
 use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\DigitalController;
+use App\Http\Controllers\Admin\SocialMoreController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -190,6 +191,17 @@ Route::prefix('admin')->group(function () {
             Route::get('digitals/{digital}/edit', [DigitalController::class, 'edit'])->name('digitals.edit');
             Route::put('digitals/{digital}', [DigitalController::class, 'update'])->name('digitals.update');
             Route::delete('digitals/{digital}', [DigitalController::class, 'destroy'])->name('digitals.destroy');
+
+               
+             // Social More routes
+             Route::get('socialmore', [SocialMoreController::class, 'index'])->name('socialmore.index');
+             Route::get('socialmore/create', [SocialMoreController::class, 'create'])->name('socialmore.create');
+             Route::post('socialmore', [SocialMoreController::class, 'store'])->name('socialmore.store');
+             Route::get('socialmore/{id}/edit', [SocialMoreController::class, 'edit'])->name('socialmore.edit');
+             Route::put('socialmore/{id}', [SocialMoreController::class, 'update'])->name('socialmore.update');
+             Route::delete('socialmore/{id}', [SocialMoreController::class, 'destroy'])->name('socialmore.destroy');
+             Route::post('socialmore/order', [SocialMoreController::class, 'order'])->name('socialmore.order');
+             Route::post('socialmore/toggle-status/{id}', [SocialMoreController::class, 'toggleStatus'])->name('socialmore.toggle-status');
         });
 
         

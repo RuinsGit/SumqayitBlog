@@ -3,26 +3,26 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\SocialfooterResource;
-use App\Models\Socialfooter;
+use App\Http\Resources\SocialMoreResource;
+use App\Models\SocialMore;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
-class SocialfooterApiController extends Controller
+class SocialMoreApiController extends Controller
 {
     public function index()
     {
-        $socials = Socialfooter::orderBy('order')->where('status', 1)->get();
-        return SocialfooterResource::collection($socials);
+        $socials = SocialMore::orderBy('order')->where('status', 1)->get();
+        return SocialMoreResource::collection($socials);
     }
 
     public function show($id)
     {
-        $social = Socialfooter::find($id);
+        $social = SocialMore::find($id);
         if (!$social) {
-            return response()->json(['message' => 'Social footer not found'], 404);
+            return response()->json(['message' => 'Social media not found'], 404);
         }
-        return new SocialfooterResource($social);
+        return new SocialMoreResource($social);
     }
 
     public function store(Request $request)
@@ -32,26 +32,26 @@ class SocialfooterApiController extends Controller
             'link' => 'required|url'
         ]);
 
-        $social = new Socialfooter();
+        $social = new SocialMore();
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads/social'), $imageName);
-            $social->image = 'uploads/social/' . $imageName;
+            $image->move(public_path('uploads/socialmore'), $imageName);
+            $social->image = 'uploads/socialmore/' . $imageName;
         }
 
         $social->link = $request->link;
-        $social->order = Socialfooter::max('order') + 1;
+        $social->order = SocialMore::max('order') + 1;
         $social->status = $request->has('status') ? 1 : 0;
         $social->save();
 
-        return response()->json(new SocialfooterResource($social), 201);
+        return response()->json(new SocialMoreResource($social), 201);
     }
 
     public function update(Request $request, $id)
     {
-        $social = Socialfooter::findOrFail($id);
+        $social = SocialMore::findOrFail($id);
 
         $request->validate([
             'image' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
@@ -65,20 +65,20 @@ class SocialfooterApiController extends Controller
 
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads/social'), $imageName);
-            $social->image = 'uploads/social/' . $imageName;
+            $image->move(public_path('uploads/socialmore'), $imageName);
+            $social->image = 'uploads/socialmore/' . $imageName;
         }
 
         $social->link = $request->link;
         $social->status = $request->has('status') ? 1 : 0;
         $social->save();
 
-        return response()->json(new SocialfooterResource($social), 200);
+        return response()->json(new SocialMoreResource($social), 200);
     }
 
     public function destroy($id)
     {
-        $social = Socialfooter::findOrFail($id);
+        $social = SocialMore::findOrFail($id);
         
         if ($social->image && File::exists(public_path($social->image))) {
             File::delete(public_path($social->image));
@@ -91,7 +91,7 @@ class SocialfooterApiController extends Controller
 
     public function toggleStatus($id)
     {
-        $social = Socialfooter::findOrFail($id);
+        $social = SocialMore::findOrFail($id);
         $social->status = !$social->status;
         $social->save();
 

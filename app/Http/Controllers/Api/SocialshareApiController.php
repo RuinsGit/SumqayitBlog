@@ -22,7 +22,7 @@ class SocialshareApiController extends Controller
 
     public function index()
     {
-        $socialshares = Socialshare::orderBy('order')->get();
+        $socialshares = Socialshare::orderBy('order')->where('status', 1)->get();
         return SocialshareResource::collection($socialshares);
     }
 
