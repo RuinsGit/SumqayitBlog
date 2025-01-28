@@ -1,6 +1,6 @@
 @extends('back.layouts.master')
 
-@section('title', 'Layihə Redaktə')
+@section('title', 'Digital Redaktə')
 
 @section('content')
 
@@ -14,11 +14,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Layihə Redaktə</h4>
+                        <h4 class="mb-sm-0">Digital Redaktə</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Ana səhifə</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('back.pages.projects.index') }}">Layihələr</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('back.pages.digitals.index') }}">Digital</a></li>
                                 <li class="breadcrumb-item active">Redaktə</li>
                             </ol>
                         </div>
@@ -30,7 +30,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('back.pages.projects.update', $project->id) }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('back.pages.digitals.update', $digital->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
 
@@ -42,9 +42,9 @@
                                             @error('image')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
-                                            @if($project->image)
+                                            @if($digital->image)
                                                 <div class="mt-2">
-                                                    <img src="{{ asset('storage/' . $project->image) }}" alt="" class="img-fluid" style="max-height: 100px">
+                                                    <img src="{{ asset('storage/' . $digital->image) }}" alt="" class="img-fluid" style="max-height: 100px">
                                                 </div>
                                             @endif
                                         </div>
@@ -76,7 +76,7 @@
                                     <div class="tab-pane active" id="az" role="tabpanel">
                                         <div class="mb-3">
                                             <label class="form-label">Başlıq</label>
-                                            <input type="text" name="title_az" id="title_az" value="{{ $project->title_az }}" class="form-control @error('title_az') is-invalid @enderror" required>
+                                            <input type="text" name="title_az" id="title_az" value="{{ $digital->title_az }}" class="form-control @error('title_az') is-invalid @enderror" required>
                                             @error('title_az')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -84,7 +84,7 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Slug</label>
-                                            <input type="text" name="slug_az" id="slug_az" value="{{ $project->slug_az }}" class="form-control @error('slug_az') is-invalid @enderror">
+                                            <input type="text" name="slug_az" id="slug_az" value="{{ $digital->slug_az }}" class="form-control @error('slug_az') is-invalid @enderror">
                                             @error('slug_az')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -92,7 +92,7 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Mətn</label>
-                                            <textarea name="text_az" class="form-control @error('text_az') is-invalid @enderror" rows="4" required>{{ $project->text_az }}</textarea>
+                                            <textarea name="text_az" class="form-control @error('text_az') is-invalid @enderror" rows="4" required>{{ $digital->text_az }}</textarea>
                                             @error('text_az')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -100,12 +100,12 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Açıqlama</label>
-                                            <textarea name="description_az" class="form-control summernote">{{ $project->description_az }}</textarea>
+                                            <textarea name="description_az" class="form-control summernote">{{ $digital->description_az }}</textarea>
                                         </div>
 
                                         <div class="mb-3">
                                             <label class="form-label">Şəkil ALT</label>
-                                            <input type="text" name="image_alt_az" value="{{ $project->image_alt_az }}" class="form-control @error('image_alt_az') is-invalid @enderror" required>
+                                            <input type="text" name="image_alt_az" value="{{ $digital->image_alt_az }}" class="form-control @error('image_alt_az') is-invalid @enderror" required>
                                             @error('image_alt_az')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -113,12 +113,12 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Meta Başlıq</label>
-                                            <input type="text" name="meta_title_az" value="{{ $project->meta_title_az }}" class="form-control">
+                                            <input type="text" name="meta_title_az" value="{{ $digital->meta_title_az }}" class="form-control">
                                         </div>
 
                                         <div class="mb-3">
                                             <label class="form-label">Meta Açıqlama</label>
-                                            <textarea name="meta_description_az" class="form-control" rows="3">{{ $project->meta_description_az }}</textarea>
+                                            <textarea name="meta_description_az" class="form-control" rows="3">{{ $digital->meta_description_az }}</textarea>
                                         </div>
                                     </div>
 
@@ -126,7 +126,7 @@
                                     <div class="tab-pane" id="en" role="tabpanel">
                                         <div class="mb-3">
                                             <label class="form-label">Title</label>
-                                            <input type="text" name="title_en" id="title_en" value="{{ $project->title_en }}" class="form-control @error('title_en') is-invalid @enderror" required>
+                                            <input type="text" name="title_en" id="title_en" value="{{ $digital->title_en }}" class="form-control @error('title_en') is-invalid @enderror" required>
                                             @error('title_en')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -134,7 +134,7 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Slug</label>
-                                            <input type="text" name="slug_en" id="slug_en" value="{{ $project->slug_en }}" class="form-control @error('slug_en') is-invalid @enderror">
+                                            <input type="text" name="slug_en" id="slug_en" value="{{ $digital->slug_en }}" class="form-control @error('slug_en') is-invalid @enderror">
                                             @error('slug_en')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -142,7 +142,7 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Text</label>
-                                            <textarea name="text_en" class="form-control @error('text_en') is-invalid @enderror" rows="4" required>{{ $project->text_en }}</textarea>
+                                            <textarea name="text_en" class="form-control @error('text_en') is-invalid @enderror" rows="4" required>{{ $digital->text_en }}</textarea>
                                             @error('text_en')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -150,12 +150,12 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Description</label>
-                                            <textarea name="description_en" class="form-control summernote">{{ $project->description_en }}</textarea>
+                                            <textarea name="description_en" class="form-control summernote">{{ $digital->description_en }}</textarea>
                                         </div>
 
                                         <div class="mb-3">
                                             <label class="form-label">Image ALT</label>
-                                            <input type="text" name="image_alt_en" value="{{ $project->image_alt_en }}" class="form-control @error('image_alt_en') is-invalid @enderror" required>
+                                            <input type="text" name="image_alt_en" value="{{ $digital->image_alt_en }}" class="form-control @error('image_alt_en') is-invalid @enderror" required>
                                             @error('image_alt_en')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -163,12 +163,12 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Meta Title</label>
-                                            <input type="text" name="meta_title_en" value="{{ $project->meta_title_en }}" class="form-control">
+                                            <input type="text" name="meta_title_en" value="{{ $digital->meta_title_en }}" class="form-control">
                                         </div>
 
                                         <div class="mb-3">
                                             <label class="form-label">Meta Description</label>
-                                            <textarea name="meta_description_en" class="form-control" rows="3">{{ $project->meta_description_en }}</textarea>
+                                            <textarea name="meta_description_en" class="form-control" rows="3">{{ $digital->meta_description_en }}</textarea>
                                         </div>
                                     </div>
 
@@ -176,7 +176,7 @@
                                     <div class="tab-pane" id="ru" role="tabpanel">
                                         <div class="mb-3">
                                             <label class="form-label">Заголовок</label>
-                                            <input type="text" name="title_ru" id="title_ru" value="{{ $project->title_ru }}" class="form-control @error('title_ru') is-invalid @enderror" required>
+                                            <input type="text" name="title_ru" id="title_ru" value="{{ $digital->title_ru }}" class="form-control @error('title_ru') is-invalid @enderror" required>
                                             @error('title_ru')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -184,7 +184,7 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Slug</label>
-                                            <input type="text" name="slug_ru" id="slug_ru" value="{{ $project->slug_ru }}" class="form-control @error('slug_ru') is-invalid @enderror">
+                                            <input type="text" name="slug_ru" id="slug_ru" value="{{ $digital->slug_ru }}" class="form-control @error('slug_ru') is-invalid @enderror">
                                             @error('slug_ru')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -192,7 +192,7 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Текст</label>
-                                            <textarea name="text_ru" class="form-control @error('text_ru') is-invalid @enderror" rows="4" required>{{ $project->text_ru }}</textarea>
+                                            <textarea name="text_ru" class="form-control @error('text_ru') is-invalid @enderror" rows="4" required>{{ $digital->text_ru }}</textarea>
                                             @error('text_ru')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -200,12 +200,12 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Описание</label>
-                                            <textarea name="description_ru" class="form-control summernote">{{ $project->description_ru }}</textarea>
+                                            <textarea name="description_ru" class="form-control summernote">{{ $digital->description_ru }}</textarea>
                                         </div>
 
                                         <div class="mb-3">
                                             <label class="form-label">ALT изображения</label>
-                                            <input type="text" name="image_alt_ru" value="{{ $project->image_alt_ru }}" class="form-control @error('image_alt_ru') is-invalid @enderror" required>
+                                            <input type="text" name="image_alt_ru" value="{{ $digital->image_alt_ru }}" class="form-control @error('image_alt_ru') is-invalid @enderror" required>
                                             @error('image_alt_ru')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -213,12 +213,12 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Мета-заголовок</label>
-                                            <input type="text" name="meta_title_ru" value="{{ $project->meta_title_ru }}" class="form-control">
+                                            <input type="text" name="meta_title_ru" value="{{ $digital->meta_title_ru }}" class="form-control">
                                         </div>
 
                                         <div class="mb-3">
                                             <label class="form-label">Мета-описание</label>
-                                            <textarea name="meta_description_ru" class="form-control" rows="3">{{ $project->meta_description_ru }}</textarea>
+                                            <textarea name="meta_description_ru" class="form-control" rows="3">{{ $digital->meta_description_ru }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -226,7 +226,7 @@
                                 <div class="row mt-3">
                                     <div class="col-12">
                                         <button type="submit" class="btn btn-primary">Yadda saxla</button>
-                                        <a href="{{ route('back.pages.projects.index') }}" class="btn btn-secondary">Ləğv et</a>
+                                        <a href="{{ route('back.pages.digitals.index') }}" class="btn btn-secondary">Ləğv et</a>
                                     </div>
                                 </div>
                             </form>
@@ -312,7 +312,7 @@
                         slugInput.value = slugify(this.value);
                     }
                 });
-
+                
                 slugInput.addEventListener('keyup', function() {
                     this.value = slugify(this.value);
                 });

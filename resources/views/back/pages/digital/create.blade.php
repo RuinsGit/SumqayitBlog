@@ -1,6 +1,6 @@
 @extends('back.layouts.master')
 
-@section('title', 'Yeni Layihə')
+@section('title', 'Yeni Digital')
 
 @section('content')
 <div class="page-content">
@@ -8,11 +8,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Yeni Layihə</h4>
+                    <h4 class="mb-sm-0">Yeni Digital</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Ana səhifə</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('back.pages.projects.index') }}">Layihələr</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('back.pages.digitals.index') }}">Digital</a></li>
                             <li class="breadcrumb-item active">Yeni</li>
                         </ol>
                     </div>
@@ -24,7 +24,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('back.pages.projects.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('back.pages.digitals.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <div class="row mb-4">
@@ -194,7 +194,7 @@
                             <div class="row mt-3">
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary">Yadda Saxla</button>
-                                    <a href="{{ route('back.pages.projects.index') }}" class="btn btn-secondary">Ləğv et</a>
+                                    <a href="{{ route('back.pages.digitals.index') }}" class="btn btn-secondary">Ləğv et</a>
                                 </div>
                             </div>
                         </form>
@@ -273,7 +273,7 @@
                 'ю': 'yu', 'Ю': 'yu',
                 'я': 'ya', 'Я': 'ya'
             };
-
+            
             for (let key in charMap) {
                 str = str.replace(new RegExp(key, 'g'), charMap[key]);
             }

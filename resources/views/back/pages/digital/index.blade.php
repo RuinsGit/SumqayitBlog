@@ -1,6 +1,6 @@
 @extends('back.layouts.master')
 
-@section('title', 'Layihələr')
+@section('title', 'Digital')
 
 @section('content')
 
@@ -14,11 +14,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Layihələr</h4>
+                    <h4 class="mb-sm-0">Digital</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Ana səhifə</a></li>
-                            <li class="breadcrumb-item active">Layihələr</li>
+                            <li class="breadcrumb-item active">Digital</li>
                         </ol>
                     </div>
                 </div>
@@ -30,10 +30,10 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h5 class="card-title mb-0 flex-grow-1">Layihələr Cədvəli</h5>
+                            <h5 class="card-title mb-0 flex-grow-1">Digital Cədvəli</h5>
                             <div class="flex-shrink-0">
-                                <a href="{{ route('back.pages.projects.create') }}" class="btn btn-primary">
-                                    <i class="ri-add-line align-bottom me-1"></i> Yeni Layihə
+                                <a href="{{ route('back.pages.digitals.create') }}" class="btn btn-primary">
+                                    <i class="ri-add-line align-bottom me-1"></i> Yeni Digital
                                 </a>
                             </div>
                         </div>
@@ -65,21 +65,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($projects as $project)
+                                    @forelse($digitals as $digital)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>{{ $project->title_az }}</td>
+                                            <td>{{ $digital->title_az }}</td>
                                             <td class="text-center">
-                                                <img src="{{ asset('storage/' . $project->image) }}" class="img-thumbnail" style="max-height: 80px;">
+                                                <img src="{{ asset('storage/' . $digital->image) }}" class="img-thumbnail" style="max-height: 80px;">
                                             </td>
                                             <td class="text-center">
-                                            <a href="{{ route('back.pages.projects.edit', $project->id) }}" class="btn btn-primary btn-sm" style="background-color: #5bf91b; border-color: green">
+                                            <a href="{{ route('back.pages.digitals.edit', $digital->id) }}" class="btn btn-primary btn-sm" style="background-color: #5bf91b; border-color: green">
                                                                 <i class="fas fa-edit"></i>
                                                             </a>
-                                                <form action="{{ route('back.pages.projects.destroy', $project->id) }}" method="POST" style="display:inline;" id="delete-form-{{ $project->id }}">
+                                                <form action="{{ route('back.pages.digitals.destroy', $digital->id) }}" method="POST" style="display:inline;" id="delete-form-{{ $digital->id }}">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-danger btn-sm" onclick="deleteData({{ $project->id }})">
+                                                    <button type="button" class="btn btn-danger btn-sm" onclick="deleteData({{ $digital->id }})">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </form>
@@ -104,7 +104,7 @@
     function deleteData(id) {
         Swal.fire({
             title: 'Silmək istədiyinizə əminsiniz?',
-            text: "Bu layihə silinəcək!",
+            text: "Bu digital silinəcək!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

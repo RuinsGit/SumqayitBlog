@@ -18,7 +18,7 @@ use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\GalleryVideoController;
 use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\ProjectController;
-
+use App\Http\Controllers\Admin\DigitalController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -182,6 +182,14 @@ Route::prefix('admin')->group(function () {
             Route::get('projects/{project}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
             Route::put('projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
             Route::delete('projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+
+            Route::resource('digitals', DigitalController::class);
+            Route::get('digitals', [DigitalController::class, 'index'])->name('digitals.index');
+            Route::get('digitals/create', [DigitalController::class, 'create'])->name('digitals.create');
+            Route::post('digitals', [DigitalController::class, 'store'])->name('digitals.store');
+            Route::get('digitals/{digital}/edit', [DigitalController::class, 'edit'])->name('digitals.edit');
+            Route::put('digitals/{digital}', [DigitalController::class, 'update'])->name('digitals.update');
+            Route::delete('digitals/{digital}', [DigitalController::class, 'destroy'])->name('digitals.destroy');
         });
 
         

@@ -197,6 +197,12 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href="{{ route('back.pages.digitals.index') }}">
+                            <i class="ri-code-line"></i>
+                            <span>Digital</span>
+                        </a>
+                    </li>
 
 
                 

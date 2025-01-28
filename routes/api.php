@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\GalleryVideoController;
 use App\Http\Controllers\Api\GalleryController;
 use App\Http\Controllers\Api\ArticleController;
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\DigitalController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -130,3 +131,6 @@ Route::apiResource('articles', ArticleController::class);
 
 // Project Routes
 Route::apiResource('projects', ProjectController::class);
+
+// Digital Routes
+Route::apiResource('digitals', DigitalController::class);
