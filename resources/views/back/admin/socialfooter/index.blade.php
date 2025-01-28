@@ -74,7 +74,7 @@
                                             <tr id="order-{{ $socialfooter->id }}">
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                    <img src="{{ asset($socialfooter->image) }}" alt="" style="height: 50px; width: 50px; object-fit: cover; ">
+                                                    <img src="{{ asset($socialfooter->image) }}" alt="" style="height: 50px; width: 50px; object-fit: cover; border-radius: 50%; background-color:{{ $socialfooter->status ? 'black' : '#ff1231' }};">
                                                 </td>
                                                 <td>{{ $socialfooter->link }}</td>
                                                 <td>

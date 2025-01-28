@@ -26,9 +26,7 @@ class GalleryVideoController extends Controller
     public function store(Request $request)
     {
         try {
-            if (GalleryVideo::count() >= 1) {
-                return back()->with('error', 'Zatən bir video qalereyası mövcuddur. Yeni video əlavə edilə bilməz.');
-            }
+           
 
             $validated = $request->validate([
                 'title_az' => 'required|string|max:255',
