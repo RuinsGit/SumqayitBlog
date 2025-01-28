@@ -58,6 +58,10 @@ class Article extends Model
     {
         return $this->{'slug_' . app()->getLocale()};
     }
+    public function getImageAltAttribute()
+    {
+        return $this->{'image_alt_' . app()->getLocale()};
+    }
    
 
 } 

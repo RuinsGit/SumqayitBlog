@@ -16,10 +16,16 @@ class ArticleResource extends JsonResource
             'description' => $this->description,
             'image' => $this->image ? asset('storage/' . $this->image) : null,
             'image_alt' => $this->image_alt,
-            'slug' => $this->slug,
+            'slug' => [
+                'az' => $this->slug_az,
+                'en' => $this->slug_en,
+                'ru' => $this->slug_ru
+            ],
             'meta_title' => $this->meta_title,
             'meta_description' => $this->meta_description,
             'view_count' => $this->view_count,
+            'created_at' => $this->created_at->format('d.m.Y'),
+            
         ];
     }
 } 
