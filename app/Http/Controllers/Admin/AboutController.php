@@ -40,8 +40,8 @@ class AboutController extends Controller
             'description_az' => 'required|string',
             'description_en' => 'required|string',
             'description_ru' => 'required|string',
-            'document_file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
+            'document_file' => 'nullable|file|mimes:pdf,doc,docx|max:8000',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:8000',
         ], [
             'image.required' => 'Resim alanı zorunludur',
             'document_file.required' => 'Döküman dosyası zorunludur',
@@ -99,8 +99,8 @@ class AboutController extends Controller
             'description_az' => 'required|string',
             'description_en' => 'required|string',
             'description_ru' => 'required|string',
-            'document_file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
+            'document_file' => 'nullable|file|mimes:pdf,doc,docx|max:4096',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:4096',
         ]);
 
         if ($request->hasFile('image')) {
