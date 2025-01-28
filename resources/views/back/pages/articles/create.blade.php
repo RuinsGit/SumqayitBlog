@@ -226,6 +226,90 @@
                 ['view', ['fullscreen', 'codeview', 'help']]
             ]
         });
+
+        // Slug oluşturma fonksiyonu
+        function createSlug(str) {
+            str = str || '';
+            str = str.toString();
+            
+            // Türkçe ve Azerice karakterleri değiştir
+            const charMap = {
+                'ə': 'e', 'Ə': 'e',
+                'ı': 'i', 'I': 'i', 'İ': 'i',
+                'ö': 'o', 'Ö': 'o',
+                'ü': 'u', 'Ü': 'u',
+                'ş': 's', 'Ş': 's',
+                'ç': 'c', 'Ç': 'c',
+                'ğ': 'g', 'Ğ': 'g',
+                'а': 'a', 'А': 'a',
+                'б': 'b', 'Б': 'b',
+                'в': 'v', 'В': 'v',
+                'г': 'g', 'Г': 'g',
+                'д': 'd', 'Д': 'd',
+                'е': 'e', 'Е': 'e',
+                'ё': 'yo', 'Ё': 'yo',
+                'ж': 'zh', 'Ж': 'zh',
+                'з': 'z', 'З': 'z',
+                'и': 'i', 'И': 'i',
+                'й': 'y', 'Й': 'y',
+                'к': 'k', 'К': 'k',
+                'л': 'l', 'Л': 'l',
+                'м': 'm', 'М': 'm',
+                'н': 'n', 'Н': 'n',
+                'о': 'o', 'О': 'o',
+                'п': 'p', 'П': 'p',
+                'р': 'r', 'Р': 'r',
+                'с': 's', 'С': 's',
+                'т': 't', 'Т': 't',
+                'у': 'u', 'У': 'u',
+                'ф': 'f', 'Ф': 'f',
+                'х': 'h', 'Х': 'h',
+                'ц': 'ts', 'Ц': 'ts',
+                'ч': 'ch', 'Ч': 'ch',
+                'ш': 'sh', 'Ш': 'sh',
+                'щ': 'sch', 'Щ': 'sch',
+                'ъ': '', 'Ъ': '',
+                'ы': 'y', 'Ы': 'y',
+                'ь': '', 'Ь': '',
+                'э': 'e', 'Э': 'e',
+                'ю': 'yu', 'Ю': 'yu',
+                'я': 'ya', 'Я': 'ya'
+            };
+
+            // Karakterleri değiştir
+            for (let key in charMap) {
+                str = str.replace(new RegExp(key, 'g'), charMap[key]);
+            }
+
+            return str
+                .toLowerCase() // küçük harfe çevir
+                .trim() // başındaki ve sonundaki boşlukları temizle
+                .replace(/[^a-z0-9\s-]/g, '') // alfanumerik ve boşluk dışındaki karakterleri temizle
+                .replace(/\s+/g, '-') // boşlukları tire ile değiştir
+                .replace(/-+/g, '-') // ardışık tireleri tek tireye çevir
+                .replace(/^-+/, '') // baştaki tireyi kaldır
+                .replace(/-+$/, ''); // sondaki tireyi kaldır
+        }
+
+        // Her dil için başlık-slug eşleşmesi
+        ['az', 'en', 'ru'].forEach(function(lang) {
+            // Input elemanını seç
+            let titleInput = $('input[name="title_' + lang + '"]');
+            let slugInput = $('input[name="slug_' + lang + '"]');
+
+            // Başlık değiştiğinde
+            titleInput.on('input', function() {
+                let title = $(this).val();
+                let slug = createSlug(title);
+                slugInput.val(slug);
+            });
+
+            // Sayfa yüklendiğinde mevcut başlıktan slug oluştur
+            let initialTitle = titleInput.val();
+            if (initialTitle) {
+                slugInput.val(createSlug(initialTitle));
+            }
+        });
     });
 </script>
 @endpush 
