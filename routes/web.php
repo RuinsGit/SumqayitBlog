@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\DigitalController;
 use App\Http\Controllers\Admin\SocialMoreController;
+use App\Http\Controllers\Admin\ContactRequestController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -202,9 +203,21 @@ Route::prefix('admin')->group(function () {
              Route::delete('socialmore/{id}', [SocialMoreController::class, 'destroy'])->name('socialmore.destroy');
              Route::post('socialmore/order', [SocialMoreController::class, 'order'])->name('socialmore.order');
              Route::post('socialmore/toggle-status/{id}', [SocialMoreController::class, 'toggleStatus'])->name('socialmore.toggle-status');
+
+
+             Route::prefix('contact-requests')->name('contact_requests.')->group(function () {
+                Route::get('/', [ContactRequestController::class, 'index'])->name('index');
+                Route::get('/create', [ContactRequestController::class, 'create'])->name('create');
+                Route::post('/', [ContactRequestController::class, 'store'])->name('store');
+                Route::get('/{contactRequest}', [ContactRequestController::class, 'show'])->name('show');
+                Route::get('/{contactRequest}/edit', [ContactRequestController::class, 'edit'])->name('edit');
+                Route::put('/{contactRequest}', [ContactRequestController::class, 'update'])->name('update');
+                Route::delete('/{contactRequest}', [ContactRequestController::class, 'destroy'])->name('destroy');
+                Route::post('/{contactRequest}/toggle-status', [ContactRequestController::class, 'toggleStatus'])->name('toggle-status');
+            });
         });
 
-        
+      
     });
 });
 

@@ -211,6 +211,13 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href="{{ route('back.pages.contact_requests.index') }}">
+                            <i class="ri-mail-open-line"></i>
+                            <span>Əlaqə Mesajları</span>
+                        </a>
+                    </li>
+
                    
 
                 

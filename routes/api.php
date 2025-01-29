@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\ArticleController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\DigitalController;
 use App\Http\Controllers\Api\SocialMoreApiController;
+use App\Http\Controllers\Api\ContactRequestApiController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -144,4 +145,12 @@ Route::prefix('social-more')->group(function () {
     Route::put('/{id}', [SocialMoreApiController::class, 'update']);
     Route::delete('/{id}', [SocialMoreApiController::class, 'destroy']);
     Route::post('/{id}/toggle-status', [SocialMoreApiController::class, 'toggleStatus']);
+});
+
+Route::prefix('contact-requests')->group(function () {
+    Route::get('/', [ContactRequestApiController::class, 'index']);
+    Route::post('/', [ContactRequestApiController::class, 'store']);
+    Route::get('/{id}', [ContactRequestApiController::class, 'show']);
+    Route::put('/{id}', [ContactRequestApiController::class, 'update']);
+    Route::delete('/{id}', [ContactRequestApiController::class, 'destroy']);
 });
