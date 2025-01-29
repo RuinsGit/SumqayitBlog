@@ -79,10 +79,12 @@
                                                     <div style="display: flex; align-items: center;">
                                                         <div style="background-color: {{ $socialshare->background_color }}; height: 50px; width: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 10px; overflow: hidden;">
                                                             @if($socialshare->image)
-                                                                <img src="{{ asset($socialshare->image) }}" alt="" style="height: 90%; width: 90%; object-fit: contain;">
+                                                                <img src="{{ asset($socialshare->image) }}" alt="" style="height: 100%; width: 100%; object-fit: scale-down;">
                                                             @else
                                                                 <span class="text-muted">Şəkil yoxdur</span>
                                                             @endif
+
+
                                                         </div>
                                                         <span>{{ $socialshare->name }}</span>
                                                     </div>

@@ -79,6 +79,8 @@
                             <label for="background_color" style="margin: 0; color: #303030; font-weight: 500; font-size: 16px;">Arxa plan Rengi</label>
                             <input type="color" name="background_color" id="background_color" class="color-picker @error('background_color') is-invalid @enderror" style="margin: 0; width: 46px; height: 46px; border-radius: 50%; outline: none; border: none; padding: 0;" value="{{ old('background_color', $socialshare->background_color) }}">
                             @error('background_color')
+
+
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
