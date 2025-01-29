@@ -5,15 +5,17 @@
 @section('content')
     <style>
         .swal2-popup {
-            border-radius: 50px; /* Modern görünüm için köşe yuvarlama */
+            border-radius: 50px; 
         }
+
         .btn-disabled {
-            background-color: #d3d3d3; /* Gri arka plan rengi */
-            border-color: #a9a9a9; /* Gri kenar rengi */
-            color: #ffffff; /* Beyaz yazı rengi */
-            cursor: not-allowed; /* İzin verilmedi imleci */
+            background-color: #d3d3d3; 
+            border-color: #a9a9a9; 
+            color: #ffffff; 
+            cursor: not-allowed; 
         }
     </style>
+
 
     @if(session('success'))
         <script>

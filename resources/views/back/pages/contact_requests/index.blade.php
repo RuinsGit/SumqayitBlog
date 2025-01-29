@@ -3,6 +3,12 @@
 @section('title', 'Əlaqə Tələbləri')
 
 @section('content')
+
+<style>
+        .swal2-popup {
+            border-radius: 50px; 
+        }
+    </style>
 <div class="page-content">
     <div class="container-fluid">
         <!-- start page title -->

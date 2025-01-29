@@ -6,7 +6,7 @@
 
 <style>
         .swal2-popup {
-            border-radius: 50px; /* Modern görünüm için köşe yuvarlama */
+            border-radius: 50px; 
         }
     </style>
 <div class="page-content">

@@ -4,7 +4,7 @@
 @section('content')
     <style>
         .swal2-popup {
-            border-radius: 50px; /* Modern görünüm için köşe yuvarlama */
+            border-radius: 50px; 
         }
     </style>
 
@@ -74,10 +74,11 @@
                                             <tr id="order-{{ $socialmore->id }}">
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                    <img src="{{ asset($socialmore->image) }}"   style="width: 150px; height: 80px; object-fit: cover; border-radius: 4px;">
+                                                    <img src="{{ asset($socialmore->image) }}"   style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
                                                 </td>
                                                 <td>{{ $socialmore->link }}</td>
                                                 <td>
+
                                                     <form action="{{ route('back.pages.socialmore.toggle-status', $socialmore->id) }}" method="POST" class="d-inline-block">
                                                         @csrf
                                                         <button type="submit" class="btn btn-sm btn-{{ $socialmore->status ? 'success' : 'danger' }}">
