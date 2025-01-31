@@ -95,15 +95,15 @@
                                         <!-- EN tab -->
                                         <div class="tab-pane" id="en" role="tabpanel">
                                             <div class="mb-3">
-                                                <label for="special_title_en" class="form-label">Özel Başlık (EN):</label>
+                                                <label for="special_title_en" class="form-label">Special Title (EN):</label>
                                                 <input type="text" class="form-control" name="special_title_en" value="{{ old('special_title_en') }}" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="title_en" class="form-label">Başlıq (EN):</label>
+                                                <label for="title_en" class="form-label">Title (EN):</label>
                                                 <input type="text" class="form-control" name="title_en" value="{{ old('title_en') }}" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="description_en" class="form-label">Açıklama (EN):</label>
+                                                <label for="description_en" class="form-label">Description (EN):</label>
                                                 <textarea class="form-control summernote" name="description_en" rows="4" required>{{ old('description_en') }}</textarea>
                                             </div>
                                             <div class="mb-3">
@@ -115,15 +115,15 @@
                                         <!-- Ru tab -->
                                         <div class="tab-pane" id="ru" role="tabpanel">
                                             <div class="mb-3">
-                                                <label for="special_title_ru" class="form-label">Özel Başlık (RU):</label>
+                                                <label for="special_title_ru" class="form-label">Специальный заголовок (RU):</label>
                                                 <input type="text" class="form-control" name="special_title_ru" value="{{ old('special_title_ru') }}" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="title_ru" class="form-label">Başlıq (RU):</label>
+                                                <label for="title_ru" class="form-label">Заголовок (RU):</label>
                                                 <input type="text" class="form-control" name="title_ru" value="{{ old('title_ru') }}" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="description_ru" class="form-label">Açıklama (RU):</label>
+                                                <label for="description_ru" class="form-label">Описание (RU):</label>
                                                 <textarea class="form-control summernote" name="description_ru" rows="4" required>{{ old('description_ru') }}</textarea>
                                             </div>
                                             <div class="mb-3">
