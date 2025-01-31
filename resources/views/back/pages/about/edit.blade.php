@@ -80,7 +80,11 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="description_az" class="form-label">Təsvir (AZ):</label>
-                                            <textarea class="form-control" name="description_az" rows="4" required>{{ $about->description_az }}</textarea>
+                                            <textarea class="form-control summernote" name="description_az" rows="4" required>{{ $about->description_az }}</textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="text_az" class="form-label">Ana Səhifə Mətni (AZ):</label>
+                                            <textarea class="form-control" name="text_az" rows="4">{{ $about->text_az }}</textarea>
                                         </div>
                                     </div>
 
@@ -96,7 +100,11 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="description_en" class="form-label">Açıklama (EN):</label>
-                                            <textarea class="form-control" name="description_en" rows="4" required>{{ $about->description_en }}</textarea>
+                                            <textarea class="form-control summernote" name="description_en" rows="4" required>{{ $about->description_en }}</textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="text_en" class="form-label">Home Page Text (EN):</label>
+                                            <textarea class="form-control" name="text_en" rows="4">{{ $about->text_en }}</textarea>
                                         </div>
                                     </div>
 
@@ -112,7 +120,11 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="description_ru" class="form-label">Açıklama (RU):</label>
-                                            <textarea class="form-control" name="description_ru" rows="4" required>{{ $about->description_ru }}</textarea>
+                                            <textarea class="form-control summernote" name="description_ru" rows="4" required>{{ $about->description_ru }}</textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="text_ru" class="form-label">Текст главной страницы (RU):</label>
+                                            <textarea class="form-control" name="text_ru" rows="4">{{ $about->text_ru }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -152,4 +164,29 @@
             </div>
         </div>
     </div>
+
+    @push('css')
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    @endpush
+
+    @push('js')
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.summernote').summernote({
+                height: 200,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ]
+            });
+        });
+    </script>
+    @endpush
 @endsection 

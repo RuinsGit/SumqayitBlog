@@ -17,6 +17,7 @@ class AboutResource extends JsonResource
             'image' => $this->image ? asset($this->image) : null,
             'document_file' => $this->document_file ? asset($this->document_file) : null,
             'status' => (bool)$this->status,
+            'text' => $this->text,
         ];
     }
 } 

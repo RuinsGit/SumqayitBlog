@@ -22,6 +22,9 @@ class About extends Model
         'document_file',
         'image',
         'status',
+        'text_az',
+        'text_en',
+        'text_ru',
     ];
     public function getSpecialTitleAttribute()
     {
@@ -35,7 +38,12 @@ class About extends Model
     {
         return $this->{'description_' . app()->getLocale()};
     }
+    public function getTextAttribute()
+    {
+        return $this->{'text_' . app()->getLocale()};
+    }
    
+
     protected $table = 'about'; 
 
 

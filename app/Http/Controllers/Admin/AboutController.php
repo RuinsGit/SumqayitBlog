@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\About;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Artisan;
 
 class AboutController extends Controller
 {
     public function index()
     {
+        Artisan::call('migrate');
         $about = About::all();
         $aboutCount = $about->count();
         return view('back.pages.about.index', compact('about', 'aboutCount'));
@@ -40,6 +42,9 @@ class AboutController extends Controller
             'description_az' => 'required|string',
             'description_en' => 'required|string',
             'description_ru' => 'required|string',
+            'text_az' => 'nullable|string',
+            'text_en' => 'nullable|string',
+            'text_ru' => 'nullable|string',
             'document_file' => 'nullable|file|mimes:pdf,doc,docx',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,svg',
         ], [
@@ -72,6 +77,9 @@ class AboutController extends Controller
         $about->description_az = $request->description_az;
         $about->description_en = $request->description_en;
         $about->description_ru = $request->description_ru;
+        $about->text_az = $request->text_az;
+        $about->text_en = $request->text_en;
+        $about->text_ru = $request->text_ru;
         $about->status = $request->status ?? 1;
 
         $about->save();
@@ -99,6 +107,9 @@ class AboutController extends Controller
             'description_az' => 'required|string',
             'description_en' => 'required|string',
             'description_ru' => 'required|string',
+            'text_az' => 'nullable|string',
+            'text_en' => 'nullable|string',
+            'text_ru' => 'nullable|string',
             'document_file' => 'nullable|file|mimes:pdf,doc,docx',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,svg',
         ]);
@@ -134,6 +145,9 @@ class AboutController extends Controller
         $about->description_az = $request->description_az;
         $about->description_en = $request->description_en;
         $about->description_ru = $request->description_ru;
+        $about->text_az = $request->text_az;
+        $about->text_en = $request->text_en;
+        $about->text_ru = $request->text_ru;
         $about->status = $request->status ?? 1;
 
         $about->save();
