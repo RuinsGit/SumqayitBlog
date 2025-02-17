@@ -104,7 +104,7 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Açıqlama</label>
-                                            <textarea name="description_az" class="form-control summernote">{{ $article->description_az }}</textarea>
+                                            <textarea name="description_az" class="form-control">{{ $article->description_az }}</textarea>
                                         </div>
 
                                         <div class="mb-3">
@@ -154,7 +154,7 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Description</label>
-                                            <textarea name="description_en" class="form-control summernote">{{ $article->description_en }}</textarea>
+                                            <textarea name="description_en" class="form-control">{{ $article->description_en }}</textarea>
                                         </div>
 
                                         <div class="mb-3">
@@ -204,7 +204,7 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Описание</label>
-                                            <textarea name="description_ru" class="form-control summernote">{{ $article->description_ru }}</textarea>
+                                            <textarea name="description_ru" class="form-control">{{ $article->description_ru }}</textarea>
                                         </div>
 
                                         <div class="mb-3">
@@ -242,28 +242,12 @@
     </div>
 
     @push('css')
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     @endpush
 
     @push('js')
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
-            $('.summernote').summernote({
-                height: 200,
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'underline', 'clear']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['fullscreen', 'codeview', 'help']]
-                ]
-            });
-            
             $('form').on('submit', function(e) {
                 e.preventDefault();
                 let form = this;

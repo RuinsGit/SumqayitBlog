@@ -76,7 +76,8 @@
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Açıqlama</label>
-                                        <textarea name="description_az" class="form-control summernote @error('description_az') is-invalid @enderror" rows="4">{{ old('description_az') }}</textarea>
+                                        <input type="hidden" name="description_az" id="description_az" value="{{ old('description_az') }}">
+                                        <div id="descriptionAZ" class="ck-content">{!! old('description_az') !!}</div>
                                         @error('description_az')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -122,7 +123,8 @@
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Description</label>
-                                        <textarea name="description_en" class="form-control summernote @error('description_en') is-invalid @enderror" rows="4">{{ old('description_en') }}</textarea>
+                                        <input type="hidden" name="description_en" id="description_en" value="{{ old('description_en') }}">
+                                        <div id="descriptionEN" class="ck-content">{!! old('description_en') !!}</div>
                                         @error('description_en')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -168,7 +170,8 @@
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Описание</label>
-                                        <textarea name="description_ru" class="form-control summernote @error('description_ru') is-invalid @enderror" rows="4">{{ old('description_ru') }}</textarea>
+                                        <input type="hidden" name="description_ru" id="description_ru" value="{{ old('description_ru') }}">
+                                        <div id="descriptionRU" class="ck-content">{!! old('description_ru') !!}</div>
                                         @error('description_ru')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -207,102 +210,274 @@
 @endsection
 
 @push('css')
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<style>
+    /* Edit sayfasındaki CKEditor stillerinin aynısı */
+    .ck-editor {
+        overflow: visible !important;
+        z-index: auto !important;
+    }
+    
+    .ck.ck-editor__editable_inline {
+        min-height: 400px;
+        border: 1px solid #e3e3e3 !important;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.05) !important;
+    }
+    
+    .ck.ck-toolbar {
+        position: sticky !important;
+        top: 0;
+        background: white !important;
+        z-index: 100 !important;
+    }
+
+    .ck-editor__editable {
+        min-height: 300px;
+        border-radius: 0 0 10px 10px !important;
+        padding: 1rem 2rem !important;
+        border: 1px solid #e9ecef !important;
+    }
+    
+    .ck.ck-toolbar {
+        border-radius: 10px 10px 0 0 !important;
+        background: #f8f9fa !important;
+        border: 1px solid #e9ecef !important;
+    }
+
+    .ck.ck-font-size .ck-dropdown__panel {
+        min-width: 140px !important;
+        max-height: 400px !important;
+        z-index: 10000 !important;
+    }
+    
+    .ck.ck-font-size .ck-button__label {
+        font-size: 14px !important;
+    }
+    
+    .ck.ck-font-size .ck-button.ck-on {
+        background-color: #e3f2fd;
+    }
+
+    .ck.ck-toolbar__separator {
+        margin: 0 10px !important;
+    }
+    
+    .ck.ck-toolbar-grouping > .ck-toolbar__items {
+        flex-wrap: nowrap !important;
+        overflow: visible !important;
+    }
+
+    .ck-toolbar-container {
+        padding: 10px;
+        background: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+
+    .ck-content {
+        min-height: 300px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 20px;
+        background: white;
+    }
+
+    .ck.ck-editor__editable_inline {
+        border: 1px solid #ddd !important;
+    }
+
+    .ck.ck-toolbar {
+        background: transparent !important;
+        border: none !important;
+    }
+
+    .ck.ck-toolbar__items {
+        flex-wrap: wrap !important;
+    }
+
+    .ck.ck-dropdown__panel {
+        max-height: 300px !important;
+        overflow-y: auto !important;
+    }
+
+    .ck.ck-button {
+        color: #333 !important;
+    }
+
+    .ck.ck-button:hover {
+        background: #e9ecef !important;
+    }
+
+    .ck.ck-button.ck-on {
+        background: #e3f2fd !important;
+        color: #0d6efd !important;
+    }
+</style>
 @endpush
 
-@push('js')
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('.summernote').summernote({
-            height: 200,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
+@push('scripts')
+<!-- CKEditor CDN -->
+<script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/decoupled-document/ckeditor.js"></script>
 
-        function createSlug(str) {
-            str = str || '';
-            str = str.toString();
-            
-            const charMap = {
-                'ə': 'e', 'Ə': 'e',
-                'ı': 'i', 'I': 'i', 'İ': 'i',
-                'ö': 'o', 'Ö': 'o',
-                'ü': 'u', 'Ü': 'u',
-                'ş': 's', 'Ş': 's',
-                'ç': 'c', 'Ç': 'c',
-                'ğ': 'g', 'Ğ': 'g',
-                'а': 'a', 'А': 'a',
-                'б': 'b', 'Б': 'b',
-                'в': 'v', 'В': 'v',
-                'г': 'g', 'Г': 'g',
-                'д': 'd', 'Д': 'd',
-                'е': 'e', 'Е': 'e',
-                'ё': 'yo', 'Ё': 'yo',
-                'ж': 'zh', 'Ж': 'zh',
-                'з': 'z', 'З': 'z',
-                'и': 'i', 'И': 'i',
-                'й': 'y', 'Й': 'y',
-                'к': 'k', 'К': 'k',
-                'л': 'l', 'Л': 'l',
-                'м': 'm', 'М': 'm',
-                'н': 'n', 'Н': 'n',
-                'о': 'o', 'О': 'o',
-                'п': 'p', 'П': 'p',
-                'р': 'r', 'Р': 'r',
-                'с': 's', 'С': 's',
-                'т': 't', 'Т': 't',
-                'у': 'u', 'У': 'u',
-                'ф': 'f', 'Ф': 'f',
-                'х': 'h', 'Х': 'h',
-                'ц': 'ts', 'Ц': 'ts',
-                'ч': 'ch', 'Ч': 'ch',
-                'ш': 'sh', 'Ш': 'sh',
-                'щ': 'sch', 'Щ': 'sch',
-                'ъ': '', 'Ъ': '',
-                'ы': 'y', 'Ы': 'y',
-                'ь': '', 'Ь': '',
-                'э': 'e', 'Э': 'e',
-                'ю': 'yu', 'Ю': 'yu',
-                'я': 'ya', 'Я': 'ya'
+<script>
+(function() {
+    const editorConfig = {
+        toolbar: {
+            items: [
+                'fontFamily', 'fontSize', '|',
+                'bold', 'italic', 'underline', '|',
+                'alignment', '|',
+                'bulletedList', 'numberedList', '|',
+                'link', 'blockQuote', '|',
+                'undo', 'redo'
+            ]
+        },
+        fontSize: {
+            options: [
+                '8pt', '9pt', '10pt', '11pt', '12pt', 
+                '14pt', '16pt', '18pt', '20pt', '22pt', 
+                '24pt', '26pt', '28pt', '36pt', '48pt'
+            ]
+        },
+        fontFamily: {
+            options: [
+                'default',
+                'Arial, Helvetica, sans-serif',
+                'Courier New, Courier, monospace',
+                'Georgia, serif',
+                'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                'Tahoma, Geneva, sans-serif',
+                'Times New Roman, Times, serif',
+                'Trebuchet MS, Helvetica, sans-serif',
+                'Verdana, Geneva, sans-serif'
+            ]
+        },
+        language: 'tr'
+    };
+
+    function initEditor(elementId, hiddenInputId) {
+        return DecoupledEditor
+            .create(document.querySelector(elementId), editorConfig)
+            .then(editor => {
+                const toolbarContainer = document.createElement('div');
+                toolbarContainer.classList.add('ck-toolbar-container');
+                document.querySelector(elementId).parentElement.insertBefore(
+                    toolbarContainer,
+                    document.querySelector(elementId)
+                );
+                toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+
+                editor.model.document.on('change:data', () => {
+                    document.querySelector(hiddenInputId).value = editor.getData();
+                });
+
+                return editor;
+            })
+            .catch(error => console.error('Editor hatası:', error));
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // AZ editörünü başlat
+        initEditor('#descriptionAZ', '#description_az');
+
+        // Tab değişikliğinde diğer editörleri başlat
+        $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
+            const target = $(e.target).attr('href');
+            const editorMap = {
+                '#en': [['#descriptionEN', '#description_en']],
+                '#ru': [['#descriptionRU', '#description_ru']]
             };
 
-            for (let key in charMap) {
-                str = str.replace(new RegExp(key, 'g'), charMap[key]);
-            }
-
-            return str
-                .toLowerCase() 
-                .trim() 
-                .replace(/[^a-z0-9\s-]/g, '') 
-                .replace(/\s+/g, '-') 
-                .replace(/-+/g, '-') 
-                .replace(/^-+/, '') 
-                .replace(/-+$/, ''); 
-        }
-
-        ['az', 'en', 'ru'].forEach(function(lang) {
-            let titleInput = $('input[name="title_' + lang + '"]');
-            let slugInput = $('input[name="slug_' + lang + '"]');
-
-            titleInput.on('input', function() {
-                let title = $(this).val();
-                let slug = createSlug(title);
-                slugInput.val(slug);
-            });
-
-            let initialTitle = titleInput.val();
-            if (initialTitle) {
-                slugInput.val(createSlug(initialTitle));
+            if (editorMap[target]) {
+                editorMap[target].forEach(([editorId, inputId]) => {
+                    if (!window[editorId.substr(1) + 'Editor']) {
+                        initEditor(editorId, inputId)
+                            .then(editor => {
+                                window[editorId.substr(1) + 'Editor'] = editor;
+                            });
+                    }
+                });
             }
         });
     });
+
+    // Slug oluşturma fonksiyonu (Mevcut kodunuz)
+    function createSlug(str) {
+        str = str || '';
+        str = str.toString();
+        
+        const charMap = {
+            'ə': 'e', 'Ə': 'e',
+            'ı': 'i', 'I': 'i', 'İ': 'i',
+            'ö': 'o', 'Ö': 'o',
+            'ü': 'u', 'Ü': 'u',
+            'ş': 's', 'Ş': 's',
+            'ç': 'c', 'Ç': 'c',
+            'ğ': 'g', 'Ğ': 'g',
+            'а': 'a', 'А': 'a',
+            'б': 'b', 'Б': 'b',
+            'в': 'v', 'В': 'v',
+            'г': 'g', 'Г': 'g',
+            'д': 'd', 'Д': 'd',
+            'е': 'e', 'Е': 'e',
+            'ё': 'yo', 'Ё': 'yo',
+            'ж': 'zh', 'Ж': 'zh',
+            'з': 'z', 'З': 'z',
+            'и': 'i', 'И': 'i',
+            'й': 'y', 'Й': 'y',
+            'к': 'k', 'К': 'k',
+            'л': 'l', 'Л': 'l',
+            'м': 'm', 'М': 'm',
+            'н': 'n', 'Н': 'n',
+            'о': 'o', 'О': 'o',
+            'п': 'p', 'П': 'p',
+            'р': 'r', 'Р': 'r',
+            'с': 's', 'С': 's',
+            'т': 't', 'Т': 't',
+            'у': 'u', 'У': 'u',
+            'ф': 'f', 'Ф': 'f',
+            'х': 'h', 'Х': 'h',
+            'ц': 'ts', 'Ц': 'ts',
+            'ч': 'ch', 'Ч': 'ch',
+            'ш': 'sh', 'Ш': 'sh',
+            'щ': 'sch', 'Щ': 'sch',
+            'ъ': '', 'Ъ': '',
+            'ы': 'y', 'Ы': 'y',
+            'ь': '', 'Ь': '',
+            'э': 'e', 'Э': 'e',
+            'ю': 'yu', 'Ю': 'yu',
+            'я': 'ya', 'Я': 'ya'
+        };
+
+        for (let key in charMap) {
+            str = str.replace(new RegExp(key, 'g'), charMap[key]);
+        }
+
+        return str
+            .toLowerCase() 
+            .trim() 
+            .replace(/[^a-z0-9\s-]/g, '') 
+            .replace(/\s+/g, '-') 
+            .replace(/-+/g, '-') 
+            .replace(/^-+/, '') 
+            .replace(/-+$/, ''); 
+    }
+
+    ['az', 'en', 'ru'].forEach(function(lang) {
+        let titleInput = $('input[name="title_' + lang + '"]');
+        let slugInput = $('input[name="slug_' + lang + '"]');
+
+        titleInput.on('input', function() {
+            let title = $(this).val();
+            let slug = createSlug(title);
+            slugInput.val(slug);
+        });
+
+        let initialTitle = titleInput.val();
+        if (initialTitle) {
+            slugInput.val(createSlug(initialTitle));
+        }
+    });
+})();
 </script>
 @endpush 
