@@ -85,6 +85,8 @@
     <!-- Responsive examples -->
     <script src="{{ asset('back/assets/') }}/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="{{ asset('back/assets/') }}/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    
 
     @if(request()->is('admin/dashboard*'))
     <script src="{{ asset('back/assets/') }}/js/pages/dashboard.init.js"></script>

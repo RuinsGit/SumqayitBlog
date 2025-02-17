@@ -76,7 +76,8 @@
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Açıqlama</label>
-                                        <textarea name="description_az" class="form-control summernote @error('description_az') is-invalid @enderror" rows="4">{{ old('description_az') }}</textarea>
+                                        <input type="hidden" name="description_az" id="description_az" value="{{ old('description_az') }}">
+                                        <div id="descriptionAZ" class="ck-content">{!! old('description_az') !!}</div>
                                         @error('description_az')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -122,7 +123,8 @@
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Description</label>
-                                        <textarea name="description_en" class="form-control summernote @error('description_en') is-invalid @enderror" rows="4">{{ old('description_en') }}</textarea>
+                                        <input type="hidden" name="description_en" id="description_en" value="{{ old('description_en') }}">
+                                        <div id="descriptionEN" class="ck-content">{!! old('description_en') !!}</div>
                                         @error('description_en')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -167,8 +169,9 @@
                                         @enderror
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label">Описание</label>
-                                        <textarea name="description_ru" class="form-control summernote @error('description_ru') is-invalid @enderror" rows="4">{{ old('description_ru') }}</textarea>
+                                        <label class="form-label">Описан    ие</label>
+                                        <input type="hidden" name="description_ru" id="description_ru" value="{{ old('description_ru') }}">
+                                        <div id="descriptionRU" class="ck-content">{!! old('description_ru') !!}</div>
                                         @error('description_ru')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -205,105 +208,192 @@
     </div>
 </div>
 @endsection
-
 @push('css')
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<style>
+    .ck-editor {
+        overflow: visible !important;
+        z-index: auto !important;
+    }
+    
+    .ck.ck-editor__editable_inline {
+        min-height: 400px;
+        border: 1px solid #e3e3e3 !important;
+        padding: 1rem 2rem !important;
+        border-radius: 0 0 10px 10px !important;
+    }
+    
+    .ck.ck-toolbar {
+        position: sticky !important;
+        top: 0;
+        background: #f8f9fa !important;
+        z-index: 100 !important;
+        border-radius: 10px 10px 0 0 !important;
+        border: 1px solid #e9ecef !important;
+    }
+
+    .ck-content {
+        min-height: 300px;
+        background: white;
+        padding: 20px;
+    }
+
+    .ck.ck-toolbar__items {
+        flex-wrap: wrap !important;
+    }
+
+    .ck.ck-dropdown__panel {
+        max-height: 300px !important;
+        overflow-y: auto !important;
+        z-index: 10000 !important;
+    }
+
+    .ck.ck-button {
+        color: #333 !important;
+    }
+
+    .ck.ck-button:hover {
+        background: #e9ecef !important;
+    }
+
+    .ck.ck-button.ck-on {
+        background: #e3f2fd !important;
+        color: #0d6efd !important;
+    }
+
+    .ck-toolbar-container {
+        padding: 10px;
+        background: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+</style>
 @endpush
 
-@push('js')
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+@push('scripts')
+<script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/decoupled-document/ckeditor.js"></script>
+
 <script>
-    $(document).ready(function() {
-        $('.summernote').summernote({
-            height: 200,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
+(function() {
+    if(typeof DecoupledEditor === 'undefined') {
+        console.error('CKEditor yükləmək mümkün olmadı!');
+        return;
+    }
+
+    const editorConfig = {
+        toolbar: {
+            items: [
+                'fontFamily', 'fontSize', '|',
+                'bold', 'italic', 'underline', '|',
+                'alignment', '|',
+                'bulletedList', 'numberedList', '|',
+                'link', 'blockQuote', '|',
+                'undo', 'redo'
             ]
-        });
-        
-        function createSlug(str) {
-            str = str || '';
-            str = str.toString();
-            
-            const charMap = {
-                'ə': 'e', 'Ə': 'e',
-                'ı': 'i', 'I': 'i', 'İ': 'i',
-                'ö': 'o', 'Ö': 'o',
-                'ü': 'u', 'Ü': 'u',
-                'ş': 's', 'Ş': 's',
-                'ç': 'c', 'Ç': 'c',
-                'ğ': 'g', 'Ğ': 'g',
-                'а': 'a', 'А': 'a',
-                'б': 'b', 'Б': 'b',
-                'в': 'v', 'В': 'v',
-                'г': 'g', 'Г': 'g',
-                'д': 'd', 'Д': 'd',
-                'е': 'e', 'Е': 'e',
-                'ё': 'yo', 'Ё': 'yo',
-                'ж': 'zh', 'Ж': 'zh',
-                'з': 'z', 'З': 'z',
-                'и': 'i', 'И': 'i',
-                'й': 'y', 'Й': 'y',
-                'к': 'k', 'К': 'k',
-                'л': 'l', 'Л': 'l',
-                'м': 'm', 'М': 'm',
-                'н': 'n', 'Н': 'n',
-                'о': 'o', 'О': 'o',
-                'п': 'p', 'П': 'p',
-                'р': 'r', 'Р': 'r',
-                'с': 's', 'С': 's',
-                'т': 't', 'Т': 't',
-                'у': 'u', 'У': 'u',
-                'ф': 'f', 'Ф': 'f',
-                'х': 'h', 'Х': 'h',
-                'ц': 'ts', 'Ц': 'ts',
-                'ч': 'ch', 'Ч': 'ch',
-                'ш': 'sh', 'Ш': 'sh',
-                'щ': 'sch', 'Щ': 'sch',
-                'ъ': '', 'Ъ': '',
-                'ы': 'y', 'Ы': 'y',
-                'ь': '', 'Ь': '',
-                'э': 'e', 'Э': 'e',
-                'ю': 'yu', 'Ю': 'yu',
-                'я': 'ya', 'Я': 'ya'
+        },
+        fontSize: {
+            options: [
+                '8pt', '9pt', '10pt', '11pt', '12pt', 
+                '14pt', '16pt', '18pt', '20pt', '22pt', 
+                '24pt', '26pt', '28pt', '36pt', '48pt'
+            ]
+        },
+        fontFamily: {
+            options: [
+                'default',
+                'Arial, Helvetica, sans-serif',
+                'Courier New, Courier, monospace',
+                'Georgia, serif',
+                'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                'Tahoma, Geneva, sans-serif',
+                'Times New Roman, Times, serif',
+                'Trebuchet MS, Helvetica, sans-serif',
+                'Verdana, Geneva, sans-serif'
+            ]
+        },
+        language: 'az'
+    };
+
+    function initEditor(elementId, hiddenInputId) {
+        return DecoupledEditor
+            .create(document.querySelector(elementId), editorConfig)
+            .then(editor => {
+                const toolbarContainer = document.createElement('div');
+                toolbarContainer.classList.add('ck-toolbar-container');
+                document.querySelector(elementId).parentElement.insertBefore(
+                    toolbarContainer,
+                    document.querySelector(elementId)
+                );
+                toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+
+                editor.model.document.on('change:data', () => {
+                    document.querySelector(hiddenInputId).value = editor.getData();
+                });
+
+                return editor;
+            })
+            .catch(error => console.error('Editor xətası:', error));
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        initEditor('#descriptionAZ', '#description_az');
+
+        $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
+            const target = $(e.target).attr('href');
+            const editorMap = {
+                '#en': [['#descriptionEN', '#description_en']],
+                '#ru': [['#descriptionRU', '#description_ru']]
             };
 
-            for (let key in charMap) {
-                str = str.replace(new RegExp(key, 'g'), charMap[key]);
-            }
-
-            return str
-                .toLowerCase() 
-                .trim() 
-                .replace(/[^a-z0-9\s-]/g, '') 
-                .replace(/\s+/g, '-') 
-                .replace(/-+/g, '-') 
-                .replace(/^-+/, '') 
-                .replace(/-+$/, ''); 
-        }
-
-        
-        ['az', 'en', 'ru'].forEach(function(lang) {
-            let titleInput = $('input[name="title_' + lang + '"]');
-            let slugInput = $('input[name="slug_' + lang + '"]');
-
-            titleInput.on('input', function() {
-                let title = $(this).val();
-                let slug = createSlug(title);
-                slugInput.val(slug);
-            });
-
-            let initialTitle = titleInput.val();
-            if (initialTitle) {
-                slugInput.val(createSlug(initialTitle));
+            if (editorMap[target]) {
+                editorMap[target].forEach(([editorId, inputId]) => {
+                    if (!window[editorId.substr(1) + 'Editor']) {
+                        initEditor(editorId, inputId)
+                            .then(editor => {
+                                window[editorId.substr(1) + 'Editor'] = editor;
+                            });
+                    }
+                });
             }
         });
+
+        const slugify = (text) => {
+            const charMap = {
+                'çÇ':'c', 'ğĞ':'g', 'şŞ':'s', 'üÜ':'u', 'ıİ':'i', 'öÖ':'o', 'əƏ':'e',
+                'ёЁ':'yo', 'йЙ':'y', 'щЩ':'sch', 'юЮ':'yu', 'яЯ':'ya',
+                'аА':'a', 'бБ':'b', 'вВ':'v', 'гГ':'g', 'дД':'d', 'еЕ':'e',
+                'жЖ':'zh', 'зЗ':'z', 'иИ':'i', 'кК':'k', 'лЛ':'l', 'мМ':'m',
+                'нН':'n', 'оО':'o', 'пП':'p', 'рР':'r', 'сС':'s', 'тТ':'t',
+                'уУ':'u', 'фФ':'f', 'хХ':'h', 'цЦ':'ts', 'чЧ':'ch', 'шШ':'sh',
+                'ъЪ':'', 'ыЫ':'y', 'ьЬ':'', 'эЭ':'e'
+            };
+
+            for(let key in charMap) {
+                text = text.replace(new RegExp('['+key+']','g'), charMap[key]);
+            }
+            return text
+                .toLowerCase()
+                .replace(/[^-a-zA-Z0-9\s]+/ig, '') 
+                .replace(/\s/gi, "-") 
+                .replace(/-+/g, "-") 
+                .trim();
+        };
+
+        ['az', 'en', 'ru'].forEach(lang => {
+            const titleInput = document.getElementById(`title_${lang}`);
+            const slugInput = document.getElementById(`slug_${lang}`);
+            
+            titleInput.addEventListener('keyup', function() {
+                if (!slugInput.value || slugInput.value === slugify(this.value)) {
+                    slugInput.value = slugify(this.value);
+                }
+            });
+
+            slugInput.addEventListener('keyup', function() {
+                this.value = slugify(this.value);
+            });
+        });
     });
+})();
 </script>
 @endpush 

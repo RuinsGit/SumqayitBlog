@@ -104,7 +104,8 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Açıqlama</label>
-                                            <textarea name="description_az" class="form-control">{{ $article->description_az }}</textarea>
+                                            <input type="hidden" name="description_az" id="description_az" value="{{ old('description_az', $article->description_az) }}">
+                                            <div id="descriptionAZ" class="ck-content">{!! old('description_az', $article->description_az) !!}</div>
                                         </div>
 
                                         <div class="mb-3">
@@ -154,7 +155,8 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Description</label>
-                                            <textarea name="description_en" class="form-control">{{ $article->description_en }}</textarea>
+                                            <input type="hidden" name="description_en" id="description_en" value="{{ old('description_en', $article->description_en) }}">
+                                            <div id="descriptionEN" class="ck-content">{!! old('description_en', $article->description_en) !!}</div>
                                         </div>
 
                                         <div class="mb-3">
@@ -204,7 +206,8 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Описание</label>
-                                            <textarea name="description_ru" class="form-control">{{ $article->description_ru }}</textarea>
+                                            <input type="hidden" name="description_ru" id="description_ru" value="{{ old('description_ru', $article->description_ru) }}">
+                                            <div id="descriptionRU" class="ck-content">{!! old('description_ru', $article->description_ru) !!}</div>
                                         </div>
 
                                         <div class="mb-3">
@@ -241,34 +244,157 @@
         </div>
     </div>
 
-    @push('css')
+    @push('styles')
+    <style>
+        .ck-editor {
+            overflow: visible !important;
+            z-index: auto !important;
+        }
+        
+        .ck.ck-editor__editable_inline {
+            min-height: 400px;
+            border: 1px solid #e3e3e3 !important;
+            padding: 1rem 2rem !important;
+            border-radius: 0 0 10px 10px !important;
+        }
+        
+        .ck.ck-toolbar {
+            position: sticky !important;
+            top: 0;
+            background: #f8f9fa !important;
+            z-index: 100 !important;
+            border-radius: 10px 10px 0 0 !important;
+            border: 1px solid #e9ecef !important;
+        }
+
+        .ck-content {
+            min-height: 300px;
+            background: white;
+            padding: 20px;
+        }
+
+        .ck.ck-toolbar__items {
+            flex-wrap: wrap !important;
+        }
+
+        .ck.ck-dropdown__panel {
+            max-height: 300px !important;
+            overflow-y: auto !important;
+            z-index: 10000 !important;
+        }
+
+        .ck.ck-button {
+            color: #333 !important;
+        }
+
+        .ck.ck-button:hover {
+            background: #e9ecef !important;
+        }
+
+        .ck.ck-button.ck-on {
+            background: #e3f2fd !important;
+            color: #0d6efd !important;
+        }
+
+        .ck-toolbar-container {
+            padding: 10px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+    </style>
     @endpush
 
-    @push('js')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @push('scripts')
+    <!-- CKEditor CDN Bağlantıları -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/decoupled-document/ckeditor.js"></script>
+
     <script>
-        $(document).ready(function() {
-            $('form').on('submit', function(e) {
-                e.preventDefault();
-                let form = this;
-                
-                Swal.fire({
-                    title: 'Əminsiniz?',
-                    text: 'Bu dəyişiklikləri yadda saxlamaq istədiyinizə əminsiniz?',
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Bəli',
-                    cancelButtonText: 'Xeyr'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        form.submit();
-                    }
-                });
+    (function() {
+        if(typeof DecoupledEditor === 'undefined') {
+            console.error('CKEditor yükləmək mümkün olmadı!');
+            return;
+        }
+
+        const editorConfig = {
+            toolbar: {
+                items: [
+                    'fontFamily', 'fontSize', '|',
+                    'bold', 'italic', 'underline', '|',
+                    'alignment', '|',
+                    'bulletedList', 'numberedList', '|',
+                    'link', 'blockQuote', '|',
+                    'undo', 'redo'
+                ]
+            },
+            fontSize: {
+                options: [
+                    '8pt', '9pt', '10pt', '11pt', '12pt', '14pt', '16pt', '18pt', '20pt', '22pt', '24pt', '26pt', '28pt', '36pt', '48pt'
+                ]
+            },
+            fontFamily: {
+                options: [
+                    'default',
+                    'Arial, Helvetica, sans-serif',
+                    'Courier New, Courier, monospace',
+                    'Georgia, serif',
+                    'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                    'Tahoma, Geneva, sans-serif',
+                    'Times New Roman, Times, serif',
+                    'Trebuchet MS, Helvetica, sans-serif',
+                    'Verdana, Geneva, sans-serif'
+                ]
+            },
+            language: 'az'
+        };
+
+        function initEditor(elementId, hiddenInputId) {
+            return DecoupledEditor
+                .create(document.querySelector(elementId), editorConfig)
+                .then(editor => {
+                    const toolbarContainer = document.createElement('div');
+                    toolbarContainer.classList.add('ck-toolbar-container');
+                    document.querySelector(elementId).parentElement.insertBefore(
+                        toolbarContainer,
+                        document.querySelector(elementId)
+                    );
+                    toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+                    
+                    // Form gönderilmeden önce içeriği hidden input'a aktar
+                    editor.model.document.on('change:data', () => {
+                        document.querySelector(hiddenInputId).value = editor.getData();
+                    });
+
+                    return editor;
+                })
+                .catch(error => console.error('Editor hatası:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // AZ editörünü başlat
+            initEditor('#descriptionAZ', '#description_az');
+
+            // Tab değişikliğinde diğer editörleri başlat
+            $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
+                const target = $(e.target).attr('href');
+                const editorMap = {
+                    '#en': [['#descriptionEN', '#description_en']],
+                    '#ru': [['#descriptionRU', '#description_ru']]
+                };
+
+                if (editorMap[target]) {
+                    editorMap[target].forEach(([editorId, inputId]) => {
+                        if (!window[editorId.substr(1) + 'Editor']) {
+                            initEditor(editorId, inputId)
+                                .then(editor => {
+                                    window[editorId.substr(1) + 'Editor'] = editor;
+                                });
+                        }
+                    });
+                }
             });
         });
-
         document.addEventListener('DOMContentLoaded', function() {
             const slugify = (text) => {
                 let trMap = {
@@ -278,7 +404,12 @@
                     'üÜ':'u',
                     'ıİ':'i',
                     'öÖ':'o',
-                    'əƏ':'e'
+                    'əƏ':'e',
+                    'ёЁ':'yo',
+                    'йЙ':'i',
+                    'щЩ':'sh',
+                    'юЮ':'yu',
+                    'яЯ':'ya'
                 };
                 for(let key in trMap) {
                     text = text.replace(new RegExp('['+key+']','g'), trMap[key]);
@@ -306,6 +437,7 @@
                 });
             });
         });
+    })();
     </script>
     @endpush
 @endsection 
