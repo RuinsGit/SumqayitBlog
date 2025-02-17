@@ -36,6 +36,7 @@
     <link href="{{ asset('back/assets/') }}/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
     @stack('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @stack('styles')
 </head>
 
 <body data-topbar="dark">
@@ -60,7 +61,8 @@
     <div class="rightbar-overlay"></div>
 
     <!-- JAVASCRIPT -->
-    <script src="{{ asset('back/assets/') }}/libs/jquery/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="{{ asset('back/assets/libs/jquery/jquery.min.js') }}"><\/script>')</script>
     <script src="{{ asset('back/assets/') }}/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('back/assets/') }}/libs/metismenu/metisMenu.min.js"></script>
     <script src="{{ asset('back/assets/') }}/libs/simplebar/simplebar.min.js"></script>
@@ -84,11 +86,12 @@
     <script src="{{ asset('back/assets/') }}/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="{{ asset('back/assets/') }}/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 
+    @if(request()->is('admin/dashboard*'))
     <script src="{{ asset('back/assets/') }}/js/pages/dashboard.init.js"></script>
+    @endif
 
     <!-- App js -->
     <script src="{{ asset('back/assets/') }}/js/app.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
@@ -99,7 +102,7 @@
             }
         });
     </script>
-    @stack('js')
+    @stack('scripts')
 </body>
 
 
