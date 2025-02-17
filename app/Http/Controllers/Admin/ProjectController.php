@@ -49,6 +49,7 @@ class ProjectController extends Controller
                 'slug_az' => 'nullable|string|max:255',
                 'slug_en' => 'nullable|string|max:255',
                 'slug_ru' => 'nullable|string|max:255',
+                'created_at' => 'nullable|date',
             ]);
 
             
@@ -72,7 +73,10 @@ class ProjectController extends Controller
                 }
             }
 
-            Project::create(array_merge($validated, ['image' => $imagePath]));
+            Project::create(array_merge($validated, [
+                'image' => $imagePath,
+                'created_at' => $request->filled('created_at') ? $request->created_at : now()
+            ]));
 
             return redirect()->route('back.pages.projects.index')->with('success', 'Layihələr uğurla yaradıldı.');
 
@@ -112,9 +116,13 @@ class ProjectController extends Controller
                 'slug_az' => 'nullable|string|max:255',
                 'slug_en' => 'nullable|string|max:255',
                 'slug_ru' => 'nullable|string|max:255',
+                'created_at' => 'nullable|date',
             ]);
 
             $data = $validated;
+            $data['created_at'] = $request->filled('created_at') 
+                ? $request->created_at 
+                : $project->created_at;
 
             if ($request->hasFile('image')) {
                 if ($project->image) {

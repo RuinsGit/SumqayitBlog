@@ -49,6 +49,7 @@ class ArticleController extends Controller
                 'slug_az' => 'nullable|string|max:255',
                 'slug_en' => 'nullable|string|max:255',
                 'slug_ru' => 'nullable|string|max:255',
+                'created_at' => 'nullable|date',
             ]);
 
             if ($request->hasFile('image')) {
@@ -71,7 +72,10 @@ class ArticleController extends Controller
                 }
             }
 
-            Article::create(array_merge($validated, ['image' => $imagePath]));
+            Article::create(array_merge($validated, [
+                'image' => $imagePath,
+                'created_at' => $request->filled('created_at') ? $request->created_at : now()
+            ]));
 
             return redirect()->route('back.pages.articles.index')->with('success', 'Məqalələr uğurla yaradıldı.');
 
@@ -111,9 +115,13 @@ class ArticleController extends Controller
                 'slug_az' => 'nullable|string|max:255',
                 'slug_en' => 'nullable|string|max:255',
                 'slug_ru' => 'nullable|string|max:255',
+                'created_at' => 'nullable|date',
             ]);
 
             $data = $validated;
+            $data['created_at'] = $request->filled('created_at') 
+                ? $request->created_at 
+                : $article->created_at;
 
             if ($request->hasFile('image')) {
                 if ($article->image) {

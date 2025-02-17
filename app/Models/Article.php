@@ -33,6 +33,7 @@ class Article extends Model
         'slug_en',
         'slug_ru',
         'view_count',
+        'created_at'
     ];
     public function getTitleAttribute()
     {

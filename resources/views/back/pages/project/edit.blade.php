@@ -58,6 +58,15 @@
                                             @endif
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Yaradılma Tarixi</label>
+                                            <input type="datetime-local" name="created_at" class="form-control" 
+                                                   value="{{ old('created_at', $project->created_at->format('Y-m-d\TH:i')) }}"
+                                                   placeholder="Boş buraxılsa cari tarix qeyd olunacaq">
+                                            <small class="text-muted">Boş buraxılsa avtomatik cari tarix qeyd olunacaq</small>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <ul class="nav nav-tabs nav-justified mb-3" role="tablist">
