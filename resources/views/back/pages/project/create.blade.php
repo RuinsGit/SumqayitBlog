@@ -3,6 +3,11 @@
 @section('title', 'Yeni Layihə')
 
 @section('content')
+<style>
+    .cke_notifications_area {
+        display: none !important;
+    }
+</style>
 <div class="page-content">
     <div class="container-fluid">
         <div class="row">
@@ -85,8 +90,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Açıqlama</label>
-                                        <input type="hidden" name="description_az" id="description_az" value="{{ old('description_az') }}">
-                                        <div id="descriptionAZ" class="ck-content">{!! old('description_az') !!}</div>
+                                        <textarea name="description_az" id="description_az" class="form-control" rows="4">{{ old('description_az') }}</textarea>
                                         @error('description_az')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -132,8 +136,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Description</label>
-                                        <input type="hidden" name="description_en" id="description_en" value="{{ old('description_en') }}">
-                                        <div id="descriptionEN" class="ck-content">{!! old('description_en') !!}</div>
+                                        <textarea name="description_en" id="description_en" class="form-control" rows="4">{{ old('description_en') }}</textarea>
                                         @error('description_en')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -179,8 +182,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Описание</label>
-                                        <input type="hidden" name="description_ru" id="description_ru" value="{{ old('description_ru') }}">
-                                        <div id="descriptionRU" class="ck-content">{!! old('description_ru') !!}</div>
+                                        <textarea name="description_ru" id="description_ru" class="form-control" rows="4">{{ old('description_ru') }}</textarea>
                                         @error('description_ru')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -325,168 +327,51 @@
 @endpush
 
 @push('scripts')
-<!-- CKEditor CDN -->
-<script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/decoupled-document/ckeditor.js"></script>
-
+<script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
 <script>
-(function() {
-    const editorConfig = {
-        toolbar: {
-            items: [
-                'fontFamily', 'fontSize', '|',
-                'bold', 'italic', 'underline', '|',
-                'alignment', '|',
-                'bulletedList', 'numberedList', '|',
-                'link', 'blockQuote', '|',
-                'undo', 'redo'
-            ]
-        },
-        fontSize: {
-            options: [
-                '8pt', '9pt', '10pt', '11pt', '12pt', 
-                '14pt', '16pt', '18pt', '20pt', '22pt', 
-                '24pt', '26pt', '28pt', '36pt', '48pt'
-            ]
-        },
-        fontFamily: {
-            options: [
-                'default',
-                'Arial, Helvetica, sans-serif',
-                'Courier New, Courier, monospace',
-                'Georgia, serif',
-                'Lucida Sans Unicode, Lucida Grande, sans-serif',
-                'Tahoma, Geneva, sans-serif',
-                'Times New Roman, Times, serif',
-                'Trebuchet MS, Helvetica, sans-serif',
-                'Verdana, Geneva, sans-serif'
-            ]
-        },
-        language: 'tr'
-    };
-
-    function initEditor(elementId, hiddenInputId) {
-        return DecoupledEditor
-            .create(document.querySelector(elementId), editorConfig)
-            .then(editor => {
-                const toolbarContainer = document.createElement('div');
-                toolbarContainer.classList.add('ck-toolbar-container');
-                document.querySelector(elementId).parentElement.insertBefore(
-                    toolbarContainer,
-                    document.querySelector(elementId)
-                );
-                toolbarContainer.appendChild(editor.ui.view.toolbar.element);
-
-                editor.model.document.on('change:data', () => {
-                    document.querySelector(hiddenInputId).value = editor.getData();
-                });
-
-                return editor;
-            })
-            .catch(error => console.error('Editor hatası:', error));
-    }
+    CKEDITOR.replace('description_az');
+    CKEDITOR.replace('description_en');
+    CKEDITOR.replace('description_ru');
 
     document.addEventListener('DOMContentLoaded', function() {
-        // AZ editörünü başlat
-        initEditor('#descriptionAZ', '#description_az');
-
-        // Tab değişikliğinde diğer editörleri başlat
-        $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
-            const target = $(e.target).attr('href');
-            const editorMap = {
-                '#en': [['#descriptionEN', '#description_en']],
-                '#ru': [['#descriptionRU', '#description_ru']]
+        const slugify = (text) => {
+            const charMap = {
+                'çÇ':'c', 'ğĞ':'g', 'şŞ':'s', 'üÜ':'u', 'ıİ':'i', 'öÖ':'o', 'əƏ':'e',
+                'ёЁ':'yo', 'йЙ':'y', 'щЩ':'sch', 'юЮ':'yu', 'яЯ':'ya',
+                'аА':'a', 'бБ':'b', 'вВ':'v', 'гГ':'g', 'дД':'d', 'еЕ':'e',
+                'жЖ':'zh', 'зЗ':'z', 'иИ':'i', 'кК':'k', 'лЛ':'l', 'мМ':'m',
+                'нН':'n', 'оО':'o', 'пП':'p', 'рР':'r', 'сС':'s', 'тТ':'t',
+                'уУ':'u', 'фФ':'f', 'хХ':'h', 'цЦ':'ts', 'чЧ':'ch', 'шШ':'sh',
+                'ъЪ':'', 'ыЫ':'y', 'ьЬ':'', 'эЭ':'e'
             };
 
-            if (editorMap[target]) {
-                editorMap[target].forEach(([editorId, inputId]) => {
-                    if (!window[editorId.substr(1) + 'Editor']) {
-                        initEditor(editorId, inputId)
-                            .then(editor => {
-                                window[editorId.substr(1) + 'Editor'] = editor;
-                            });
+            for(let key in charMap) {
+                text = text.replace(new RegExp('['+key+']','g'), charMap[key]);
+            }
+            return text
+                .toLowerCase()
+                .replace(/[^-a-zA-Z0-9\s]+/ig, '') 
+                .replace(/\s/gi, "-") 
+                .replace(/-+/g, "-") 
+                .trim();
+        };
+
+        ['az', 'en', 'ru'].forEach(lang => {
+            const titleInput = document.querySelector(`[name="title_${lang}"]`);
+            const slugInput = document.querySelector(`[name="slug_${lang}"]`);
+            
+            if (titleInput && slugInput) {
+                titleInput.addEventListener('keyup', function() {
+                    if (!slugInput.value || slugInput.value === slugify(this.value)) {
+                        slugInput.value = slugify(this.value);
                     }
+                });
+
+                slugInput.addEventListener('keyup', function() {
+                    this.value = slugify(this.value);
                 });
             }
         });
     });
-
-    // Slug oluşturma fonksiyonu (Mevcut kodunuz)
-    function createSlug(str) {
-        str = str || '';
-        str = str.toString();
-        
-        const charMap = {
-            'ə': 'e', 'Ə': 'e',
-            'ı': 'i', 'I': 'i', 'İ': 'i',
-            'ö': 'o', 'Ö': 'o',
-            'ü': 'u', 'Ü': 'u',
-            'ş': 's', 'Ş': 's',
-            'ç': 'c', 'Ç': 'c',
-            'ğ': 'g', 'Ğ': 'g',
-            'а': 'a', 'А': 'a',
-            'б': 'b', 'Б': 'b',
-            'в': 'v', 'В': 'v',
-            'г': 'g', 'Г': 'g',
-            'д': 'd', 'Д': 'd',
-            'е': 'e', 'Е': 'e',
-            'ё': 'yo', 'Ё': 'yo',
-            'ж': 'zh', 'Ж': 'zh',
-            'з': 'z', 'З': 'z',
-            'и': 'i', 'И': 'i',
-            'й': 'y', 'Й': 'y',
-            'к': 'k', 'К': 'k',
-            'л': 'l', 'Л': 'l',
-            'м': 'm', 'М': 'm',
-            'н': 'n', 'Н': 'n',
-            'о': 'o', 'О': 'o',
-            'п': 'p', 'П': 'p',
-            'р': 'r', 'Р': 'r',
-            'с': 's', 'С': 's',
-            'т': 't', 'Т': 't',
-            'у': 'u', 'У': 'u',
-            'ф': 'f', 'Ф': 'f',
-            'х': 'h', 'Х': 'h',
-            'ц': 'ts', 'Ц': 'ts',
-            'ч': 'ch', 'Ч': 'ch',
-            'ш': 'sh', 'Ш': 'sh',
-            'щ': 'sch', 'Щ': 'sch',
-            'ъ': '', 'Ъ': '',
-            'ы': 'y', 'Ы': 'y',
-            'ь': '', 'Ь': '',
-            'э': 'e', 'Э': 'e',
-            'ю': 'yu', 'Ю': 'yu',
-            'я': 'ya', 'Я': 'ya'
-        };
-
-        for (let key in charMap) {
-            str = str.replace(new RegExp(key, 'g'), charMap[key]);
-        }
-
-        return str
-            .toLowerCase() 
-            .trim() 
-            .replace(/[^a-z0-9\s-]/g, '') 
-            .replace(/\s+/g, '-') 
-            .replace(/-+/g, '-') 
-            .replace(/^-+/, '') 
-            .replace(/-+$/, ''); 
-    }
-
-    ['az', 'en', 'ru'].forEach(function(lang) {
-        let titleInput = $('input[name="title_' + lang + '"]');
-        let slugInput = $('input[name="slug_' + lang + '"]');
-
-        titleInput.on('input', function() {
-            let title = $(this).val();
-            let slug = createSlug(title);
-            slugInput.val(slug);
-        });
-
-        let initialTitle = titleInput.val();
-        if (initialTitle) {
-            slugInput.val(createSlug(initialTitle));
-        }
-    });
-})();
 </script>
 @endpush 

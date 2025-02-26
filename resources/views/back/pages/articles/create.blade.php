@@ -3,6 +3,11 @@
 @section('title', 'Yeni Məqalə')
 
 @section('content')
+<style>
+    .cke_notifications_area {
+        display: none !important;
+    }
+</style>
 <div class="page-content">
     <div class="container-fluid">
         <div class="row">
@@ -85,8 +90,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Açıqlama</label>
-                                        <input type="hidden" name="description_az" id="description_az" value="{{ old('description_az') }}">
-                                        <div id="descriptionAZ" class="ck-content">{!! old('description_az') !!}</div>
+                                        <textarea name="description_az" id="description_az" class="form-control" rows="4">{{ old('description_az') }}</textarea>
                                         @error('description_az')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -132,8 +136,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Description</label>
-                                        <input type="hidden" name="description_en" id="description_en" value="{{ old('description_en') }}">
-                                        <div id="descriptionEN" class="ck-content">{!! old('description_en') !!}</div>
+                                        <textarea name="description_en" id="description_en" class="form-control" rows="4">{{ old('description_en') }}</textarea>
                                         @error('description_en')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -178,9 +181,8 @@
                                         @enderror
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label">Описан    ие</label>
-                                        <input type="hidden" name="description_ru" id="description_ru" value="{{ old('description_ru') }}">
-                                        <div id="descriptionRU" class="ck-content">{!! old('description_ru') !!}</div>
+                                        <label class="form-label">Описание</label>
+                                        <textarea name="description_ru" id="description_ru" class="form-control" rows="4">{{ old('description_ru') }}</textarea>
                                         @error('description_ru')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -280,92 +282,13 @@
 @endpush
 
 @push('scripts')
-<script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/decoupled-document/ckeditor.js"></script>
-
+<script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
 <script>
-(function() {
-    if(typeof DecoupledEditor === 'undefined') {
-        console.error('CKEditor yükləmək mümkün olmadı!');
-        return;
-    }
-
-    const editorConfig = {
-        toolbar: {
-            items: [
-                'fontFamily', 'fontSize', '|',
-                'bold', 'italic', 'underline', '|',
-                'alignment', '|',
-                'bulletedList', 'numberedList', '|',
-                'link', 'blockQuote', '|',
-                'undo', 'redo'
-            ]
-        },
-        fontSize: {
-            options: [
-                '8pt', '9pt', '10pt', '11pt', '12pt', 
-                '14pt', '16pt', '18pt', '20pt', '22pt', 
-                '24pt', '26pt', '28pt', '36pt', '48pt'
-            ]
-        },
-        fontFamily: {
-            options: [
-                'default',
-                'Arial, Helvetica, sans-serif',
-                'Courier New, Courier, monospace',
-                'Georgia, serif',
-                'Lucida Sans Unicode, Lucida Grande, sans-serif',
-                'Tahoma, Geneva, sans-serif',
-                'Times New Roman, Times, serif',
-                'Trebuchet MS, Helvetica, sans-serif',
-                'Verdana, Geneva, sans-serif'
-            ]
-        },
-        language: 'az'
-    };
-
-    function initEditor(elementId, hiddenInputId) {
-        return DecoupledEditor
-            .create(document.querySelector(elementId), editorConfig)
-            .then(editor => {
-                const toolbarContainer = document.createElement('div');
-                toolbarContainer.classList.add('ck-toolbar-container');
-                document.querySelector(elementId).parentElement.insertBefore(
-                    toolbarContainer,
-                    document.querySelector(elementId)
-                );
-                toolbarContainer.appendChild(editor.ui.view.toolbar.element);
-
-                editor.model.document.on('change:data', () => {
-                    document.querySelector(hiddenInputId).value = editor.getData();
-                });
-
-                return editor;
-            })
-            .catch(error => console.error('Editor xətası:', error));
-    }
+    CKEDITOR.replace('description_az');
+    CKEDITOR.replace('description_en');
+    CKEDITOR.replace('description_ru');
 
     document.addEventListener('DOMContentLoaded', function() {
-        initEditor('#descriptionAZ', '#description_az');
-
-        $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
-            const target = $(e.target).attr('href');
-            const editorMap = {
-                '#en': [['#descriptionEN', '#description_en']],
-                '#ru': [['#descriptionRU', '#description_ru']]
-            };
-
-            if (editorMap[target]) {
-                editorMap[target].forEach(([editorId, inputId]) => {
-                    if (!window[editorId.substr(1) + 'Editor']) {
-                        initEditor(editorId, inputId)
-                            .then(editor => {
-                                window[editorId.substr(1) + 'Editor'] = editor;
-                            });
-                    }
-                });
-            }
-        });
-
         const slugify = (text) => {
             const charMap = {
                 'çÇ':'c', 'ğĞ':'g', 'şŞ':'s', 'üÜ':'u', 'ıİ':'i', 'öÖ':'o', 'əƏ':'e',
@@ -389,20 +312,21 @@
         };
 
         ['az', 'en', 'ru'].forEach(lang => {
-            const titleInput = document.getElementById(`title_${lang}`);
-            const slugInput = document.getElementById(`slug_${lang}`);
+            const titleInput = document.querySelector(`[name="title_${lang}"]`);
+            const slugInput = document.querySelector(`[name="slug_${lang}"]`);
             
-            titleInput.addEventListener('keyup', function() {
-                if (!slugInput.value || slugInput.value === slugify(this.value)) {
-                    slugInput.value = slugify(this.value);
-                }
-            });
+            if (titleInput && slugInput) {
+                titleInput.addEventListener('keyup', function() {
+                    if (!slugInput.value || slugInput.value === slugify(this.value)) {
+                        slugInput.value = slugify(this.value);
+                    }
+                });
 
-            slugInput.addEventListener('keyup', function() {
-                this.value = slugify(this.value);
-            });
+                slugInput.addEventListener('keyup', function() {
+                    this.value = slugify(this.value);
+                });
+            }
         });
     });
-})();
 </script>
 @endpush 

@@ -60,6 +60,7 @@
                                     <tr>
                                         <th scope="col" class="text-center">#</th>
                                         <th scope="col" class="text-center">Başlıq</th>
+                                        <!-- <th scope="col" class="text-center">Açıqlama</th> -->
                                         <th scope="col" class="text-center">Şəkil</th>
                                         <th scope="col" class="text-center">İşlər</th>
                                     </tr>
@@ -69,6 +70,7 @@
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td>{{ $article->title_az }}</td>
+                                            <!-- <td>{{ $article->description_az }}</td> -->
                                             <td class="text-center">
                                                 <img src="{{ asset('storage/' . $article->image) }}" class="img-thumbnail" style="width: 150px; height: 80px; object-fit: cover; border-radius: 4px;">
                                             </td>
