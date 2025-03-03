@@ -27,7 +27,7 @@ class ContactMarketingApiController extends Controller
 
         $contact = ContactMarketing::create($request->all());
         
-        Mail::to('museyibli.ruhin@gmail.com')->send(new ContactMarketingMail($contact));
+        Mail::to('etimad.musaoglu@gmail.com')->send(new ContactMarketingMail($contact));
         
         return new ContactMarketingResource($contact);
     }
@@ -53,7 +53,7 @@ class ContactMarketingApiController extends Controller
             'message' => 'This is a test message.',
         ]);
 
-        Mail::to('museyibli.ruhin@gmail.com')->send(new ContactMarketingMail($contactMarketing));
+        Mail::to('etimad.musaoglu@gmail.com')->send(new ContactMarketingMail($contactMarketing));
 
         return response()->json(['message' => 'Test mail sent!']);
     }

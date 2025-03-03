@@ -48,7 +48,7 @@ class ContactRequestApiController extends Controller
             ]);
 
             // Mail gönderme işlemi
-            Mail::to('museyibli.ruhin@gmail.com')->send(new ContactMail($contactRequest));
+            Mail::to('etimad.musaoglu@gmail.com')->send(new ContactMail($contactRequest));
 
             DB::commit();
 
