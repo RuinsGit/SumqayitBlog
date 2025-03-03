@@ -7,6 +7,10 @@ use App\Models\ContactRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Mail\ContactMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
+use App\Http\Resources\ContactRequestResource;
 
 class ContactRequestApiController extends Controller
 {
@@ -25,37 +29,42 @@ class ContactRequestApiController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'number' => 'required|string|max:20',
-            'text' => 'required|string',
-            'status' => 'nullable|string|in:pending,processed' // Status opsiyonel
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
         try {
-            $contactRequest = ContactRequest::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'number' => $request->number,
-                'text' => $request->text,
-                'status' => $request->status ?? 'pending' // Default değer
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
+                'number' => 'required|string|max:20',
+                'text' => 'required|string'
             ]);
 
+            DB::beginTransaction();
+            
+            $contactRequest = ContactRequest::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'number' => $validated['number'],
+                'text' => $validated['text'],
+                'status' => ContactRequest::STATUS_NEW
+            ]);
+
+            // Mail gönderme işlemi
+            Mail::to('museyibli.ruhin@gmail.com')->send(new ContactMail($contactRequest));
+
+            DB::commit();
+
             return response()->json([
-                'status' => 'success',
-                'data' => $contactRequest
+                'success' => true,
+                'message' => 'Mail uğurla göndərildi',
+                'data' => new ContactRequestResource($contactRequest)
             ], 201);
 
         } catch (\Exception $e) {
-            return $this->sendErrorResponse($e);
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Xəta baş verdi',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 

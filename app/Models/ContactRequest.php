@@ -9,6 +9,8 @@ class ContactRequest extends Model
 {
     use HasFactory;
 
+    const STATUS_NEW = 'new';
+
     protected $fillable = [
         'name',
         'email',
