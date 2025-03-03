@@ -55,14 +55,14 @@
                                 <div class="tab-pane active" id="az" role="tabpanel">
                                     <div class="mb-3">
                                         <label class="form-label">Slug</label>
-                                        <input type="text" name="slug_az" class="form-control @error('slug_az') is-invalid @enderror" value="{{ old('slug_az') }}">
+                                        <input type="text" name="slug_az" id="slug_az" class="form-control @error('slug_az') is-invalid @enderror" value="{{ old('slug_az') }}">
                                         @error('slug_az')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Başlıq</label>
-                                        <input type="text" name="title_az" class="form-control @error('title_az') is-invalid @enderror" value="{{ old('title_az') }}" required>
+                                        <input type="text" name="title_az" id="title_az" class="form-control @error('title_az') is-invalid @enderror" value="{{ old('title_az') }}" required>
                                         @error('title_az')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -76,7 +76,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Açıqlama</label>
-                                        <textarea name="description_az" class="form-control summernote @error('description_az') is-invalid @enderror" rows="4">{{ old('description_az') }}</textarea>
+                                        <textarea name="description_az" id="description_az" class="form-control @error('description_az') is-invalid @enderror" rows="6">{{ old('description_az') }}</textarea>
                                         @error('description_az')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -101,14 +101,14 @@
                                 <div class="tab-pane" id="en" role="tabpanel">
                                     <div class="mb-3">
                                         <label class="form-label">Slug</label>
-                                        <input type="text" name="slug_en" class="form-control @error('slug_en') is-invalid @enderror" value="{{ old('slug_en') }}">
+                                        <input type="text" name="slug_en" id="slug_en" class="form-control @error('slug_en') is-invalid @enderror" value="{{ old('slug_en') }}">
                                         @error('slug_en')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Title</label>
-                                        <input type="text" name="title_en" class="form-control @error('title_en') is-invalid @enderror" value="{{ old('title_en') }}" required>
+                                        <input type="text" name="title_en" id="title_en" class="form-control @error('title_en') is-invalid @enderror" value="{{ old('title_en') }}" required>
                                         @error('title_en')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -122,7 +122,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Description</label>
-                                        <textarea name="description_en" class="form-control summernote @error('description_en') is-invalid @enderror" rows="4">{{ old('description_en') }}</textarea>
+                                        <textarea name="description_en" id="description_en" class="form-control @error('description_en') is-invalid @enderror" rows="6">{{ old('description_en') }}</textarea>
                                         @error('description_en')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -147,14 +147,14 @@
                                 <div class="tab-pane" id="ru" role="tabpanel">
                                     <div class="mb-3">
                                         <label class="form-label">Slug</label>
-                                        <input type="text" name="slug_ru" class="form-control @error('slug_ru') is-invalid @enderror" value="{{ old('slug_ru') }}">
+                                        <input type="text" name="slug_ru" id="slug_ru" class="form-control @error('slug_ru') is-invalid @enderror" value="{{ old('slug_ru') }}">
                                         @error('slug_ru')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Заголовок</label>
-                                        <input type="text" name="title_ru" class="form-control @error('title_ru') is-invalid @enderror" value="{{ old('title_ru') }}" required>
+                                        <input type="text" name="title_ru" id="title_ru" class="form-control @error('title_ru') is-invalid @enderror" value="{{ old('title_ru') }}" required>
                                         @error('title_ru')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -168,7 +168,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Описание</label>
-                                        <textarea name="description_ru" class="form-control summernote @error('description_ru') is-invalid @enderror" rows="4">{{ old('description_ru') }}</textarea>
+                                        <textarea name="description_ru" id="description_ru" class="form-control @error('description_ru') is-invalid @enderror" rows="6">{{ old('description_ru') }}</textarea>
                                         @error('description_ru')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -207,26 +207,124 @@
 @endsection
 
 @push('css')
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<style>
+    /* CKEditor stilleri */
+    .ck-editor {
+        overflow: visible !important;
+        z-index: auto !important;
+    }
+    
+    .ck.ck-editor__editable_inline {
+        min-height: 400px;
+        border: 1px solid #e3e3e3 !important;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.05) !important;
+    }
+    
+    .ck.ck-toolbar {
+        position: sticky !important;
+        top: 0;
+        background: white !important;
+        z-index: 100 !important;
+    }
+
+    .ck-editor__editable {
+        min-height: 300px;
+        border-radius: 0 0 10px 10px !important;
+        padding: 1rem 2rem !important;
+        border: 1px solid #e9ecef !important;
+    }
+    
+    .ck.ck-toolbar {
+        border-radius: 10px 10px 0 0 !important;
+        background: #f8f9fa !important;
+        border: 1px solid #e9ecef !important;
+    }
+
+    .ck.ck-font-size .ck-dropdown__panel {
+        min-width: 140px !important;
+        max-height: 400px !important;
+        z-index: 10000 !important;
+    }
+    
+    .ck.ck-font-size .ck-button__label {
+        font-size: 14px !important;
+    }
+    
+    .ck.ck-font-size .ck-button.ck-on {
+        background-color: #e3f2fd;
+    }
+
+    .ck.ck-toolbar__separator {
+        margin: 0 10px !important;
+    }
+    
+    .ck.ck-toolbar-grouping > .ck-toolbar__items {
+        flex-wrap: nowrap !important;
+        overflow: visible !important;
+    }
+
+    .ck-toolbar-container {
+        padding: 10px;
+        background: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+
+    .ck-content {
+        min-height: 300px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 20px;
+        background: white;
+    }
+
+    .ck.ck-editor__editable_inline {
+        border: 1px solid #ddd !important;
+    }
+
+    .ck.ck-toolbar {
+        background: transparent !important;
+        border: none !important;
+    }
+
+    .ck.ck-toolbar__items {
+        flex-wrap: wrap !important;
+    }
+
+    .ck.ck-dropdown__panel {
+        max-height: 300px !important;
+        overflow-y: auto !important;
+    }
+
+    .ck.ck-button {
+        color: #333 !important;
+    }
+
+    .ck.ck-button:hover {
+        background: #e9ecef !important;
+    }
+
+    .ck.ck-button.ck-on {
+        background: #e3f2fd !important;
+        color: #0d6efd !important;
+    }
+    
+    .cke_notifications_area {
+        display: none !important;
+    }
+</style>
 @endpush
 
-@push('js')
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+@push('scripts')
+<script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
 <script>
     $(document).ready(function() {
-        $('.summernote').summernote({
-            height: 200,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
-
+        // CKEditor başlatma - jQuery ready içine alındı
+        CKEDITOR.replace('description_az');
+        CKEDITOR.replace('description_en');
+        CKEDITOR.replace('description_ru');
+        
         function createSlug(str) {
             str = str || '';
             str = str.toString();
@@ -289,18 +387,15 @@
         }
 
         ['az', 'en', 'ru'].forEach(function(lang) {
-            let titleInput = $('input[name="title_' + lang + '"]');
-            let slugInput = $('input[name="slug_' + lang + '"]');
+            let titleInput = document.getElementById('title_' + lang);
+            let slugInput = document.getElementById('slug_' + lang);
 
-            titleInput.on('input', function() {
-                let title = $(this).val();
-                let slug = createSlug(title);
-                slugInput.val(slug);
-            });
-
-            let initialTitle = titleInput.val();
-            if (initialTitle) {
-                slugInput.val(createSlug(initialTitle));
+            if (titleInput && slugInput) {
+                titleInput.addEventListener('input', function() {
+                    let title = this.value;
+                    let slug = createSlug(title);
+                    slugInput.value = slug;
+                });
             }
         });
     });

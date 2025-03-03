@@ -8,6 +8,9 @@
         .swal2-popup {
             border-radius: 50px;
         }
+        .cke_notifications_area {
+            display: none !important;
+        }
     </style>
     <div class="page-content">
         <div class="container-fluid">
@@ -100,7 +103,7 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Açıqlama</label>
-                                            <textarea name="description_az" class="form-control summernote">{{ $digital->description_az }}</textarea>
+                                            <textarea name="description_az" id="description_az" class="form-control" rows="6">{{ $digital->description_az }}</textarea>
                                         </div>
 
                                         <div class="mb-3">
@@ -150,7 +153,7 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Description</label>
-                                            <textarea name="description_en" class="form-control summernote">{{ $digital->description_en }}</textarea>
+                                            <textarea name="description_en" id="description_en" class="form-control" rows="6">{{ $digital->description_en }}</textarea>
                                         </div>
 
                                         <div class="mb-3">
@@ -200,7 +203,7 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Описание</label>
-                                            <textarea name="description_ru" class="form-control summernote">{{ $digital->description_ru }}</textarea>
+                                            <textarea name="description_ru" id="description_ru" class="form-control" rows="6">{{ $digital->description_ru }}</textarea>
                                         </div>
 
                                         <div class="mb-3">
@@ -238,28 +241,116 @@
     </div>
 
     @push('css')
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <style>
+      
+        .ck-editor {
+            overflow: visible !important;
+            z-index: auto !important;
+        }
+        
+        .ck.ck-editor__editable_inline {
+            min-height: 400px;
+            border: 1px solid #e3e3e3 !important;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05) !important;
+        }
+        
+        .ck.ck-toolbar {
+            position: sticky !important;
+            top: 0;
+            background: white !important;
+            z-index: 100 !important;
+        }
+
+        .ck-editor__editable {
+            min-height: 300px;
+            border-radius: 0 0 10px 10px !important;
+            padding: 1rem 2rem !important;
+            border: 1px solid #e9ecef !important;
+        }
+        
+        .ck.ck-toolbar {
+            border-radius: 10px 10px 0 0 !important;
+            background: #f8f9fa !important;
+            border: 1px solid #e9ecef !important;
+        }
+
+        .ck.ck-font-size .ck-dropdown__panel {
+            min-width: 140px !important;
+            max-height: 400px !important;
+            z-index: 10000 !important;
+        }
+        
+        .ck.ck-font-size .ck-button__label {
+            font-size: 14px !important;
+        }
+        
+        .ck.ck-font-size .ck-button.ck-on {
+            background-color: #e3f2fd;
+        }
+
+        .ck.ck-toolbar__separator {
+            margin: 0 10px !important;
+        }
+        
+        .ck.ck-toolbar-grouping > .ck-toolbar__items {
+            flex-wrap: nowrap !important;
+            overflow: visible !important;
+        }
+
+        .ck-toolbar-container {
+            padding: 10px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .ck-content {
+            min-height: 300px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 20px;
+            background: white;
+        }
+
+        .ck.ck-editor__editable_inline {
+            border: 1px solid #ddd !important;
+        }
+
+        .ck.ck-toolbar {
+            background: transparent !important;
+            border: none !important;
+        }
+
+        .ck.ck-toolbar__items {
+            flex-wrap: wrap !important;
+        }
+
+        .ck.ck-dropdown__panel {
+            max-height: 300px !important;
+            overflow-y: auto !important;
+        }
+
+        .ck.ck-button {
+            color: #333 !important;
+        }
+
+        .ck.ck-button:hover {
+            background: #e9ecef !important;
+        }
+
+        .ck.ck-button.ck-on {
+            background: #e3f2fd !important;
+            color: #0d6efd !important;
+        }
+    </style>
     @endpush
 
-    @push('js')
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
     <script>
         $(document).ready(function() {
-            $('.summernote').summernote({
-                height: 200,
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'underline', 'clear']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['fullscreen', 'codeview', 'help']]
-                ]
-            });
-
             $('form').on('submit', function(e) {
                 e.preventDefault();
                 let form = this;
@@ -279,6 +370,11 @@
                     }
                 });
             });
+            
+            // CKEditor başlatma - jQuery ready içine alındı
+            CKEDITOR.replace('description_az');
+            CKEDITOR.replace('description_en');
+            CKEDITOR.replace('description_ru');
         });
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -290,7 +386,12 @@
                     'üÜ':'u',
                     'ıİ':'i',
                     'öÖ':'o',
-                    'əƏ':'e'
+                    'əƏ':'e',
+                    'ёЁ':'yo',
+                    'йЙ':'i',
+                    'щЩ':'sh',
+                    'юЮ':'yu',
+                    'яЯ':'ya'
                 };
                 for(let key in trMap) {
                     text = text.replace(new RegExp('['+key+']','g'), trMap[key]);
