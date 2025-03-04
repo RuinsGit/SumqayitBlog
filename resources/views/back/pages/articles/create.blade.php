@@ -35,7 +35,7 @@
                             <div class="row mb-4">
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label class="form-label">Ana Şəkil</label>
+                                        <label class="form-label">Ana Şəkil (1224x471)</label>
                                         <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" required>
                                         @error('image')
                                         <div class="invalid-feedback">{{ $message }}</div>

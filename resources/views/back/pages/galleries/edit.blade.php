@@ -38,7 +38,7 @@
                                     <!-- Main Image -->
                                     <div class="col-md-4">
                                         <div class="mb-3">
-                                            <label class="form-label">Əsas Şəkil</label>
+                                            <label class="form-label">Əsas Şəkil (600x338)</label>
                                             <input type="file" name="main_image" class="form-control @error('main_image') is-invalid @enderror">
                                             @error('main_image')
                                                 <div class="invalid-feedback">{{ $message }}</div>

@@ -82,7 +82,7 @@
                                     <div class="tab-pane active" id="az" role="tabpanel">
                                         <!-- Logo 1 -->
                                         <div class="mb-3">
-                                            <label for="logo_1_image" class="form-label">Header logo Şəkli:</label>
+                                            <label for="logo_1_image" class="form-label">Header logo Şəkli: (90x42)</label>
                                             <input type="file" class="form-control" name="logo_1_image" accept=".jpeg,.png,.jpg,.gif,.svg">
                                             @if($logo->logo_1_image)
                                                 <img src="{{ asset($logo->logo_1_image) }}" alt="Logo 1" width="100" class="mt-2">
@@ -108,7 +108,7 @@
 
                                         <!-- Logo 2 -->
                                         <div class="mb-3">
-                                            <label for="logo_2_image" class="form-label">Fotter logo Şəkli:</label>
+                                            <label for="logo_2_image" class="form-label">Fotter logo Şəkli: (90x42)</label>
                                             <input type="file" class="form-control" name="logo_2_image" accept=".jpeg,.png,.jpg,.gif,.svg">
                                             @if($logo->logo_2_image)
                                                 <img src="{{ asset($logo->logo_2_image) }}" alt="Logo 2" width="100" class="mt-2">

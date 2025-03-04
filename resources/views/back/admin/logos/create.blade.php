@@ -76,7 +76,7 @@
                                     <div class="tab-pane active" id="az" role="tabpanel">
                                         <!-- Logo 1 -->
                                         <div class="mb-3">
-                                            <label for="logo_1_image" class="form-label">Logo 1 Şəkli:</label>
+                                            <label for="logo_1_image" class="form-label">Logo 1 Şəkli: (90x42)</label>
                                             <input type="file" class="form-control" name="logo_1_image" accept=".jpeg,.png,.jpg,.gif,.svg" required>
                                             @error('logo_1_image')
                                                 <div class="text-danger">{{ $message }}</div>
@@ -99,7 +99,7 @@
 
                                         <!-- Logo 2 -->
                                         <div class="mb-3">
-                                            <label for="logo_2_image" class="form-label">Logo 2 Şəkli:</label>
+                                            <label for="logo_2_image" class="form-label">Logo 2 Şəkli: (90x42)</label>
                                             <input type="file" class="form-control" name="logo_2_image" accept=".jpeg,.png,.jpg,.gif,.svg" required>
                                             @error('logo_2_image')
                                                 <div class="text-danger">{{ $message }}</div>

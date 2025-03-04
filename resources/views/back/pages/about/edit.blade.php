@@ -135,7 +135,7 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="image" class="form-label">Şəkil:</label>
+                                    <label for="image" class="form-label">Şəkil: (600x633)</label>
                                     @if($about->image)
                                         <div class="mb-2">
                                             <img src="{{ asset($about->image) }}" alt="Mövcud Şəkil" style="max-width: 200px; height: auto;">

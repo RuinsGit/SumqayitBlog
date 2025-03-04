@@ -146,7 +146,7 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="image" class="form-label">Şəkil:</label>
+                                        <label for="image" class="form-label">Şəkil: (600x633)</label>
                                         <input type="file" class="form-control" name="image" accept=".jpeg,.png,.jpg,.gif,.svg">
                                     </div>
 
