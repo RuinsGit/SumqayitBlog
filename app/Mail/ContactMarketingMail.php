@@ -21,9 +21,9 @@ class ContactMarketingMail extends Mailable
     public function build()
     {
         return $this->from(config('mail.from.address'))
-                    ->subject('Yeni Sumqayıt Bloq Konstultasiya mesajı')
+                    ->subject('Konstultasiya mesajı')
                     ->html("
-                        <h2>Yeni Sumqayıt Bloq Konstultasiya mesajı</h2>
+                        <h2>Konstultasiya mesajı</h2>
                         <p><strong>Ad:</strong> {$this->contactMarketing->name}</p>
                         <p><strong>E-posta:</strong> {$this->contactMarketing->email}</p>
                         <p><strong>Mesaj:</strong> {$this->contactMarketing->message}</p>
