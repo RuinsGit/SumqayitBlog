@@ -37,6 +37,15 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Fayl (PDF, DOC, vb.)</label>
+                                        <input type="file" name="file" class="form-control @error('file') is-invalid @enderror">
+                                        @error('file')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
 
                             <ul class="nav nav-tabs nav-justified" role="tablist">

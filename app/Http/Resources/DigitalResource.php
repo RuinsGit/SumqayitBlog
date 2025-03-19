@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class DigitalResource extends JsonResource
 {
@@ -14,7 +15,8 @@ class DigitalResource extends JsonResource
             'title' => $this->title,
             'text' => $this->text,
             'description' => $this->description,
-            'image' => $this->image ? asset('storage/' . $this->image) : null,
+            'image' => $this->image ? Storage::disk('public')->url($this->image) : null,
+            'file' => $this->file ? Storage::disk('public')->url($this->file) : null,
             'image_alt' => $this->image_alt,
             'slug' => [
                 'az' => $this->slug_az,

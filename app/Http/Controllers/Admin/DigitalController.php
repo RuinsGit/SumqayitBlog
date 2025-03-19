@@ -34,6 +34,7 @@ class DigitalController extends Controller
                 'text_en' => 'required|string',
                 'text_ru' => 'required|string',
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif',
+                'file' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480', 
                 'image_alt_az' => 'required|string|max:255',
                 'image_alt_en' => 'required|string|max:255',
                 'image_alt_ru' => 'required|string|max:255',
@@ -72,7 +73,39 @@ class DigitalController extends Controller
                 }
             }
 
-            Digital::create(array_merge($validated, ['image' => $imagePath]));
+            
+            $filePath = null;
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                
+                
+                $fileDirectory = 'digitals/files';
+                $publicPath = public_path('storage/' . $fileDirectory);
+                
+                if (!file_exists($publicPath)) {
+                    mkdir($publicPath, 0755, true);
+                }
+                
+                
+                $originalName = $file->getClientOriginalName();
+                $safeFileName = time() . '_' . preg_replace('/[^A-Za-z0-9\._-]/', '_', $originalName);
+                
+               
+                $file->move($publicPath, $safeFileName);
+                
+               
+                $filePath = $fileDirectory . '/' . $safeFileName;
+            }
+
+            if ($filePath && !file_exists(public_path('storage/' . $filePath))) {
+                \Log::error('PDF dosyası oluşturulamadı: ' . $filePath);
+                return back()->withInput()->with('error', 'PDF dosyası yüklenirken bir sorun oluştu. Lütfen tekrar deneyin.');
+            }
+
+            Digital::create(array_merge($validated, [
+                'image' => $imagePath ?? null, 
+                'file' => $filePath
+            ]));
 
             return redirect()->route('back.pages.digitals.index')->with('success', 'Digital uğurla yaradıldı.');
 
@@ -97,6 +130,7 @@ class DigitalController extends Controller
                 'text_en' => 'required|string',
                 'text_ru' => 'required|string',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+                'file' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480', 
                 'image_alt_az' => 'required|string|max:255',
                 'image_alt_en' => 'required|string|max:255',
                 'image_alt_ru' => 'required|string|max:255',
@@ -140,6 +174,41 @@ class DigitalController extends Controller
                 }
             }
 
+          
+            if ($request->hasFile('file')) {
+              
+                if ($digital->file) {
+                   
+                    if (file_exists(public_path('storage/' . $digital->file))) {
+                        unlink(public_path('storage/' . $digital->file));
+                    }
+                }
+                
+                $file = $request->file('file');
+              
+                $fileDirectory = 'digitals/files';
+                $publicPath = public_path('storage/' . $fileDirectory);
+                
+                if (!file_exists($publicPath)) {
+                    mkdir($publicPath, 0755, true);
+                }
+                
+             
+                $originalName = $file->getClientOriginalName();
+                $safeFileName = time() . '_' . preg_replace('/[^A-Za-z0-9\._-]/', '_', $originalName);
+                
+               
+                $file->move($publicPath, $safeFileName);
+                
+           
+                $data['file'] = $fileDirectory . '/' . $safeFileName;
+            }
+
+            if (isset($data['file']) && !file_exists(public_path('storage/' . $data['file']))) {
+                \Log::error('PDF dosyası güncellenemedi: ' . $data['file']);
+                return back()->withInput()->with('error', 'PDF dosyası güncellenirken bir sorun oluştu. Lütfen tekrar deneyin.');
+            }
+
             $digital->update($data);
 
             return redirect()->route('back.pages.digitals.index')->with('success', 'Digital uğurla yeniləndi.');
@@ -154,6 +223,11 @@ class DigitalController extends Controller
         try {
             if ($digital->image) {
                 Storage::disk('public')->delete($digital->image);
+            }
+            
+      
+            if ($digital->file) {
+                Storage::disk('public')->delete($digital->file);
             }
 
             $digital->delete();

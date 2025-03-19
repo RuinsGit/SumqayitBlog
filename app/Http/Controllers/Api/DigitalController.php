@@ -14,7 +14,7 @@ class DigitalController extends Controller
     {
         $digitals = Digital::all();
         
-        // Her bir makalenin view_count değerini artır
+      
         foreach ($digitals as $digital) {
             $digital->increment('view_count');
         }
@@ -38,10 +38,10 @@ class DigitalController extends Controller
             ], 404);
         }
 
-        // View count artırma
+     
         $digital->increment('view_count');
 
-        // Kontrol için log ekleyin
+       
         \Log::info('View count for digital ID ' . $id . ' increased to ' . $digital->view_count);
 
         return response()->json([
@@ -62,6 +62,7 @@ class DigitalController extends Controller
                 'text_en' => 'required|string',
                 'text_ru' => 'required|string',
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif',
+                'file' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx',
                 'image_alt_az' => 'required|string|max:255',
                 'image_alt_en' => 'required|string|max:255',
                 'image_alt_ru' => 'required|string|max:255',
@@ -79,7 +80,7 @@ class DigitalController extends Controller
                 'slug_ru' => 'nullable|string|max:255',
             ]);
 
-            // Ana görsel yükleme
+         
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
                 $destinationPath = public_path('storage/digitals');
@@ -100,7 +101,17 @@ class DigitalController extends Controller
                 }
             }
 
-            $digital = Digital::create(array_merge($validated, ['image' => $imagePath]));
+      
+            $filePath = null;
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $filePath = $file->store('digitals/files', 'public');
+            }
+
+            $digital = Digital::create(array_merge($validated, [
+                'image' => $imagePath ?? null,
+                'file' => $filePath
+            ]));
 
             return response()->json([
                 'success' => true,
@@ -137,6 +148,7 @@ class DigitalController extends Controller
                 'text_en' => 'required|string',
                 'text_ru' => 'required|string',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+                'file' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx',
                 'image_alt_az' => 'required|string|max:255',
                 'image_alt_en' => 'required|string|max:255',
                 'image_alt_ru' => 'required|string|max:255',
@@ -180,6 +192,16 @@ class DigitalController extends Controller
                 }
             }
 
+     
+            if ($request->hasFile('file')) {
+                if ($digital->file) {
+                    Storage::disk('public')->delete($digital->file);
+                }
+                $file = $request->file('file');
+                $filePath = $file->store('digitals/files', 'public');
+                $data['file'] = $filePath;
+            }
+
             $digital->update($data);
 
             return response()->json([
@@ -201,7 +223,7 @@ class DigitalController extends Controller
     {
         try {
             $digital = Digital::find($id);
-                if (!$digital) {
+            if (!$digital) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Digital tapılmadı',
@@ -211,6 +233,11 @@ class DigitalController extends Controller
 
             if ($digital->image) {
                 Storage::disk('public')->delete($digital->image);
+            }
+            
+         
+            if ($digital->file) {
+                Storage::disk('public')->delete($digital->file);
             }
 
             $digital->delete();
@@ -228,5 +255,5 @@ class DigitalController extends Controller
                 'data' => null
             ], 500);
         }
-        }
+    }
 } 

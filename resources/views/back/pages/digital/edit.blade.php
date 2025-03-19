@@ -52,6 +52,29 @@
                                             @endif
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Fayl (PDF, DOC, vb.)</label>
+                                            <input type="file" name="file" class="form-control @error('file') is-invalid @enderror">
+                                            @error('file')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                            @if($digital->file)
+                                                <div class="mt-2">
+                                                    <!-- Dosya adından direkt link oluştur -->
+                                                    <a href="{{ url('storage/' . $digital->file) }}" target="_blank" class="btn btn-sm btn-primary">
+                                                        Fayla bax
+                                                    </a>
+                                                    
+                                                    <!-- Debug bilgisi -->
+                                                    <div class="mt-2">
+                                                        <small class="text-muted">Fayl adı: {{ basename($digital->file) }}</small><br>
+                                                        <small class="text-muted">Tam yol: {{ $digital->file }}</small>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <ul class="nav nav-tabs nav-justified" role="tablist">

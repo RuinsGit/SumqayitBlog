@@ -17,6 +17,7 @@ class Digital extends Model
         'text_en',
         'text_ru',
         'image',
+        'file',
         'image_alt_az',
         'image_alt_en',
         'image_alt_ru',
