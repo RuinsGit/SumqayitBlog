@@ -39,9 +39,27 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label class="form-label">Fayl (PDF, DOC, vb.)</label>
-                                        <input type="file" name="file" class="form-control @error('file') is-invalid @enderror">
-                                        @error('file')
+                                        <label class="form-label">Fayl AZ (PDF, DOC, vb.)</label>
+                                        <input type="file" name="file_az" class="form-control @error('file_az') is-invalid @enderror">
+                                        @error('file_az')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">File EN (PDF, DOC, etc.)</label>
+                                        <input type="file" name="file_en" class="form-control @error('file_en') is-invalid @enderror">
+                                        @error('file_en')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Файл RU (PDF, DOC, и т.д.)</label>
+                                        <input type="file" name="file_ru" class="form-control @error('file_ru') is-invalid @enderror">
+                                        @error('file_ru')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>

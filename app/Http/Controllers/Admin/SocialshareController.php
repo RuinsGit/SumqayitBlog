@@ -13,7 +13,7 @@ class SocialshareController extends Controller
 
     public function __construct()
     {   
-        Artisan::call('migrate');
+        // Artisan::call('migrate');
         $this->destinationPath = public_path('uploads');
         
         if (!file_exists($this->destinationPath)) {

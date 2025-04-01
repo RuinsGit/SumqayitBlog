@@ -34,10 +34,17 @@ class Digital extends Model
         'slug_en',
         'slug_ru',
         'view_count',
+        'file_az',
+        'file_en',
+        'file_ru'
     ];
     public function getTitleAttribute()
     {
         return $this->{'title_' . app()->getLocale()};
+    }
+    public function getFileAttribute()
+    {
+        return $this->{'file_' . app()->getLocale()};
     }
     public function getTextAttribute()
     {

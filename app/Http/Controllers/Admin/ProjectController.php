@@ -13,7 +13,7 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        Artisan::call('migrate');
+        // Artisan::call('migrate');
         $projects = Project::latest()->get();
         return view('back.pages.project.index', compact('projects'));
     }

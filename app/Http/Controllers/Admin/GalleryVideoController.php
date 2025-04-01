@@ -13,7 +13,7 @@ class GalleryVideoController extends Controller
 {
     public function index()
     {
-        Artisan::call('migrate');
+        // Artisan::call('migrate');
         $galleryVideos = GalleryVideo::latest()->get();
         return view('back.pages.gallery-videos.index', compact('galleryVideos'));
     }

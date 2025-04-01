@@ -13,7 +13,7 @@ class GalleryController extends Controller
 {
     public function index()
     {
-    Artisan::call('migrate');
+    // Artisan::call('migrate');
         $galleries = Gallery::latest()->get();
         return view('back.pages.galleries.index', compact('galleries'));
     }

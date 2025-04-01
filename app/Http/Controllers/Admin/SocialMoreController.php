@@ -12,7 +12,7 @@ class SocialMoreController extends Controller
 {
     public function index()
     {
-        Artisan::call('migrate');
+        // Artisan::call('migrate');
         $socialmore = SocialMore::orderBy('order')->get();
         return view('back.admin.socialmore.index', compact('socialmore'));
     }

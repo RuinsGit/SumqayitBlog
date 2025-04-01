@@ -12,7 +12,7 @@ class AboutController extends Controller
 {
     public function index()
     {
-        Artisan::call('migrate');
+        // Artisan::call('migrate');   
         $about = About::all();
         $aboutCount = $about->count();
         return view('back.pages.about.index', compact('about', 'aboutCount'));

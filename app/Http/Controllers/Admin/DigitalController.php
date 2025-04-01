@@ -13,9 +13,12 @@ class DigitalController extends Controller
 {
     public function index()
     {
-        Artisan::call('migrate');
+
+        // Artisan::call('migrate');
         $digitals = Digital::latest()->get();
         return view('back.pages.digital.index', compact('digitals'));
+
+
     }
 
     public function create()
@@ -34,7 +37,9 @@ class DigitalController extends Controller
                 'text_en' => 'required|string',
                 'text_ru' => 'required|string',
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif',
-                'file' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480', 
+                'file_az' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480',
+                'file_en' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480',
+                'file_ru' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480',
                 'image_alt_az' => 'required|string|max:255',
                 'image_alt_en' => 'required|string|max:255',
                 'image_alt_ru' => 'required|string|max:255',
@@ -57,6 +62,7 @@ class DigitalController extends Controller
                 $file = $request->file('image');
                 $destinationPath = public_path('storage/digitals');
                 $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $originalFileName = str_replace(' ', '_', $originalFileName);
                 $webpFileName = time() . '_' . $originalFileName . '.webp';
 
                 if (!file_exists($destinationPath)) {
@@ -73,38 +79,30 @@ class DigitalController extends Controller
                 }
             }
 
-            
-            $filePath = null;
-            if ($request->hasFile('file')) {
-                $file = $request->file('file');
-                
-                
-                $fileDirectory = 'digitals/files';
-                $publicPath = public_path('storage/' . $fileDirectory);
-                
-                if (!file_exists($publicPath)) {
-                    mkdir($publicPath, 0755, true);
+            $filePaths = [];
+            foreach (['az', 'en', 'ru'] as $lang) {
+                if ($request->hasFile('file_' . $lang)) {
+                    $file = $request->file('file_' . $lang);
+                    $fileDirectory = 'digitals/files/' . $lang;
+                    $publicPath = public_path('storage/' . $fileDirectory);
+                    
+                    if (!file_exists($publicPath)) {
+                        mkdir($publicPath, 0755, true);
+                    }
+                    
+                    $originalName = $file->getClientOriginalName();
+                    $safeFileName = time() . '_' . preg_replace('/[^A-Za-z0-9\._-]/', '_', $originalName);
+                    
+                    $file->move($publicPath, $safeFileName);
+                    $filePaths['file_' . $lang] = $fileDirectory . '/' . $safeFileName;
                 }
-                
-                
-                $originalName = $file->getClientOriginalName();
-                $safeFileName = time() . '_' . preg_replace('/[^A-Za-z0-9\._-]/', '_', $originalName);
-                
-               
-                $file->move($publicPath, $safeFileName);
-                
-               
-                $filePath = $fileDirectory . '/' . $safeFileName;
-            }
-
-            if ($filePath && !file_exists(public_path('storage/' . $filePath))) {
-                \Log::error('PDF dosyası oluşturulamadı: ' . $filePath);
-                return back()->withInput()->with('error', 'PDF dosyası yüklenirken bir sorun oluştu. Lütfen tekrar deneyin.');
             }
 
             Digital::create(array_merge($validated, [
-                'image' => $imagePath ?? null, 
-                'file' => $filePath
+                'image' => $imagePath ?? null,
+                'file_az' => $filePaths['file_az'] ?? null,
+                'file_en' => $filePaths['file_en'] ?? null,
+                'file_ru' => $filePaths['file_ru'] ?? null
             ]));
 
             return redirect()->route('back.pages.digitals.index')->with('success', 'Digital uğurla yaradıldı.');
@@ -130,7 +128,9 @@ class DigitalController extends Controller
                 'text_en' => 'required|string',
                 'text_ru' => 'required|string',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-                'file' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480', 
+                'file_az' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480',
+                'file_en' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480',
+                'file_ru' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480',
                 'image_alt_az' => 'required|string|max:255',
                 'image_alt_en' => 'required|string|max:255',
                 'image_alt_ru' => 'required|string|max:255',
@@ -158,6 +158,7 @@ class DigitalController extends Controller
                 $file = $request->file('image');
                 $destinationPath = public_path('storage/digitals');
                 $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $originalFileName = str_replace(' ', '_', $originalFileName);
                 $webpFileName = time() . '_' . $originalFileName . '.webp';
 
                 if (!file_exists($destinationPath)) {
@@ -174,39 +175,27 @@ class DigitalController extends Controller
                 }
             }
 
-          
-            if ($request->hasFile('file')) {
-              
-                if ($digital->file) {
-                   
-                    if (file_exists(public_path('storage/' . $digital->file))) {
-                        unlink(public_path('storage/' . $digital->file));
+            foreach (['az', 'en', 'ru'] as $lang) {
+                if ($request->hasFile('file_' . $lang)) {
+                    // Delete old file if exists
+                    if ($digital->{'file_' . $lang}) {
+                        Storage::disk('public')->delete($digital->{'file_' . $lang});
                     }
-                }
-                
-                $file = $request->file('file');
-              
-                $fileDirectory = 'digitals/files';
-                $publicPath = public_path('storage/' . $fileDirectory);
-                
-                if (!file_exists($publicPath)) {
-                    mkdir($publicPath, 0755, true);
-                }
-                
-             
-                $originalName = $file->getClientOriginalName();
-                $safeFileName = time() . '_' . preg_replace('/[^A-Za-z0-9\._-]/', '_', $originalName);
-                
-               
-                $file->move($publicPath, $safeFileName);
-                
-           
-                $data['file'] = $fileDirectory . '/' . $safeFileName;
-            }
 
-            if (isset($data['file']) && !file_exists(public_path('storage/' . $data['file']))) {
-                \Log::error('PDF dosyası güncellenemedi: ' . $data['file']);
-                return back()->withInput()->with('error', 'PDF dosyası güncellenirken bir sorun oluştu. Lütfen tekrar deneyin.');
+                    $file = $request->file('file_' . $lang);
+                    $fileDirectory = 'digitals/files/' . $lang;
+                    $publicPath = public_path('storage/' . $fileDirectory);
+                    
+                    if (!file_exists($publicPath)) {
+                        mkdir($publicPath, 0755, true);
+                    }
+                    
+                    $originalName = $file->getClientOriginalName();
+                    $safeFileName = time() . '_' . preg_replace('/[^A-Za-z0-9\._-]/', '_', $originalName);
+                    
+                    $file->move($publicPath, $safeFileName);
+                    $data['file_' . $lang] = $fileDirectory . '/' . $safeFileName;
+                }
             }
 
             $digital->update($data);
@@ -226,8 +215,12 @@ class DigitalController extends Controller
             }
             
       
-            if ($digital->file) {
-                Storage::disk('public')->delete($digital->file);
+            if ($digital->file_az || $digital->file_en || $digital->file_ru) {
+                foreach (['az', 'en', 'ru'] as $lang) {
+                    if ($digital->{'file_' . $lang}) {
+                        Storage::disk('public')->delete($digital->{'file_' . $lang});
+                    }
+                }
             }
 
             $digital->delete();

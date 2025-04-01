@@ -13,7 +13,7 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        Artisan::call('migrate');
+        // Artisan::call('migrate');
         $articles = Article::latest()->get();
         return view('back.pages.articles.index', compact('articles'));
     }

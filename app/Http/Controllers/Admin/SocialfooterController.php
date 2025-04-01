@@ -15,7 +15,7 @@ class SocialfooterController extends Controller
 {
     public function index()
     {
-        Artisan::call('migrate');
+        // Artisan::call('migrate');
         $socialfooters = Socialfooter::orderBy('order')->get();
         return view('back.admin.socialfooter.index', compact('socialfooters'));
     }

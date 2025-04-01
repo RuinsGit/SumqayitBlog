@@ -10,13 +10,16 @@ class DigitalResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
+        
+        $appUrl = config('app.url');
+        
         return [
             'id' => $this->id,
             'title' => $this->title,
             'text' => $this->text,
             'description' => $this->description,
-            'image' => $this->image ? Storage::disk('public')->url($this->image) : null,
-            'file' => $this->file ? Storage::disk('public')->url($this->file) : null,
+            'image' => $this->image ? asset('storage/' . str_replace(' ', '%20', $this->image)) : null,
+            'file' => $this->file ? asset('storage/' . str_replace(' ', '%20', $this->file)) : null,
             'image_alt' => $this->image_alt,
             'slug' => [
                 'az' => $this->slug_az,

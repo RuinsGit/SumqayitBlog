@@ -12,7 +12,7 @@ class SocialMediaController extends Controller
 {
     public function index()
     {
-        Artisan::call('migrate');
+        // Artisan::call('migrate');
         $socials = SocialMedia::orderBy('order')->get();
         return view('back.admin.social.index', compact('socials'));
     }

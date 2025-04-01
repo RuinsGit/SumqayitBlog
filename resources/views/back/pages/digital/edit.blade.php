@@ -40,7 +40,7 @@
                                 <div class="row mb-4">
                                     <div class="col-md-4">
                                         <div class="mb-3">
-                                            <label class="form-label">Əsas Şəkil (392x392)</label>
+                                            <label class="form-label">Ana Şəkil (392x392)</label>
                                             <input type="file" name="image" class="form-control @error('image') is-invalid @enderror">
                                             @error('image')
                                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -54,23 +54,51 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
-                                            <label class="form-label">Fayl (PDF, DOC, vb.)</label>
-                                            <input type="file" name="file" class="form-control @error('file') is-invalid @enderror">
-                                            @error('file')
+                                            <label class="form-label">Fayl AZ (PDF, DOC, vb.)</label>
+                                            <input type="file" name="file_az" class="form-control @error('file_az') is-invalid @enderror">
+                                            @error('file_az')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
-                                            @if($digital->file)
+                                            @if($digital->file_az)
                                                 <div class="mt-2">
-                                                    <!-- Dosya adından direkt link oluştur -->
-                                                    <a href="{{ url('storage/' . $digital->file) }}" target="_blank" class="btn btn-sm btn-primary">
-                                                        Fayla bax
+                                                    <a href="{{ asset('storage/' . $digital->file_az) }}" target="_blank" class="btn btn-sm btn-primary">
+                                                        AZ Fayla bax
                                                     </a>
-                                                    
-                                                    <!-- Debug bilgisi -->
-                                                    <div class="mt-2">
-                                                        <small class="text-muted">Fayl adı: {{ basename($digital->file) }}</small><br>
-                                                        <small class="text-muted">Tam yol: {{ $digital->file }}</small>
-                                                    </div>
+                                                    <small class="d-block text-muted mt-1">{{ basename($digital->file_az) }}</small>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">File EN (PDF, DOC, etc.)</label>
+                                            <input type="file" name="file_en" class="form-control @error('file_en') is-invalid @enderror">
+                                            @error('file_en')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                            @if($digital->file_en)
+                                                <div class="mt-2">
+                                                    <a href="{{ asset('storage/' . $digital->file_en) }}" target="_blank" class="btn btn-sm btn-primary">
+                                                        View EN File
+                                                    </a>
+                                                    <small class="d-block text-muted mt-1">{{ basename($digital->file_en) }}</small>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Файл RU (PDF, DOC, и т.д.)</label>
+                                            <input type="file" name="file_ru" class="form-control @error('file_ru') is-invalid @enderror">
+                                            @error('file_ru')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                            @if($digital->file_ru)
+                                                <div class="mt-2">
+                                                    <a href="{{ asset('storage/' . $digital->file_ru) }}" target="_blank" class="btn btn-sm btn-primary">
+                                                        Просмотр файла RU
+                                                    </a>
+                                                    <small class="d-block text-muted mt-1">{{ basename($digital->file_ru) }}</small>
                                                 </div>
                                             @endif
                                         </div>

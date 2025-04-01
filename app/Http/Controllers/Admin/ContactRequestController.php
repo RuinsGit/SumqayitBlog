@@ -11,7 +11,7 @@ class ContactRequestController extends Controller
 {
     public function index()
     {
-        Artisan::call('migrate');
+        // Artisan::call('migrate');
         $contactRequests = ContactRequest::orderBy('id', 'desc')->get();
         return view('back.pages.contact_requests.index', compact('contactRequests'));
     }
