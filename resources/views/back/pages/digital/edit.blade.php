@@ -105,7 +105,7 @@
                                     </div>
                                 </div>
 
-                                <ul class="nav nav-tabs nav-justified" role="tablist">
+                                <!-- <ul class="nav nav-tabs nav-justified" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" data-bs-toggle="tab" href="#az" role="tab">
                                             <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
@@ -124,10 +124,10 @@
                                             <span class="d-none d-sm-block">Rus</span>
                                         </a>
                                     </li>
-                                </ul>
+                                </ul> -->
 
                                 <div class="tab-content p-3">
-                                    <div class="tab-pane active" id="az" role="tabpanel">
+                                    <!-- <div class="tab-pane active" id="az" role="tabpanel">
                                         <div class="mb-3">
                                             <label class="form-label">Başlıq</label>
                                             <input type="text" name="title_az" id="title_az" value="{{ $digital->title_az }}" class="form-control @error('title_az') is-invalid @enderror" required>
@@ -174,10 +174,10 @@
                                             <label class="form-label">Meta Açıqlama</label>
                                             <textarea name="meta_description_az" class="form-control" rows="3">{{ $digital->meta_description_az }}</textarea>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <!-- İngilis dili -->
-                                    <div class="tab-pane" id="en" role="tabpanel">
+                                    <!-- <div class="tab-pane" id="en" role="tabpanel">
                                         <div class="mb-3">
                                             <label class="form-label">Title</label>
                                             <input type="text" name="title_en" id="title_en" value="{{ $digital->title_en }}" class="form-control @error('title_en') is-invalid @enderror" required>
@@ -224,10 +224,10 @@
                                             <label class="form-label">Meta Description</label>
                                             <textarea name="meta_description_en" class="form-control" rows="3">{{ $digital->meta_description_en }}</textarea>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <!-- Rus dili -->
-                                    <div class="tab-pane" id="ru" role="tabpanel">
+                                    <!-- <div class="tab-pane" id="ru" role="tabpanel">
                                         <div class="mb-3">
                                             <label class="form-label">Заголовок</label>
                                             <input type="text" name="title_ru" id="title_ru" value="{{ $digital->title_ru }}" class="form-control @error('title_ru') is-invalid @enderror" required>
@@ -274,7 +274,7 @@
                                             <label class="form-label">Мета-описание</label>
                                             <textarea name="meta_description_ru" class="form-control" rows="3">{{ $digital->meta_description_ru }}</textarea>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
 
                                 <div class="row mt-3">

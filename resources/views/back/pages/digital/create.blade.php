@@ -66,7 +66,7 @@
                                 </div>
                             </div>
 
-                            <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <!-- <ul class="nav nav-tabs nav-justified" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" data-bs-toggle="tab" href="#az" role="tab">AZ</a>
                                 </li>
@@ -76,9 +76,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link" data-bs-toggle="tab" href="#ru" role="tab">RU</a>
                                 </li>
-                            </ul>
+                            </ul> -->
 
-                            <div class="tab-content p-3">
+                            <!-- <div class="tab-content p-3">
                                 <div class="tab-pane active" id="az" role="tabpanel">
                                     <div class="mb-3">
                                         <label class="form-label">Slug</label>
@@ -216,7 +216,7 @@
                                         <textarea name="meta_description_ru" class="form-control" rows="3">{{ old('meta_description_ru') }}</textarea>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="row mt-3">
                                 <div class="col-12">

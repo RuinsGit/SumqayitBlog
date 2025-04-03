@@ -59,37 +59,27 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th scope="col" class="text-center">#</th>
-                                        <th scope="col" class="text-center">Başlıq</th>
+                                     
                                         <th scope="col" class="text-center">Şəkil</th>
-                                        <th scope="col" class="text-center">İşlər</th>
+                                    
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse($digitals as $digital)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>{{ $digital->title_az }}</td>
+                                        
                                             <td class="text-center">
                                                 <img src="{{ asset('storage/' . $digital->image) }}" class="img-thumbnail" style="width: 150px; height: 80px; object-fit: cover; border-radius: 4px;">
-                                            </td>
-                                            <td class="text-center">
-                                            <a href="{{ route('back.pages.digitals.edit', $digital->id) }}" class="btn btn-primary btn-sm" style="background-color: #5bf91b; border-color: green">
-                                                                <i class="fas fa-edit"></i>
-                                                            </a>
-                                                <form action="{{ route('back.pages.digitals.destroy', $digital->id) }}" method="POST" style="display:inline;" id="delete-form-{{ $digital->id }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-danger btn-sm" onclick="deleteData({{ $digital->id }})">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
                                             <td colspan="4" class="text-center">Layihə yoxdur</td>
                                         </tr>
+                                        
                                     @endforelse
+                                       
                                 </tbody>
                             </table>
                         </div>

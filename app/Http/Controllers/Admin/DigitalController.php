@@ -30,19 +30,19 @@ class DigitalController extends Controller
     {
         try {
             $validated = $request->validate([
-                'title_az' => 'required|string|max:255',
-                'title_en' => 'required|string|max:255',
-                'title_ru' => 'required|string|max:255',
-                'text_az' => 'required|string',
-                'text_en' => 'required|string',
-                'text_ru' => 'required|string',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif',
+                'title_az' => 'nullable|string|max:255',
+                'title_en' => 'nullable|string|max:255',
+                'title_ru' => 'nullable|string|max:255',
+                'text_az' => 'nullable|string',
+                'text_en' => 'nullable|string',
+                'text_ru' => 'nullable|string',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
                 'file_az' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480',
                 'file_en' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480',
                 'file_ru' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480',
-                'image_alt_az' => 'required|string|max:255',
-                'image_alt_en' => 'required|string|max:255',
-                'image_alt_ru' => 'required|string|max:255',
+                'image_alt_az' => 'nullable|string|max:255',
+                'image_alt_en' => 'nullable|string|max:255',
+                'image_alt_ru' => 'nullable|string|max:255',
                 'meta_title_az' => 'nullable|string|max:255',
                 'meta_title_en' => 'nullable|string|max:255',
                 'meta_title_ru' => 'nullable|string|max:255',
@@ -121,19 +121,19 @@ class DigitalController extends Controller
     {
         try {
             $validated = $request->validate([
-                'title_az' => 'required|string|max:255',
-                'title_en' => 'required|string|max:255',
-                'title_ru' => 'required|string|max:255',
-                'text_az' => 'required|string',
-                'text_en' => 'required|string',
-                'text_ru' => 'required|string',
+                'title_az' => 'nullable|string|max:255',
+                'title_en' => 'nullable|string|max:255',
+                'title_ru' => 'nullable|string|max:255',
+                'text_az' => 'nullable|string',
+                'text_en' => 'nullable|string',
+                'text_ru' => 'nullable|string',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
                 'file_az' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480',
                 'file_en' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480',
                 'file_ru' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480',
-                'image_alt_az' => 'required|string|max:255',
-                'image_alt_en' => 'required|string|max:255',
-                'image_alt_ru' => 'required|string|max:255',
+                'image_alt_az' => 'nullable|string|max:255',
+                'image_alt_en' => 'nullable|string|max:255',
+                'image_alt_ru' => 'nullable|string|max:255',
                 'meta_title_az' => 'nullable|string|max:255',
                 'meta_title_en' => 'nullable|string|max:255',
                 'meta_title_ru' => 'nullable|string|max:255',
@@ -177,7 +177,7 @@ class DigitalController extends Controller
 
             foreach (['az', 'en', 'ru'] as $lang) {
                 if ($request->hasFile('file_' . $lang)) {
-                    // Delete old file if exists
+                  
                     if ($digital->{'file_' . $lang}) {
                         Storage::disk('public')->delete($digital->{'file_' . $lang});
                     }
