@@ -16,8 +16,10 @@ class Digital extends Model
         'text_az',
         'text_en',
         'text_ru',
-        'image',
-        'file',
+        'image_az',
+        'image_en',
+        'image_ru',
+    
         'image_alt_az',
         'image_alt_en',
         'image_alt_ru',
@@ -69,6 +71,10 @@ class Digital extends Model
     public function getImageAltAttribute()
     {
         return $this->{'image_alt_' . app()->getLocale()};
+    }
+    public function getImageAttribute()
+    {
+        return $this->{'image_' . app()->getLocale()};
     }
    
 

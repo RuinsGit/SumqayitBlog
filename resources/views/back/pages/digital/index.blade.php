@@ -60,7 +60,10 @@
                                     <tr>
                                         <th scope="col" class="text-center">#</th>
                                      
-                                        <th scope="col" class="text-center">Şəkil</th>
+                                        <th scope="col" class="text-center">AZ Şəkil</th>
+                                        <th scope="col" class="text-center">EN Şəkil</th>
+                                        <th scope="col" class="text-center">RU Şəkil</th>
+                                        <th scope="col" class="text-center">Əməliyyatlar</th>
                                     
                                     </tr>
                                 </thead>
@@ -70,12 +73,40 @@
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                         
                                             <td class="text-center">
-                                                <img src="{{ asset('storage/' . $digital->image) }}" class="img-thumbnail" style="width: 150px; height: 80px; object-fit: cover; border-radius: 4px;">
+                                                @if($digital->image_az)
+                                                    <img src="{{ asset('storage/' . $digital->image_az) }}" class="img-thumbnail" style="width: 150px; height: 80px; object-fit: cover; border-radius: 4px;">
+                                                @else
+                                                    <span class="badge bg-light text-dark">Şəkil yoxdur</span>
+                                                @endif
+                                            </td>
+                                            <td class="text-center">
+                                                @if($digital->image_en)
+                                                    <img src="{{ asset('storage/' . $digital->image_en) }}" class="img-thumbnail" style="width: 150px; height: 80px; object-fit: cover; border-radius: 4px;">
+                                                @else
+                                                    <span class="badge bg-light text-dark">Şəkil yoxdur</span>
+                                                @endif
+                                            </td>
+                                            <td class="text-center">
+                                                @if($digital->image_ru)
+                                                    <img src="{{ asset('storage/' . $digital->image_ru) }}" class="img-thumbnail" style="width: 150px; height: 80px; object-fit: cover; border-radius: 4px;">
+                                                @else
+                                                    <span class="badge bg-light text-dark">Şəkil yoxdur</span>
+                                                @endif
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="d-flex justify-content-center gap-2">
+                                                    <a href="{{ route('back.pages.digitals.edit', $digital->id) }}" class="btn btn-sm btn-success"><i class="ri-pencil-line"></i></a>
+                                                    <form id="delete-form-{{ $digital->id }}" action="{{ route('back.pages.digitals.destroy', $digital->id) }}" method="POST" style="display: none;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    </form>
+                                                    <button type="button" class="btn btn-sm btn-danger" onclick="deleteData({{ $digital->id }})"><i class="ri-delete-bin-line"></i></button>
+                                                </div>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="4" class="text-center">Layihə yoxdur</td>
+                                            <td colspan="5" class="text-center">Layihə yoxdur</td>
                                         </tr>
                                         
                                     @endforelse

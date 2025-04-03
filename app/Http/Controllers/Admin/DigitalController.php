@@ -36,7 +36,9 @@ class DigitalController extends Controller
                 'text_az' => 'nullable|string',
                 'text_en' => 'nullable|string',
                 'text_ru' => 'nullable|string',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+                'image_az' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+                'image_en' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+                'image_ru' => 'nullable|image|mimes:jpeg,png,jpg,gif',
                 'file_az' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480',
                 'file_en' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480',
                 'file_ru' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480',
@@ -57,25 +59,28 @@ class DigitalController extends Controller
                 'slug_ru' => 'nullable|string|max:255',
             ]);
 
+            $imagePaths = [];
             
-            if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $destinationPath = public_path('storage/digitals');
-                $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $originalFileName = str_replace(' ', '_', $originalFileName);
-                $webpFileName = time() . '_' . $originalFileName . '.webp';
+            foreach (['az', 'en', 'ru'] as $lang) {
+                if ($request->hasFile('image_' . $lang)) {
+                    $file = $request->file('image_' . $lang);
+                    $destinationPath = public_path('storage/digitals/' . $lang);
+                    $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                    $originalFileName = str_replace(' ', '_', $originalFileName);
+                    $webpFileName = time() . '_' . $originalFileName . '.webp';
 
-                if (!file_exists($destinationPath)) {
-                    mkdir($destinationPath, 0777, true);
-                }
+                    if (!file_exists($destinationPath)) {
+                        mkdir($destinationPath, 0777, true);
+                    }
 
-                $imageResource = imagecreatefromstring(file_get_contents($file));
-                $webpPath = $destinationPath . '/' . $webpFileName;
+                    $imageResource = imagecreatefromstring(file_get_contents($file));
+                    $webpPath = $destinationPath . '/' . $webpFileName;
 
-                if ($imageResource) {
-                    imagewebp($imageResource, $webpPath, 80);
-                    imagedestroy($imageResource);
-                    $imagePath = 'digitals/' . $webpFileName;
+                    if ($imageResource) {
+                        imagewebp($imageResource, $webpPath, 80);
+                        imagedestroy($imageResource);
+                        $imagePaths['image_' . $lang] = 'digitals/' . $lang . '/' . $webpFileName;
+                    }
                 }
             }
 
@@ -98,12 +103,7 @@ class DigitalController extends Controller
                 }
             }
 
-            Digital::create(array_merge($validated, [
-                'image' => $imagePath ?? null,
-                'file_az' => $filePaths['file_az'] ?? null,
-                'file_en' => $filePaths['file_en'] ?? null,
-                'file_ru' => $filePaths['file_ru'] ?? null
-            ]));
+            Digital::create(array_merge($validated, $imagePaths, $filePaths));
 
             return redirect()->route('back.pages.digitals.index')->with('success', 'Digital uğurla yaradıldı.');
 
@@ -127,7 +127,9 @@ class DigitalController extends Controller
                 'text_az' => 'nullable|string',
                 'text_en' => 'nullable|string',
                 'text_ru' => 'nullable|string',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+                'image_az' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+                'image_en' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+                'image_ru' => 'nullable|image|mimes:jpeg,png,jpg,gif',
                 'file_az' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480',
                 'file_en' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480',
                 'file_ru' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:20480',
@@ -150,34 +152,35 @@ class DigitalController extends Controller
 
             $data = $validated;
 
-            if ($request->hasFile('image')) {
-                if ($digital->image) {
-                    Storage::disk('public')->delete($digital->image);
-                }
+            foreach (['az', 'en', 'ru'] as $lang) {
+                if ($request->hasFile('image_' . $lang)) {
+                    if ($digital->{'image_' . $lang}) {
+                        Storage::disk('public')->delete($digital->{'image_' . $lang});
+                    }
 
-                $file = $request->file('image');
-                $destinationPath = public_path('storage/digitals');
-                $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $originalFileName = str_replace(' ', '_', $originalFileName);
-                $webpFileName = time() . '_' . $originalFileName . '.webp';
+                    $file = $request->file('image_' . $lang);
+                    $destinationPath = public_path('storage/digitals/' . $lang);
+                    $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                    $originalFileName = str_replace(' ', '_', $originalFileName);
+                    $webpFileName = time() . '_' . $originalFileName . '.webp';
 
-                if (!file_exists($destinationPath)) {
-                    mkdir($destinationPath, 0777, true);
-                }
+                    if (!file_exists($destinationPath)) {
+                        mkdir($destinationPath, 0777, true);
+                    }
 
-                $imageResource = imagecreatefromstring(file_get_contents($file));
-                $webpPath = $destinationPath . '/' . $webpFileName;
+                    $imageResource = imagecreatefromstring(file_get_contents($file));
+                    $webpPath = $destinationPath . '/' . $webpFileName;
 
-                if ($imageResource) {
-                    imagewebp($imageResource, $webpPath, 80);
-                    imagedestroy($imageResource);
-                    $data['image'] = 'digitals/' . $webpFileName;
+                    if ($imageResource) {
+                        imagewebp($imageResource, $webpPath, 80);
+                        imagedestroy($imageResource);
+                        $data['image_' . $lang] = 'digitals/' . $lang . '/' . $webpFileName;
+                    }
                 }
             }
 
             foreach (['az', 'en', 'ru'] as $lang) {
                 if ($request->hasFile('file_' . $lang)) {
-                  
                     if ($digital->{'file_' . $lang}) {
                         Storage::disk('public')->delete($digital->{'file_' . $lang});
                     }
@@ -210,16 +213,13 @@ class DigitalController extends Controller
     public function destroy(Digital $digital)
     {
         try {
-            if ($digital->image) {
-                Storage::disk('public')->delete($digital->image);
-            }
-            
-      
-            if ($digital->file_az || $digital->file_en || $digital->file_ru) {
-                foreach (['az', 'en', 'ru'] as $lang) {
-                    if ($digital->{'file_' . $lang}) {
-                        Storage::disk('public')->delete($digital->{'file_' . $lang});
-                    }
+            foreach (['az', 'en', 'ru'] as $lang) {
+                if ($digital->{'image_' . $lang}) {
+                    Storage::disk('public')->delete($digital->{'image_' . $lang});
+                }
+                
+                if ($digital->{'file_' . $lang}) {
+                    Storage::disk('public')->delete($digital->{'file_' . $lang});
                 }
             }
 

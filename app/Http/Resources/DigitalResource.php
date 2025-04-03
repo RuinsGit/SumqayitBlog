@@ -13,12 +13,13 @@ class DigitalResource extends JsonResource
         
         $appUrl = config('app.url');
         
-        return [
+       return [
             'id' => $this->id,
             'title' => $this->title,
             'text' => $this->text,
             'description' => $this->description,
             'image' => $this->image ? asset('storage/' . str_replace(' ', '%20', $this->image)) : null,
+
             'file' => $this->file ? asset('storage/' . str_replace(' ', '%20', $this->file)) : null,
             'image_alt' => $this->image_alt,
             'slug' => [
